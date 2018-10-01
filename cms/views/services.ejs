@@ -1,5 +1,3 @@
-
-
 <!--
 	Author: W3layouts
 	Author URL: http://w3layouts.com
@@ -9,7 +7,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Eduversity Education Category Flat Bootstrap Responsive Website Template | Error : W3layouts</title>
+    <title>Eduversity Education Category Flat Bootstrap Responsive Website Template | Services : W3layouts</title>
 
     <!-- Meta tag Keywords -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -32,6 +30,10 @@
     <link rel="stylesheet" href="css/style.css" type="text/css" media="all" /> <!-- Style-CSS -->
     <link rel="stylesheet" href="css/fontawesome-all.css"> <!-- Font-Awesome-Icons-CSS -->
     <!-- //css files -->
+
+    <!-- testimonials css -->
+    <link rel="stylesheet" href="css/flexslider.css" type="text/css" media="screen" property="" /><!-- flexslider css -->
+    <!-- //testimonials css -->
 
     <!--web font-->
     <link href="//fonts.googleapis.com/css?family=PT+Sans+Caption:400,700&amp;subset=cyrillic,cyrillic-ext,latin-ext" rel="stylesheet">
@@ -79,7 +81,7 @@
             <!-- main nav -->
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-lg-auto text-center">
-                    <li class="nav-item active  mr-lg-3">
+                    <li class="nav-item mr-lg-3">
                         <a class="nav-link" href="/">Home
                             <span class="sr-only">(current)</span>
                         </a>
@@ -87,7 +89,7 @@
                     <li class="nav-item mr-lg-3">
                         <a class="nav-link" href="/about">about</a>
                     </li>
-                    <li class="nav-item mr-lg-3">
+                    <li class="nav-item active mr-lg-3">
                         <a class="nav-link" href="/services">Services</a>
                     </li>
                     <li class="dropdown nav-item mr-lg-3">
@@ -139,7 +141,7 @@
     <div class="container">
         <div class="agileinfo-inner">
             <h2 class="text-center text-white">
-                Error Page
+                Services Page
             </h2>
         </div>
     </div>
@@ -151,30 +153,133 @@
         <li class="breadcrumb-item">
             <a href="/">Home</a>
         </li>
-        <li class="breadcrumb-item active" aria-current="page">Error Page</li>
+        <li class="breadcrumb-item active" aria-current="page">Services</li>
     </ol>
 </nav>
 <!-- //breadcrumbs -->
 
-<!-- error banner -->
-<div class="error_banner py-5">
-    <div class="container py-sm-3">
-        <div class="d-flex agileinfo-error  flex-column">
-            <div class="error_grid">
-                <h4>oop's!</h4>
-                <h5 class="d-flex">404
-                    <span class="d-flex align-items-center ml-3">Error</span>
-                </h5>
 
-                <p>the requested page was not found.</p>
-                <h1><%= message %></h1>
-                <h2><%= error.status %></h2>
-                <pre><%= error.stack %></pre>
+<!-- services -->
+<section class="services py-5">
+    <div class="container py-sm-3">
+        <h3 class="heading text-capitalize mb-lg-5 mb-4"> Services - <span>What We Offer</span> </h3>
+        <div class="row service-grids">
+            <div class="col-lg-4 col-md-6">
+                <div class="service-grid1">
+                    <i class="fas fa-globe"></i>
+                    <h5>1</h5>
+                    <h4 class="mb-3">Free Online Courses</h4>
+                    <p>Aenean tristique, duiid blandit elt ultricies, ligula elit interd ures turpis, a bibendum lib.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mt-md-0 mt-5">
+                <div class="service-grid1">
+                    <i class="fas fa-book"></i>
+                    <h5>2</h5>
+                    <h4 class="mb-3">Digital Library</h4>
+                    <p>Aenean tristique, duiid blandit elt ultricies, ligula elit interd ures turpis, a bibendum lib.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mt-lg-0 mt-5">
+                <div class="service-grid1">
+                    <i class="fab fa-digital-ocean"></i>
+                    <h5>3</h5>
+                    <h4 class="mb-3">Unlimited Courses</h4>
+                    <p>Aenean tristique, duiid blandit elt ultricies, ligula elit interd ures turpis, a bibendum lib.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mt-5">
+                <div class="service-grid1">
+                    <i class="fab fa-skyatlas"></i>
+                    <h5>4</h5>
+                    <h4 class="mb-3">Best Industry Leaders</h4>
+                    <p>Aenean tristique, duiid blandit elt ultricies, ligula elit interd ures turpis, a bibendum lib.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mt-5">
+                <div class="service-grid1">
+                    <i class="fas fa-tasks"></i>
+                    <h5>5</h5>
+                    <h4 class="mb-3">Graduate Courses</h4>
+                    <p>Aenean tristique, duiid blandit elt ultricies, ligula elit interd ures turpis, a bibendum lib.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mt-5">
+                <div class="service-grid1">
+                    <i class="fab fa-deskpro"></i>
+                    <h5>6</h5>
+                    <h4 class="mb-3">Certificate Courses</h4>
+                    <p>Aenean tristique, duiid blandit elt ultricies, ligula elit interd ures turpis, a bibendum lib.</p>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<!-- // error banner -->
+</section>
+<!-- //services -->
+
+
+<!-- Clients -->
+<section class="clients-main">
+    <div class="wthree-different-dot1 py-5">
+        <div class="container py-sm-3">
+            <!-- Owl-Carousel -->
+            <h3 class="heading text-capitalize mb-sm-5 mb-4">Testimonials - <span>What People Say </span> </h3>
+            <div class="cli-ent">
+                <section class="slider">
+                    <div class="flexslider">
+                        <ul class="slides">
+                            <li>
+                                <div class="item g1">
+                                    <div class="row agile-dish-caption">
+                                        <div class="col-lg-3 col-md-4">
+                                            <img class="lazyOwl" src="images/test1.jpg" alt="" />
+                                        </div>
+                                        <div class="col-lg-9 col-md-8">
+                                            <h5>Michael Johnson</h5>
+                                            <h4>Best Educational Institute</h4>
+                                            <p class="para-w3-agile"> Phasellus iaculis sapien in tellus gravida, a placerat lacus elementum. Nulla vitae lacus nec elit mollis pretium. Sed sed nunc lectus. Integer vehicula elit eget dignissim congue. Aliquam sed ultricies tortor. Curabitur ut odio vestibulum consectetur.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item g1">
+                                    <div class="row agile-dish-caption">
+                                        <div class="col-lg-3 col-md-4">
+                                            <img class="lazyOwl" src="images/test2.jpg" alt="" />
+                                        </div>
+                                        <div class="col-lg-9 col-md-8">
+                                            <h5>Mary elizabeth</h5>
+                                            <h4>Great Place For Education</h4>
+                                            <p class="para-w3-agile"> Phasellus iaculis sapien in tellus gravida, a placerat lacus elementum. Nulla vitae lacus nec elit mollis pretium. Sed sed nunc lectus. Integer vehicula elit eget dignissim congue. Aliquam sed ultricies tortor. Curabitur ut odio vestibulum consectetur.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item g1">
+                                    <div class="row agile-dish-caption">
+                                        <div class="col-lg-3 col-md-4">
+                                            <img class="lazyOwl" src="images/test3.jpg" alt="" />
+                                        </div>
+                                        <div class="col-lg-9 col-md-8">
+                                            <h5>Elisa kour</h5>
+                                            <h4>Experienced Staff for better future</h4>
+                                            <p class="para-w3-agile"> Phasellus iaculis sapien in tellus gravida, a placerat lacus elementum. Nulla vitae lacus nec elit mollis pretium. Sed sed nunc lectus. Integer vehicula elit eget dignissim congue. Aliquam sed ultricies tortor. Curabitur ut odio vestibulum consectetur.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+            <!--// Owl-Carousel -->
+        </div>
+    </div>
+</section>
+<!--// Clients -->
+
 
 <!-- footer -->
 <footer>
@@ -329,6 +434,20 @@
 <!-- search-bar -->
 <script src="js/main.js"></script>
 <!-- //search-bar -->
+
+<!-- flexSlider --><!-- for testimonials -->
+<script defer src="js/jquery.flexslider.js"></script>
+<script type="text/javascript">
+    $(window).load(function(){
+        $('.flexslider').flexslider({
+            animation: "slide",
+            start: function(slider){
+                $('body').removeClass('loading');
+            }
+        });
+    });
+</script>
+<!-- //flexSlider --><!-- for testimonials -->
 
 <!-- start-smoth-scrolling -->
 <script src="js/SmoothScroll.min.js"></script>
