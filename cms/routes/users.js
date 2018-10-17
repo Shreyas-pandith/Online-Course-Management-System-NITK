@@ -18,28 +18,28 @@ function(req, email, password, done) { // callback with email and password from 
   console.log("email",email);
   console.log("password",password);
    connection.query("SELECT * FROM STU WHERE mail = ? ", email ,function(err,rows){
-         if (err)
-          return done(err);
-   if (rows.length==0) {
+               if (err)
+                return done(err);
+        
+                if (rows.length==0) {
 
-           console.log("sorry no user found");
-            return done(null, false, null)
-          
-         // return done(null, false, req.flash('loginMessage', 'No user found.')); // req.flash is the way to set flashdata using connect-flash
-      } 
+                  console.log("sorry no user found");
+                  return done(null, false)
+                
+              // return done(null, false, req.flash('loginMessage', 'No user found.')); // req.flash is the way to set flashdata using connect-flash
+                     } 
 
-// if the user is found but the password is wrong
-      if (!( rows[0].password == password))
-         {console.log("sorry");
-         return done(null, false, null);
-         // return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.')); // create the loginMessage and save it to session as flashdata
-         }
-      // all is well, return successful user
-      console.log("success");
-      return done(null, rows[0]);			
+          // if the user is found but the password is wrong
+                if (!( rows[0].password == password))
+                  {console.log("sorry");
+                  return done(null, false);
+                  // return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.')); // create the loginMessage and save it to session as flashdata
+                  }
+                // all is well, return successful user
+                console.log("success");
+                return done(null, rows[0]);			
 
-});
-
+          });
 
 
 }));
@@ -49,10 +49,11 @@ function(req, email, password, done) { // callback with email and password from 
 
 
 router.post('/login',
-  passport.authenticate('local-login', { successRedirect: '../users',
-                                   failureRedirect: '../users',
-                                   failureFlash: false})
+  passport.authenticate('local-login', { successRedirect: '../profile',
+                                   failureRedirect: '../',
+                                   failureFlash: false,session:true})
 );
+
 
 /* GET users listing. */
 router.post('/signup', function(req, res, next) {
@@ -87,18 +88,26 @@ router.post('/signup', function(req, res, next) {
 
 router.get('/', function(req, res, next) {
   console.log("   oh oh");
-  console.log(req.user);
-  console.log(req.session.passport.user);
-  console.log(req.session.user);
-  connection.query('SELECT * FROM us',function(err,rows,fields){
-    res.render('users/all',{data: rows});
+  
+ 
+  
+    
+    console.log(req.user);
+    
+  
 
+  
+   
+   res.redirect('../profile');
 });
+
+
+
+
+router.get('/logout', function(req, res){
+  req.session.destroy(function (err) {
+    res.redirect('../users'); //Inside a callback… bulletproof!
+  });
 });
-
-
-
-
-
 
 module.exports = router;

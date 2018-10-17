@@ -22,4 +22,16 @@ router.get('/services', function(req, res, next) {
     res.render('services', { title: 'Express' });
 });
 
+
+router.get('/profile', function(req, res, next) {
+    if(req.user)
+    {
+    res.render('users/profile',{user:req.user.mail});
+    }
+    else
+    {
+        res.redirect('../');
+    }
+});
+
 module.exports = router;

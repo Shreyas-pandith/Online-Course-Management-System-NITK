@@ -24,7 +24,7 @@ var app = express();
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-app.use(passport.initialize());
+
 
 //app.use(require('flash')());
 
@@ -43,17 +43,19 @@ app.use(session({
   resave: false,
   saveUninitialized: true,
   store: sessionStore,
-  cookie: { secure: !true }
-}));
+  
 
+}));
+app.use(passport.initialize());
 app.use(passport.session());
+
 passport.serializeUser(function(user, done) {
   done(null, user.mail);
   });
 
  
-  passport.deserializeUser(function(id, done) {
-  connection.query("select * from STU where mail = "+id,function(err,rows){	
+  passport.deserializeUser(function(user, done) {
+  db_connection.query("select mail from STU where mail =  ?",user,function(err,rows){	
     done(err, rows[0]);
   });
   });
