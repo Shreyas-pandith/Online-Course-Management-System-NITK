@@ -17,26 +17,27 @@ function(req, email, password, done) { // callback with email and password from 
    
   console.log("email",email);
   console.log("password",password);
-   connection.query("SELECT * FROM STU WHERE mail = ? ", email ,function(err,rows){
+   connection.query("SELECT * FROM INSTRUCTOR WHERE Email = ? ", email ,function(err,rows){
                if (err)
                 return done(err);
         
                 if (rows.length==0) {
 
                   console.log("sorry no user found");
-                 // return done(null, false)
+              //    return done(null, false)
                 
-              return done(null, false, req.flash('loginMessage', 'No user found.')); // req.flash is the way to set flashdata using connect-flash
+             return done(null, false, req.flash('loginMessage', 'No user found.')); // req.flash is the way to set flashdata using connect-flash
                      } 
 
           // if the user is found but the password is wrong
                 if (!( rows[0].password == password))
                   {console.log("sorry");
                  // return done(null, false);
-                   return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.')); // create the loginMessage and save it to session as flashdata
+                  return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.')); // create the loginMessage and save it to session as flashdata
                   }
                 // all is well, return successful user
                 console.log("success");
+                req.flash('loginMessage', 'Successfully loggedin.');
                 return done(null, rows[0]);			
 
           });
@@ -49,41 +50,42 @@ function(req, email, password, done) { // callback with email and password from 
 
 
 router.post('/login',
-  passport.authenticate('local-login', { successRedirect: '../profile',
+  passport.authenticate('local-login', { successRedirect: '../instructor/profile',
                                    failureRedirect: '../',
-                                   failureFlash: true,session:true})
+                                   failureFlash: false,session:true})
 );
 
 
+router.get('/profile', function(req, res, next) {
+    // console.log("req",req.body);
+ res.render('instructor/profile',{'message':req.flash('loginMessage'),'user':req.user});
+
+});
 
 
-/* GET users listing. */
+
 router.post('/signup', function(req, res, next) {
   // console.log("req",req.body);
   var today = new Date();
   console.log("req",req.body);
   var user={
    
-    "mail":req.body.email,
+    "Email":req.body.email,
     "password":req.body.password,
     
   }
 
-  connection.query('INSERT INTO STU SET ?',user, function (error, results, fields) {
+  connection.query('INSERT INTO INSTRUCTOR SET ?',user, function (error, results, fields) {
   if (error) {
     console.log("error ocurred",error);
-    res.send({
-      "code":400,
-      "failed":"error ocurred"
-    })
+    req.flash("loginMessage"," something went wrong ..Try again");
+   
+    res.redirect('../');
   }else{
     console.log('The solution is: ', results);
-    res.send({
-      "code":200,
-      "success":"user registered sucessfully"
-        });
-
-
+    req.flash("loginMessage"," successfully registered NOW LOGIN");
+    
+    res.redirect('../');
   }
   });
 });
@@ -93,9 +95,17 @@ router.post('/signup', function(req, res, next) {
 router.get('/', function(req, res, next) {
   console.log("   oh oh");
   
+ 
+  
+    if(req.user)
+    {
+        res.redirect('/profile');
+    }
+    else
+    res.redirect('../');
     console.log(req.user);
     
-   res.redirect('../profile');
+  
 });
 
 

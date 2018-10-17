@@ -41,6 +41,9 @@
 
 <body>
 
+  <% if ( message.length > 0 ) { %>
+    <p><%= message %> </p>
+  <% } %>
 
 <!-- header -->
 <header>
@@ -492,7 +495,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form action="/users/login" method="post" class="p-3">
+        <form action="/instructor/login" method="post" class="p-3">
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">emial</label>
             <input type="email" class="form-control" placeholder="email" name="email" id="recipient-name" required="">
@@ -523,7 +526,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form action="users/signup" method="post" class="p-3">
+        <form action="instructor/signup" method="post" class="p-3">
        <!--   <div class="form-group">
             <label for="recipient-name" class="col-form-label">First Name</label>
             <input type="text" class="form-control" placeholder="First Name" name="Name" id="recipient-name2" required="">

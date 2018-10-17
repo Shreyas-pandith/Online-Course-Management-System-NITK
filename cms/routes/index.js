@@ -3,7 +3,9 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+
+    
+  res.render('index', { title: 'Express' ,message: req.flash('loginMessage')});
 });
 
 router.get('/course', function(req, res, next) {
@@ -26,7 +28,7 @@ router.get('/services', function(req, res, next) {
 router.get('/profile', function(req, res, next) {
     if(req.user)
     {
-    res.render('users/profile',{user:req.user.mail});
+    res.render('users/profile',{user:req.user});
     }
     else
     {

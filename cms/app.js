@@ -14,6 +14,7 @@ var flash = require('connect-flash');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var instructorRouter=require('./routes/instructor');
 
 
 var app = express();
@@ -49,17 +50,17 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.serializeUser(function(user, done) {
-  done(null, user.mail);
+  passport.serializeUser(function(user, done) {
+  done(null, user.Instructor_id);
   });
 
  
   passport.deserializeUser(function(user, done) {
-  db_connection.query("select mail from STU where mail =  ?",user,function(err,rows){	
+  db_connection.query("select Instructor_id from  INSTRUCTOR where Instructor_id  =  ?",user,function(err,rows){	
     done(err, rows[0]);
   });
   });
-  app.use(flash());
+ 
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -69,11 +70,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(flash());
 
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/instructor',instructorRouter);
 
 
 // catch 404 and forward to error handler
