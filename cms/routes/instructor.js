@@ -102,81 +102,15 @@ router.get('/logout', function(req, res){
 });
 
 
-router.get('/home', function(req, res){
-  if(req.user)
-  {
- res.render('instructor/home');
-  }
-});
 
-router.get('/edit_profile', function(req, res){
-  if(req.user)
-  {
-    connection.query("SELECT * FROM INSTRUCTOR WHERE Instructor_id = ? ",req.user.Instructor_id ,function(err,rows){
-      if(err)
-      {
-        console.log("error");
-
-      }
-      else
-      {
-        res.render('instructor/edit_profile',{'user':rows[0]});
-      }
-  });
-  
-  }
-  else
-  {
-    res.redirect('../');
-  }
-});
-
-router.post('/edit_profile', function(req, res){
-  if(req.user)
-  {
-  
-  var user={
-   
-  "Email":req.body.Email,
- 
-  "First_Name" :req.body.FN,
-  
-  "Middle_Name":req.body.MN,
-  "Last_Name": req.body.LN,
-  
-  "Phone_Number": req.body.Mobile
-  
-  
-   }
-
-connection.query('UPDATE INSTRUCTOR SET ?',user, function (error, results, fields) {
- if(error)
- {
-
- }else
- {
-    res.redirect('./profile');
- }
-});
-
-  }
-  else
-  {
-    res.redirect('../');
-  }
-});
-
-router.get('/courses', function(req, res){
-  if(req.user)
-  {
-  res.render('instructor/create_course');
-  }
-});
 
 router.get('/', function(req, res){
   if(req.user)
   {
   res.render('instructor/home',{user:req.user});
+  }
+  else{
+    res.redirect('../');
   }
 });
 
@@ -200,6 +134,165 @@ router.get('/profile', function(req, res, next) {
 
   }
 
+});
+
+
+router.get('/edit_profile', function(req, res){
+  if(req.user)
+  {
+    connection.query("SELECT * FROM INSTRUCTOR WHERE Instructor_id = ? ",req.user.Instructor_id ,function(err,rows){
+      if(err)
+      {
+        console.log("error");
+
+      }
+      else
+      {
+        res.render('instructor/edit_profile',{'user':rows[0]});
+      }
+  });
+  
+  }
+  else
+  {
+    res.redirect('../');
+  }
+});
+
+
+
+router.post('/edit_profile', function(req, res){
+  if(req.user)
+  {
+        
+        var user={
+        
+        "Email":req.body.Email,
+      
+        "First_Name" :req.body.FN,
+        
+        "Middle_Name":req.body.MN,
+        "Last_Name": req.body.LN,
+        
+        "Phone_Number": req.body.Mobile
+        
+        
+        }
+
+      connection.query('UPDATE INSTRUCTOR SET ? where Instructor_id = ?',[user,req.user.Instructor_id], function (error, results, fields) {
+      if(error)
+      {
+
+      }else
+      {
+          res.redirect('./profile');
+      }
+      });
+
+  }
+  else
+      {
+        res.redirect('../');
+      }
+});
+
+router.get('/courses', function(req, res){
+  if(req.user)
+  {
+    connection.query("SELECT * FROM COURSE WHERE Instructor_id = ? ",req.user.Instructor_id ,function(err,rows){
+      if(err)
+      {
+        console.log("error");
+
+      }
+      else
+      {
+        res.render('instructor/courses',{'message':req.flash('loginMessage'),'courses':rows});
+      }
+  });
+    
+
+ 
+  }
+});
+
+
+
+router.get('/add_course', function(req, res){
+  if(req.user)
+  {
+
+  res.render('instructor/create_course',{user:req.user});
+  }
+  else
+  {
+    res.redirect('../');
+  }
+});
+
+router.post('/add_course', function(req, res){
+        if(req.user)
+        {
+          var course={
+              
+            "Course_Title": req.body.title,
+          
+          "Instructor_id":  req.user.Instructor_id,
+              "Department_id":1,
+        
+            
+            };
+
+          connection.query('INSERT INTO COURSE SET ? ',course, function (error, results, fields) {
+          if(error)
+          {
+                    console.log(error)
+          }else
+          {
+              res.redirect('./courses');
+          }
+          });
+
+          
+        }
+        else
+        {
+          res.redirect('../');
+        }
+});
+
+
+router.get('/course/(:id)', function(req, res){
+  if(req.user)
+  {
+    connection.query("SELECT * FROM COURSE WHERE Course_id = ? ",req.params.id ,function(err,rows){
+      if(err)
+      {
+        console.log("error");
+
+      }
+      else
+      { 
+        connection.query("SELECT * FROM DEPARTMENT WHERE Department_id = ? ",rows[0].Department_id ,function(err,result){
+                       
+          if(err)
+          {
+            console.log("error");
+    
+          }
+          else
+          {
+            res.render('instructor/course',{'message':req.flash('loginMessage'),'course':rows[0],'department':result[0]});
+          }
+        });
+       
+      }
+  });
+ 
+  }
+  else{
+    res.redirect('../');
+  }
 });
 
 

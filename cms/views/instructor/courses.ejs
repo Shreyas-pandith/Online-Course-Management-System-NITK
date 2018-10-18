@@ -1,0 +1,21 @@
+<h1>
+
+    courses
+</h1>
+
+
+
+        <ul>
+                <% courses.forEach(function(course){ %>
+                  <li> 
+                    
+                   <a href="./course/<%=course.Course_id%>"> <%= course.Course_Title %>  </a>
+                    <br>
+                      <%= course.Course_id %>
+
+                  </li>
+                  <hr>
+                <% }); %>
+        </ul>
+
+              <a href="./">home</a>
