@@ -50,17 +50,12 @@ function(req, email, password, done) { // callback with email and password from 
 
 
 router.post('/login',
-  passport.authenticate('local-login', { successRedirect: '../instructor/profile',
+  passport.authenticate('local-login', { successRedirect: '../instructor/',
                                    failureRedirect: '../',
                                    failureFlash: false,session:true})
 );
 
 
-router.get('/profile', function(req, res, next) {
-    // console.log("req",req.body);
- res.render('instructor/profile',{'message':req.flash('loginMessage'),'user':req.user});
-
-});
 
 
 
@@ -92,29 +87,120 @@ router.post('/signup', function(req, res, next) {
 
 
 
-router.get('/', function(req, res, next) {
-  console.log("   oh oh");
-  
- 
-  
-    if(req.user)
-    {
-        res.redirect('/profile');
-    }
-    else
-    res.redirect('../');
-    console.log(req.user);
-    
-  
-});
+
 
 
 
 
 router.get('/logout', function(req, res){
+  if(req.user)
+  {
   req.session.destroy(function (err) {
-    res.redirect('../users'); //Inside a callback… bulletproof!
+    res.redirect('../'); //Inside a callback… bulletproof!
   });
+    }
 });
+
+
+router.get('/home', function(req, res){
+  if(req.user)
+  {
+ res.render('instructor/home');
+  }
+});
+
+router.get('/edit_profile', function(req, res){
+  if(req.user)
+  {
+    connection.query("SELECT * FROM INSTRUCTOR WHERE Instructor_id = ? ",req.user.Instructor_id ,function(err,rows){
+      if(err)
+      {
+        console.log("error");
+
+      }
+      else
+      {
+        res.render('instructor/edit_profile',{'user':rows[0]});
+      }
+  });
+  
+  }
+  else
+  {
+    res.redirect('../');
+  }
+});
+
+router.post('/edit_profile', function(req, res){
+  if(req.user)
+  {
+  
+  var user={
+   
+  "Email":req.body.Email,
+ 
+  "First_Name" :req.body.FN,
+  
+  "Middle_Name":req.body.MN,
+  "Last_Name": req.body.LN,
+  
+  "Phone_Number": req.body.Mobile
+  
+  
+   }
+
+connection.query('UPDATE INSTRUCTOR SET ?',user, function (error, results, fields) {
+ if(error)
+ {
+
+ }else
+ {
+    res.redirect('./profile');
+ }
+});
+
+  }
+  else
+  {
+    res.redirect('../');
+  }
+});
+
+router.get('/courses', function(req, res){
+  if(req.user)
+  {
+  res.render('instructor/create_course');
+  }
+});
+
+router.get('/', function(req, res){
+  if(req.user)
+  {
+  res.render('instructor/home',{user:req.user});
+  }
+});
+
+router.get('/profile', function(req, res, next) {
+  // console.log("req",req.body);
+  if(req.user)
+  {
+    
+    connection.query("SELECT * FROM INSTRUCTOR WHERE Instructor_id = ? ",req.user.Instructor_id ,function(err,rows){
+        if(err)
+        {
+          console.log("error");
+
+        }
+        else
+        {
+          res.render('instructor/profile',{'message':req.flash('loginMessage'),'user':rows[0]});
+        }
+    });
+
+
+  }
+
+});
+
 
 module.exports = router;

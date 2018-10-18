@@ -18,7 +18,7 @@ var instructorRouter=require('./routes/instructor');
 
 
 var app = express();
-
+require('express-reverse')(app);
 
 // view engine setup
 
