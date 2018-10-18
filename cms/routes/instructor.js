@@ -281,8 +281,20 @@ router.get('/course/(:id)', function(req, res){
     
           }
           else
-          {
-            res.render('instructor/course',{'message':req.flash('loginMessage'),'course':rows[0],'department':result[0]});
+          {   
+            connection.query("SELECT * FROM COURSE_MATERIALS WHERE Course_id = ? ",req.params.id,function(err,result1){
+
+              if(err)
+              {
+                console.log("error");
+        
+              }
+              else
+              {
+                res.render('instructor/course',{'message':req.flash('loginMessage'),'course':rows[0],'department':result[0],'materials':result1});
+              }
+            });
+        
           }
         });
        
@@ -291,6 +303,52 @@ router.get('/course/(:id)', function(req, res){
  
   }
   else{
+    res.redirect('../');
+  }
+});
+
+
+
+
+router.get('/course/(:id)/add_material', function(req, res){
+  if(req.user)
+  {
+    res.render('instructor/add_material');
+  }else
+  {
+    res.redirect('../');
+  }
+});
+
+
+router.post('/course/(:id)/add_material', function(req, res){
+  if(req.user)
+  {
+    var material={
+       'Topic': req.body.Topic,
+       'Remark':req.body.Remark ,
+       'Material':req.body.Material,
+       'Course_id': req.params.id,
+       'Instructor_id':req.user.Instructor_id,
+
+      
+    };
+    
+    connection.query("INSERT INTO COURSE_MATERIALS SET  ? ",material ,function(err,result){
+                       
+      if(err)
+      {
+        console.log(err);
+
+      }
+      else
+      {
+       res.redirect('./');
+      }
+    });
+
+  }else
+  {
     res.redirect('../');
   }
 });

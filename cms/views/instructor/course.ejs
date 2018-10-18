@@ -9,4 +9,23 @@
     <%= department.Department_Name%>
 </h3>
 
+
+<h1> Materials</h1>
+
+<ul>
+        <% materials.forEach(function(material){ %>
+          <li> 
+            
+            <%= material.Topic %>  
+            <br>
+              <%= material.Remark%>
+              <br>
+              <%=material.Material%>
+              <!-- <iframe src="<%=material.Material%>"></iframe> -->
+
+          </li>
+          <hr>
+        <% }); %>
+</ul>
+<a href="./<%=course.Course_id%>/add_material">add_material</a>
 <a href="../">home</a>
