@@ -3,7 +3,7 @@ var express = require('express');
 var mysql = require('mysql');
 var path = require('path');
 var bodyParser = require('body-parser');
-
+var expressValidator = require('express-validator');
 var cookieParser = require('cookie-parser');
 var session=require('express-session');
 var logger = require('morgan');
@@ -31,7 +31,7 @@ app.set('view engine', 'ejs');
 
 
 
-
+app.use(expressValidator());
 
 db_connection=require('./db');
 var sessionStore = new mysql_store({
@@ -50,16 +50,16 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-  passport.serializeUser(function(user, done) {
-  done(null, user.Instructor_id);
-  });
-
- 
-  passport.deserializeUser(function(user, done) {
-  db_connection.query("select Instructor_id from  INSTRUCTOR where Instructor_id  =  ?",user,function(err,rows){	
-    done(err, rows[0]);
-  });
-  });
+  // passport.serializeUser(function(user, done) {
+  // done(null, user.Instructor_id);
+  // });
+  //
+  //
+  // passport.deserializeUser(function(user, done) {
+  // db_connection.query("select Instructor_id from  INSTRUCTOR where Instructor_id  =  ?",user,function(err,rows){
+  //   done(err, rows[0]);
+  // });
+  // });
  
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -70,8 +70,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(flash());
-
+app.use(require('connect-flash')());
+app.use(function (req, res, next) {
+    res.locals.messages = require('express-messages')(req, res);
+    next();
+});
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

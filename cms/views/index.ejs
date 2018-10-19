@@ -26,12 +26,12 @@
   <!--// Meta tag Keywords -->
 
   <!-- css files -->
-  <link rel="stylesheet" href="css/bootstrap.css"> <!-- Bootstrap-Core-CSS -->
-  <link rel="stylesheet" href="css/style.css" type="text/css" media="all" /> <!-- Style-CSS -->
-  <link rel="stylesheet" href="css/fontawesome-all.css"> <!-- Font-Awesome-Icons-CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css"> <!-- Bootstrap-Core-CSS -->
+  <link rel="stylesheet" href="/css/style.css" type="text/css" media="all" /> <!-- Style-CSS -->
+  <link rel="stylesheet" href="/css/fontawesome-all.css"> <!-- Font-Awesome-Icons-CSS -->
   <!-- //css files -->
 
-  <link rel="stylesheet" href="css/jquery.countdown.css" />
+  <link rel="stylesheet" href="/css/jquery.countdown.css" />
 
   <!--web font-->
   <link href="//fonts.googleapis.com/css?family=PT+Sans+Caption:400,700&amp;subset=cyrillic,cyrillic-ext,latin-ext" rel="stylesheet">
@@ -41,9 +41,7 @@
 
 <body>
 
-  <% if ( message.length > 0 ) { %>
-    <p><%= message %> </p>
-  <% } %>
+    <p><%= messages() %> </p>
 
 <!-- header -->
 <header>
@@ -54,14 +52,12 @@
       </div>
       <div class="col-lg-6 buttons">
         <p><i class="fas mr-1 fa-phone"></i> +12 8976 2334</p>
-        <button type="button" class="btn btn-info btn-lg-block w3ls-btn px-4 text-capitalize mr-2" data-toggle="modal"
-                aria-pressed="false" data-target="#exampleModal">
-          Login
-        </button>
-        <button type="button" class="btn btn-info1 btn-lg-block w3ls-btn1 px-4 text-capitalize" data-toggle="modal"
-                aria-pressed="false" data-target="#exampleModal1">
-          Register
-        </button>
+
+              <a href="/users/login"><button type="button" class="btn btn-info btn-lg-block w3ls-btn px-4 text-capitalize mr-2" data-toggle="modal"
+                                  aria-pressed="false" data-target="">Login</button></a>
+
+          <a href="/users/register/"><button type="button" class="btn btn-info btn-lg-block w3ls-btn px-4 text-capitalize mr-2" data-toggle="modal"
+                              aria-pressed="false" data-target="">Register</button></a>
       </div>
     </section>
     <!-- top header -->
@@ -526,16 +522,16 @@
         </button>
       </div>
       <div class="modal-body">
-        <form action="instructor/signup" method="post" class="p-3">
-       <!--   <div class="form-group">
+        <form action="users/register" method="post" class="p-3">
+         <div class="form-group">
             <label for="recipient-name" class="col-form-label">First Name</label>
-            <input type="text" class="form-control" placeholder="First Name" name="Name" id="recipient-name2" required="">
+            <input type="text" class="form-control" placeholder="First Name" name="fname" id="recipient-name2" required="">
           </div>
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">Last Name</label>
-            <input type="text" class="form-control" placeholder="Last Name" name="Name" id="recipient-name3" required="">
+            <input type="text" class="form-control" placeholder="Last Name" name="lname" id="recipient-name3" required="">
           </div>
-        -->  
+
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">Email id</label>
             <input type="email" class="form-control" placeholder="Email id" name="email" id="recipient-name4" required="">
@@ -544,10 +540,21 @@
             <label for="recipient-name" class="col-form-label">Mobile Number</label>
             <input type="text" class="form-control" placeholder="Mobile Number" name="Name" id="recipient-name5" required="">
           </div>
-        -->   
+        -->
           <div class="form-group">
             <label for="recipient-name1" class="col-form-label">Password</label>
-            <input type="password" class="form-control" placeholder="Password" name="password" id="recipient-name6" required="">
+            <input type="password" class="form-control" placeholder="Password" name="psw" id="recipient-name6" required="">
+          </div>
+          <div class="form-group">
+            <label for="recipient-name1" class="col-form-label">Repeat Password</label>
+            <input type="password" class="form-control" placeholder="Password" name="psw_repeat" id="recipient-name6" required="">
+          </div>
+          <div class="form-group">
+            <label for="recipient-name1" class="col-form-label">I am a</label>
+            <select class="form-control" name="role">
+              <option value="Student">Student</option>
+              <option value="Instructor">Instructor</option>
+            </select>
           </div>
           <div class="right-w3l mt-4 mb-3">
             <input type="submit" class="form-control" value="Create account">
@@ -584,8 +591,8 @@
 
 <!-- start-smoth-scrolling -->
 <script src="js/SmoothScroll.min.js"></script>
-<script type="text/javascript" src="js/move-top.js"></script>
-<script type="text/javascript" src="js/easing.js"></script>
+<script type="text/javascript" src="/js/move-top.js"></script>
+<script type="text/javascript" src="/js/easing.js"></script>
 <script type="text/javascript">
     jQuery(document).ready(function($) {
         $(".scroll").click(function(event){

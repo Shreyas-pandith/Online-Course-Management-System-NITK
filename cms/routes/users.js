@@ -1,110 +1,221 @@
 var express = require('express');
 var router = express.Router();
-var connection=require('../db');
-var passport=require('passport');
-var LocalStrategy   = require('passport-local').Strategy;
 
 
-
-passport.use('local-login', new LocalStrategy({
-  // by default, local strategy uses username and password, we will override with email
-  usernameField : 'email',
-  passwordField : 'password',
-  passReqToCallback : true // allows us to pass back the entire request to the callback
-  
-},
-function(req, email, password, done) { // callback with email and password from our form
-   
-  console.log("email",email);
-  console.log("password",password);
-   connection.query("SELECT * FROM STU WHERE mail = ? ", email ,function(err,rows){
-               if (err)
-                return done(err);
-        
-                if (rows.length==0) {
-
-                  console.log("sorry no user found");
-                 // return done(null, false)
-                
-              return done(null, false, req.flash('loginMessage', 'No user found.')); // req.flash is the way to set flashdata using connect-flash
-                     } 
-
-          // if the user is found but the password is wrong
-                if (!( rows[0].password == password))
-                  {console.log("sorry");
-                 // return done(null, false);
-                   return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.')); // create the loginMessage and save it to session as flashdata
-                  }
-                // all is well, return successful user
-                console.log("success");
-                return done(null, rows[0]);			
-
-          });
+//Database
+var db = require('../db');
 
 
-}));
+//Password Encryptoion
+var bcrypt = require('bcrypt');
+const saltRounds = 10;
+const myPlaintextPassword = 's0/\/\P4$$w0rD';
+const someOtherPlaintextPassword = 'not_bacon';
 
 
+//Authentication
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
 
-
-
-router.post('/login',
-  passport.authenticate('local-login', { successRedirect: '../profile',
-                                   failureRedirect: '../',
-                                   failureFlash: true,session:true})
-);
-
-
-
-
-/* GET users listing. */
-router.post('/signup', function(req, res, next) {
-  // console.log("req",req.body);
-  var today = new Date();
-  console.log("req",req.body);
-  var user={
-   
-    "mail":req.body.email,
-    "password":req.body.password,
-    
-  }
-
-  connection.query('INSERT INTO STU SET ?',user, function (error, results, fields) {
-  if (error) {
-    console.log("error ocurred",error);
-    res.send({
-      "code":400,
-      "failed":"error ocurred"
-    })
-  }else{
-    console.log('The solution is: ', results);
-    res.send({
-      "code":200,
-      "success":"user registered sucessfully"
-        });
-
-
-  }
-  });
-});
 
 
 
 router.get('/', function(req, res, next) {
-  console.log("   oh oh");
-  
-    console.log(req.user);
-    
-   res.redirect('../profile');
+    res.send(req.user);
 });
 
 
 
-
-router.get('/logout', function(req, res){
-  req.session.destroy(function (err) {
-    res.redirect('../users'); //Inside a callback… bulletproof!
-  });
+router.get('/register', function(req, res, next) {
+    res.render('register', { messages: ''});
 });
+
+
+
+router.post('/register', function(req, res, next) {
+
+
+    req.checkBody('fname', 'Firsname field can not be empty').notEmpty();
+
+    req.checkBody('psw', 'Password field can not be empty').notEmpty();
+    req.checkBody('psw_repeat', 'Repeat Password field can not be empty').notEmpty();
+    req.checkBody('psw_repeat', 'Repeat Password field must be equal to passwrd field').equals(req.body.psw);
+
+    req.checkBody('email', 'Email field can not be empty').notEmpty();
+    req.checkBody('email', 'Entered Email is not valid').isEmail();
+
+    req.checkBody('lname', 'Lastname field can not be empty').notEmpty();
+
+
+    console.log(req.body.role);
+
+    const errors = req.validationErrors();
+
+    if(errors){
+        return res.render('register', { messages : errors})
+    }
+    else
+    {
+        var today = new Date();
+
+        bcrypt.hash(req.body.psw, saltRounds, function(err, hash) {
+            // Store hash in your password DB.
+            var userData = {
+                'first_name': req.body.fname,
+                'last_name': req.body.lname,
+                'email': req.body.email,
+                'password': hash,
+                'created': today,
+                'role': req.body.role
+            };
+
+
+            db.query(`INSERT INTO User SET ?`, userData, function(err, rows, fields) {
+                if (!err) {
+
+                    db.query(`SELECT LAST_INSERT_ID() as user_id`, function (error, results, fields) {
+
+                        if(error){
+                            console.log(error);
+                        }
+
+                        const user_id = results[0];
+                        console.log(user_id);
+
+                        return res.render('index', {message : ''});
+
+                    });
+                } else {
+                    console.log(err);
+                    return res.render('register', { messages : err})
+                }
+            });
+        });
+
+
+    }
+
+});
+
+
+router.get('/login', function(req, res, next) {
+
+    res.render('login');
+});
+
+
+router.post('/login',
+    passport.authenticate('local'),
+    function(req, res) {
+        // If this function gets called, authentication was successful.
+        // `req.user` contains the authenticated user.
+
+        var role = req.user.role;
+
+        if (role === 'Studnet'){
+            res.redirect('/users/')
+        }
+        else if(role === 'Instructor'){
+            res.redirect('/instructor/')
+        }
+        else{
+            res.redirect('/users/')
+        }
+
+    });
+
+
+router.get('/logout', function(req, res, next) {
+    req.logout();
+    req.session.destroy();
+    res.redirect('/');
+});
+
+
+
+router.get('/home', function(req, res, next) {
+
+    if(!req.isAuthenticated())
+    {
+        return res.redirect('/users/login/')
+    }
+
+
+    db.query(`SELECT * FROM users WHERE id = ?`,[req.user.user_id], function (error, results, fields) {
+
+        var user = {
+            fname : results[0].first_name,
+            lname : results[0].last_name,
+            email : results[0].email
+        };
+
+        res.render('home', {user : user});
+
+    });
+
+});
+
+
+passport.serializeUser(function(user, done) {
+    done(null, user);
+});
+
+
+passport.deserializeUser(function(user, done) {
+    done(null, user);
+});
+
+
+function authenticationMiddleware() {
+    return (req, res, next)  => {
+        console.log(
+            `req.session.passport.user: ${JSON.stringify(req.session.passport)}`
+        );
+
+        if(req.isAuthenticated()) return next(
+
+        );
+
+        res.redirect('/users/login');
+    }
+}
+
+
+passport.use(new LocalStrategy({
+        usernameField: 'email',
+        passwordField: 'psw',
+        session: false,
+        passReqToCallback : true
+    },
+    function(req,username, password, done) {
+
+        db.query(`SELECT * FROM User WHERE email = ?`,[username], function (error, results, fields) {
+
+            if(!error) {
+                if (results.length === 0) {
+                    console.log('No user');
+                    return done(null, false);
+                }
+
+                bcrypt.compare(password, results[0].password.toString(), function (err, res) {
+                    if(res === true){
+                        console.log(results[0].id);
+                        done(null, results[0]);
+                    }else {
+                        console.log('wrong password');
+                        done(null,false);
+                    }
+                });
+            } else {
+                console.log(error);
+                return done(null, false);
+            }
+
+
+
+        });
+
+    }
+));
 
 module.exports = router;
