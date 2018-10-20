@@ -78,7 +78,7 @@
                         </a>
                         <ul class="dropdown-menu" role="menu">
                             <li class="nav-item">
-                                <a href="/course" class="nav-link">Profile</a>
+                                <a href="/instructor/profile/" class="nav-link">Profile</a>
                             </li>
                             <li class="nav-item">
                                 <a href="/users/logout" class="nav-link">Logout</a>
@@ -128,7 +128,7 @@
         <li class="breadcrumb-item">
             <a href="/instructor/">Home</a>
         </li>
-        <li class="breadcrumb-item active" aria-current="page"></li>
+        <li class="breadcrumb-item active" aria-current="page">Profile</li>
     </ol>
 </nav>
 <!-- //breadcrumbs -->
@@ -139,33 +139,64 @@
 
 
 
+    <!-- Login modal -->
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-uppercase" id="exampleModalLabel1">My Profile</h5>
+            </div>
+            <div class="modal-body">
+                <form action="/instructor/profile/" method="post" class="p-3">
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">First Name</label>
+                        <input type="text" class="form-control" placeholder="First Name" name="fname" id="recipient-name2" value="<%= user.first_name%>">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Last Name</label>
+                        <input type="text" class="form-control" placeholder="Last Name" name="lname" id="recipient-name3" value="<%= user.last_name%>">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Email id</label>
+                        <h5><%= user.email%></h5>
+                    </div>
+                    <div class="right-w3l mt-4 mb-3">
+                        <input type="submit" class="form-control" value="Update Profile">
+                    </div>
+                </form>
+
+            </div>
+    </div>
+
+    <!-- //Login modal -->
 
 
 
 
 
 
-    <h1>profile</h1>
 
-    <br>
+    <!--<h1>profile</h1>-->
 
-    <li><%= user.Instructor_id  %></li>
-    <li><%= user.First_Name  %></li>
-    <li><%= user.Last_Name  %></li>
-    <li><%= user.Middle_Name  %></li>
-    <li><%= user.Email  %></li>
-    <li><%= user.Phone_Number  %></li>
+    <!--<br>-->
 
-    <li><%= user. Department_id  %></li>
+    <!--<li><%= user.Instructor_id  %></li>-->
+    <!--<li><%= user.First_Name  %></li>-->
+    <!--<li><%= user.Last_Name  %></li>-->
+    <!--<li><%= user.Middle_Name  %></li>-->
+    <!--<li><%= user.Email  %></li>-->
+    <!--<li><%= user.Phone_Number  %></li>-->
 
-
-
+    <!--<li><%= user. Department_id  %></li>-->
 
 
 
 
 
-    <a href="./">home</a>
+
+
+
+    <!--<a href="./">home</a>-->
 
 
 

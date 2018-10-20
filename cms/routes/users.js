@@ -110,17 +110,29 @@ router.post('/login',
         // If this function gets called, authentication was successful.
         // `req.user` contains the authenticated user.
 
-        var role = req.user.role;
 
-        if (role === 'Studnet'){
-            res.redirect('/users/')
-        }
-        else if(role === 'Instructor'){
-            res.redirect('/instructor/')
-        }
-        else{
-            res.redirect('/users/')
-        }
+        db.query("SELECT * FROM User WHERE id = ? ",req.user ,function(err2,rows2){
+            if(err2) {
+                console.log(err2);
+                res.redirect('/users/login')
+
+            }
+            else {
+                var role = rows2[0].role;
+
+                if (role === 'Student'){
+                    res.redirect('/student/')
+                }
+                else if(role === 'Instructor'){
+                    res.redirect('/instructor/')
+                }
+                else{
+                    res.redirect('/users/')
+                }
+            }
+        });
+
+
 
     });
 
@@ -156,13 +168,13 @@ router.get('/home', function(req, res, next) {
 });
 
 
-passport.serializeUser(function(user, done) {
-    done(null, user);
+passport.serializeUser(function(user_id, done) {
+    done(null, user_id);
 });
 
 
-passport.deserializeUser(function(user, done) {
-    done(null, user);
+passport.deserializeUser(function(user_id, done) {
+    done(null, user_id);
 });
 
 
@@ -200,7 +212,7 @@ passport.use(new LocalStrategy({
                 bcrypt.compare(password, results[0].password.toString(), function (err, res) {
                     if(res === true){
                         console.log(results[0].id);
-                        done(null, results[0]);
+                        done(null, results[0].id);
                     }else {
                         console.log('wrong password');
                         done(null,false);

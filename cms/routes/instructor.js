@@ -110,62 +110,87 @@ var connection=require('../db');
 
 router.get('/', function(req, res){
 
-    connection.query("SELECT * FROM User_Instructor WHERE user_id = ? ",req.user.id ,function(err,rows){
-        if(err) {
-            console.log(err);
+    console.log(req.user);
+    connection.query("SELECT * FROM User_Instructor WHERE user_id = ? ",req.user ,function(err1,rows1){
+        if(err1) {
+            console.log(err1);
             res.redirect('/users/login')
 
         }
         else {
-            res.render('instructor/home',{'user':req.user, 'instructor': rows[0]});
+            connection.query("SELECT * FROM User WHERE id = ? ",req.user ,function(err2,rows2){
+                if(err2) {
+                    console.log(err2);
+                    res.redirect('/users/login')
+
+                }
+                else {
+                    res.render('instructor/home',{'user':rows2[0], 'instructor': rows1[0]});
+                }
+            });
         }
     });
 });
 
 router.get('/profile', function(req, res, next) {
-    res.render('profile');
-  // console.log("req",req.body);
-  if(req.user)
-  {
-    
-    connection.query("SELECT * FROM INSTRUCTOR WHERE Instructor_id = ? ",req.user.Instructor_id ,function(err,rows){
-        if(err)
-        {
-          console.log("error");
+  if(req.user){
+      console.log('ddd');
+      connection.query("SELECT * FROM User_Instructor WHERE user_id = ? ",req.user ,function(err1,rows1){
+          if(err1) {
+              console.log(err1);
+              res.redirect('/users/login')
 
-        }
-        else
-        {
-          res.render('instructor/profile',{'message':req.flash('loginMessage'),'user':rows[0]});
-        }
-    });
+          }
+          else {
+              connection.query("SELECT * FROM User WHERE id = ? ",req.user ,function(err2,rows2){
+                  if(err2) {
+                      console.log(err2);
+                      res.redirect('/users/login')
 
-
+                  }
+                  else {
+                      res.render('instructor/profile',{'user':rows2[0], 'instructor': rows1[0]});
+                  }
+              });
+          }
+      });
+  }
+  else {
+      res.redirect('/login/')
   }
 
 });
 
 
 router.post('/profile', function(req, res){
-  if(req.user)
-  {
-    connection.query("SELECT * FROM INSTRUCTOR WHERE Instructor_id = ? ",req.user.Instructor_id ,function(err,rows){
-      if(err)
-      {
-        console.log("error");
+    if(req.user){
+        console.log('ddd');
+        var first_name = req.body.fname;
+        var last_name = req.body.lname;
+        console.log(first_name);
+        connection.query("SELECT * FROM User_Instructor WHERE user_id = ? ",req.user ,function(err1,rows1){
+            if(err1) {
+                console.log(err1);
+                res.redirect('/users/login')
 
-      }
-      else
-      {
-        res.render('instructor/edit_profile',{'user':rows[0]});
-      }
-  });
-  
-  }
-  else
-  {
-    res.redirect('../');
-  }
+            }
+            else {
+                connection.query("UPDATE User SET first_name = ? , last_name = ? WHERE id = ?",[first_name, last_name, req.user] ,function(err2,rows2){
+                    if(err2) {
+                        console.log(err2);
+                        res.redirect('/users/login')
+
+                    }
+                    else {
+                        res.redirect('/instructor/profile/')
+                    }
+                });
+            }
+        });
+    }
+    else {
+        res.redirect('/login/')
+    }
 });
 
 
@@ -206,6 +231,7 @@ router.post('/edit_profile', function(req, res){
 });
 
 router.get('/courses', function(req, res){
+    res.render('instructor/courses',{'message':req.flash('loginMessage'),'courses':''});
   if(req.user)
   {
     connection.query("SELECT * FROM COURSE WHERE Instructor_id = ? ",req.user.Instructor_id ,function(err,rows){
