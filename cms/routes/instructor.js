@@ -227,8 +227,18 @@ router.get('/courses', function(req, res){
 
                     }
                     else {
-                        console.log(rows1[0]);
-                        res.render('instructor/courses',{'user':rows1[0], 'instructor': rows2[0]});
+                        connection.query("SELECT * FROM COURSE WHERE Instructor_id = ?  ",rows2[0].Instructor_id ,function(err3,rows3){
+                            if(err3) {
+                                console.log(err2);
+                                res.redirect('/users/login')
+
+                            }
+                            else {
+                                console.log(rows3);
+                                res.render('instructor/courses',{'user':rows1[0], 'instructor': rows2[0], 'courses': rows3});
+                            }
+                        });
+
                     }
                 });
             }
@@ -241,7 +251,7 @@ router.get('/courses', function(req, res){
 
 
 
-router.get('/courses/course-details/', function(req, res){
+router.get('/course-details/:id', function(req, res){
     if(req.user) {
 
         connection.query("SELECT * FROM USER WHERE id = ?",req.user ,function(err1,rows1){
@@ -258,8 +268,79 @@ router.get('/courses/course-details/', function(req, res){
 
                     }
                     else {
-                        console.log(rows1[0]);
-                        res.render('instructor/course',{'user':rows1[0], 'instructor': rows2[0]});
+                        connection.query("SELECT * FROM COURSE WHERE Course_id = ?  ",req.params.id ,function(err3,rows3){
+                            if(err3) {
+                                console.log(err3);
+                                res.redirect('/instructor/courses/')
+
+                            }
+                            else {
+                                console.log(rows3[0]);
+                                res.render('instructor/course',{'user':rows1[0], 'instructor': rows2[0], 'course': rows3[0]});
+                            }
+                        });
+
+                    }
+                });
+            }
+        });
+    }
+    else{
+        return res.redirect('/users/login')
+    }
+});
+
+
+
+
+router.post('/course-details/:id', function(req, res){
+    if(req.user) {
+
+        connection.query("SELECT * FROM USER WHERE id = ?",req.user ,function(err1,rows1){
+            if(err1) {
+                console.log(err1);
+                res.redirect('/users/login')
+
+            }
+            else {
+                connection.query("SELECT * FROM INSTRUCTOR WHERE User_id = ?  ",req.user ,function(err2,rows2){
+                    if(err2) {
+                        console.log(err2);
+                        res.redirect('/users/login')
+
+                    }
+                    else {
+
+                        var data;
+
+                        if(req.body.introduction){
+                            data = {
+                                'Introduction' : req.body.introduction
+                            };
+                        }
+                        else if(req.body.description){
+                            data = {
+                                'Description' : req.body.description
+                            };
+                        }
+                        else if(req.body.requirements){
+                            data = {
+                                'Requirements' : req.body.requirements
+                            };
+                        }
+
+                        connection.query("UPDATE COURSE SET ?  WHERE Course_id = ?",[ data, req.params.id] ,function(err3,rows3){
+                            if(err3) {
+                                console.log(err3);
+                                res.redirect('/instructor/courses/')
+
+                            }
+                            else {
+                                console.log(rows3[0]);
+                                url = '/instructor/course-details/' + req.params.id;
+                                return res.redirect(url);
+                            }
+                        });
                     }
                 });
             }
@@ -320,7 +401,36 @@ router.post('/offer-course', function(req, res){
                     }
                     else {
                         console.log(rows1[0]);
-                        res.redirect('/instructor/offer-course')
+
+
+                        var data = {
+                            'Course_Title': req.body.title,
+                            'Course_Code': req.body.code,
+                            'Instructor_id': rows2[0].Instructor_id
+                        };
+
+                        connection.query("INSERT INTO COURSE SET  ? ",data ,function(err3,rows3){
+                            if(err3) {
+                                console.log(err3);
+                                res.redirect('/offer-course')
+
+                            }
+                            else {
+
+                                connection.query("SELECT LAST_INSERT_ID() as id" ,function(err4,rows4){
+                                    if(err4) {
+                                        console.log(err4);
+                                        res.redirect('/offer-course')
+
+                                    }
+                                    else {
+                                        console.log(rows4[0]);
+                                        url = '/instructor/course-details/' + rows4[0].id;
+                                        return res.redirect(url);
+                                    }
+                                });
+                            }
+                        });
                     }
                 });
             }

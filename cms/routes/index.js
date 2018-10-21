@@ -3,8 +3,6 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-
-    
   res.render('index', { title: 'Express' ,message: req.flash('loginMessage')});
 });
 
@@ -22,18 +20,6 @@ router.get('/contact', function(req, res, next) {
 
 router.get('/services', function(req, res, next) {
     res.render('services', { title: 'Express' });
-});
-
-
-router.get('/profile', function(req, res, next) {
-    if(req.user)
-    {
-    res.render('users/profile',{user:req.user});
-    }
-    else
-    {
-        res.redirect('../');
-    }
 });
 
 module.exports = router;

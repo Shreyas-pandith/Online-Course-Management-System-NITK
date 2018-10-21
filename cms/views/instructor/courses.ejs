@@ -138,66 +138,25 @@
     <div class="container py-sm-3">
         <h3 class="heading text-capitalize mb-lg-5 mb-4"> Your courses</span> </h3>
         <div class="row course-grids">
-            <div class="col-lg-4 col-md-6">
-                <div class="card">
-                    <img class="card-img-top" src="/images/image3.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">Graduation Course</h5>
-                        <p class="card-text mb-3">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="/instructor/courses/course-details" class="btn btn-primary"><i class="fas fa-graduation-cap"></i> View Course</a>
+
+
+            <% if (courses) { %>
+                <% for (var i=0;i<courses.length ;i ++) {%>
+
+
+                    <div class="col-lg-4 col-md-6">
+                        <br><div class="card">
+                            <img class="card-img-top" src="/images/image3.jpg" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title"><%= courses[i].Course_Title%> (<%= courses[i].Course_Code%>)</h5>
+                                <p class="card-text mb-3">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                <a href="/instructor/course-details/<%= courses[i].Course_id%>" class="btn btn-primary"><i class="fas fa-graduation-cap"></i> View Course</a>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 mt-md-0 mt-5">
-                <div class="card">
-                    <img class="card-img-top" src="/images/image2.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">Art Course</h5>
-                        <p class="card-text mb-3">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="/instructor/courses/course-details" class="btn btn-primary"><i class="fas fa-graduation-cap"></i> View Course</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 mt-lg-0 mt-5">
-                <div class="card">
-                    <img class="card-img-top" src="/images/image1.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">Library Course</h5>
-                        <p class="card-text mb-3">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="/instructor/courses/course-details" class="btn btn-primary"><i class="fas fa-graduation-cap"></i> View Course</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 mt-5">
-                <div class="card">
-                    <img class="card-img-top" src="/images/image2.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">Designing Course</h5>
-                        <p class="card-text mb-3">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="/instructor/courses/course-details" class="btn btn-primary"><i class="fas fa-graduation-cap"></i> View Course</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 mt-5">
-                <div class="card">
-                    <img class="card-img-top" src="/images/image1.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">Abroad Courses</h5>
-                        <p class="card-text mb-3">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="/instructor/courses/course-details" class="btn btn-primary"><i class="fas fa-graduation-cap"></i> View Course</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 mt-5">
-                <div class="card">
-                    <img class="card-img-top" src="/images/image3.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">Online Course</h5>
-                        <p class="card-text mb-3">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="/instructor/courses/course-details" class="btn btn-primary"><i class="fas fa-graduation-cap"></i> View Course</a>
-                    </div>
-                </div>
-            </div>
+                <% }%>
+            <% } %>
+
         </div>
     </div>
 </section>

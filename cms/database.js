@@ -108,8 +108,12 @@ function connectDatabase() {
                 (
                   Course_id INT NOT NULL AUTO_INCREMENT,
                   Course_Title VARCHAR(255) NOT NULL,
+                  Course_Code VARCHAR(255) NOT NULL,
                   Instructor_id INT NOT NULL,
-                  Department_id INT NOT NULL,
+                  Department_id INT,
+                  Introduction TEXT,
+                  Description TEXT,
+                  Requirements TEXT,
                   PRIMARY KEY (Course_id),
                   FOREIGN KEY (Instructor_id) REFERENCES INSTRUCTOR(Instructor_id),
                   FOREIGN KEY (Department_id) REFERENCES DEPARTMENT(Department_id)

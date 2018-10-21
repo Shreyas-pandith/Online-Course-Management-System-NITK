@@ -37,7 +37,98 @@
 
     <!--web font-->
     <link href="//fonts.googleapis.com/css?family=PT+Sans+Caption:400,700&amp;subset=cyrillic,cyrillic-ext,latin-ext" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--//web font-->
+
+    <style>
+
+        #paper {
+            color:#FFF;
+            font-size:20px;
+        }
+        #margin {
+            margin-left:12px;
+            margin-bottom:20px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            -o-user-select: none;
+            user-select: none;
+        }
+        #text {
+            width:100%;
+            overflow:hidden;
+            background-color:#FFF;
+            color:#222;
+            font-family:Courier, monospace;
+            font-weight:normal;
+            font-size:24px;
+            resize:none;
+            line-height:40px;
+            padding-left:100px;
+            padding-right:100px;
+            padding-top:45px;
+            padding-bottom:34px;
+            background-image:url(https://static.tumblr.com/maopbtg/E9Bmgtoht/lines.png), url(https://static.tumblr.com/maopbtg/nBUmgtogx/paper.png);
+            background-repeat:repeat-y, repeat;
+            -webkit-border-radius:12px;
+            border-radius:12px;
+            -webkit-box-shadow: 0px 2px 14px #000;
+            box-shadow: 0px 2px 14px #000;
+            border-top:1px solid #FFF;
+            border-bottom:1px solid #FFF;
+            white-space: pre-wrap;
+        }
+        #title {
+            background-color:transparent;
+            border-bottom:3px solid #FFF;
+            color:#FFF;
+            font-size:20px;
+            font-family:Courier, monospace;
+            height:28px;
+            font-weight:bold;
+            width:220px;
+        }
+        #button {
+            cursor:pointer;
+            margin-top:20px;
+            float:right;
+            height:40px;
+            padding-left:24px;
+            padding-right:24px;
+            font-family:Arial, Helvetica, sans-serif;
+            font-weight:bold;
+            font-size:20px;
+            color:#FFF;
+            text-shadow: 0px -1px 0px #000000;
+            -webkit-border-radius:8px;
+            border-radius:8px;
+            border-top:1px solid #FFF;
+            -webkit-box-shadow: 0px 2px 14px #000;
+            box-shadow: 0px 2px 14px #000;
+            background-color: #62add6;
+            background-image:url(https://static.tumblr.com/maopbtg/ZHLmgtok7/button.png);
+            background-repeat:repeat-x;
+        }
+        #button:active {
+            zoom: 1;
+            filter: alpha(opacity=80);
+            opacity: 0.8;
+        }
+        #button:focus {
+            zoom: 1;
+            filter: alpha(opacity=80);
+            opacity: 0.8;
+        }
+        #wrapper {
+            width:700px;
+            height:auto;
+            margin-left:auto;
+            margin-right:auto;
+            margin-top:24px;
+            margin-bottom:100px;
+        }
+    </style>
 
 </head>
 
@@ -163,45 +254,62 @@
                                 </div>
                             </div>
 
+
+
+
+
+
+
+
                             <h3>
-                                <a href="single.html" class="single-text text-dark font-weight-light">Nemo enim ipsam voluptatem quia voluptas
-                                    sit aspernatur aut odit aut fugit 2018</a>
+                                <a class="single-text text-dark font-weight-light">Introduction To Course</a>   <button id="formButton" style="font-size:24px"> <i class="material-icons">border_color</i></button>
                             </h3>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sedc dnmo eiusmod tempor incididunt ut labore et
-                                dolore magna
-                                aliqua uta enim ad minim ven iam quis nostrud exercitation ullamco labor nisi ut aliquip exea commodo consequat
-                                duis
-                                aute irudre dolor in elit sed uta labore dolore reprehender</p>
-                            <p class="my-3">Ullamco labor nisi ut aliquip exea commodo consequat duis aute irudre dolor in elit sed uta
-                                labore dolore reprehender</p>
-                            <p>Jabore et dolore magna aliqua uta enim ad minim ven iam quis nostrud exercitation ullamco labor nisi ut
-                                <span class="text-danger">aliquip exea commodo consequat duis aute irudre dolor in elit sed uta labore dolore
-									reprehender</span>
+                            <p id="introduction" style="white-space: pre-wrap;"><%= course.Introduction%></p>
+
                             </p>
-                            <div class="offset-lg-2 mt-sm-5 mt-4">
-                                <p>Elit sedc dnmo eiusmod tempor incididunt ut labore et dolore magna aliqua uta enim ad minim ven iam quis
-                                    nostrud
-                                    exercitation ullamco labor nisi ut aliquip exea commodo consequat duis aute irudre dolor in elit sed uta
-                                    labore
-                                    dolore reprehender</p>
-                                <p class="my-3">Ullamco labor nisi ut aliquip exea commodo consequat duis aute irudre dolor in elit sed uta
-                                    labore dolore reprehender</p>
-                                <p>Jabore et dolore magna aliqua uta enim ad minim ven iam quis nostrud exercitation ullamco labor nisi ut
-                                    aliquip exea
-                                    <span class="text-danger">commodo consequat duis aute irudre dolor in elit sed uta labore dolore reprehender</span>
-                                </p>
+                            <div id="introduction_textarea" style="display: none">
+
+                                <form id="paper" method="post" action="/instructor/course-details/<%= course.Course_id%>">
+
+                                    <textarea placeholder="Enter something funny." id="text" name="introduction" rows="4" style="overflow: hidden; word-wrap: break-word; resize: none; height: 500px; "><%= course.Introduction%></textarea>
+                                    <br>
+                                    <button type="submit">Save</button>
+                                </form>
+
                             </div>
+
                             <h3>
-                                <a href="single.html" class="single-text text-dark font-weight-light">Nemo enim ipsam voluptatem quia voluptas
-                                    sit aspernatur aut odit aut fugit 2018</a>
+                                <a class="single-text text-dark font-weight-light">Description of Course</a>   <button id="formButton2" style="font-size:24px"> <i class="material-icons">border_color</i></button>
                             </h3>
-                            <p class="my-3">Ullamco labor nisi ut aliquip exea commodo consequat duis aute irudre dolor in elit sed uta
-                                labore dolore reprehender</p>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sedc dnmo eiusmod tempor incididunt ut labore et
-                                dolore magna
-                                aliqua uta enim ad minim ven iam quis nostrud exercitation ullamco labor nisi ut aliquip exea commodo consequat
-                                duis
-                                aute irudre dolor in elit sed uta labore dolore reprehender</p>
+
+                            <p id="description" style="white-space: pre-wrap;"> <%= course.Description%> </p>
+                            <div id="description_textarea" style="display: none">
+
+                                <form id="paper" method="post" action="/instructor/course-details/<%= course.Course_id%>">
+
+                                    <textarea placeholder="Enter something funny." id="text" name="description" rows="4" style="overflow: hidden; word-wrap: break-word; resize: none; height: 500px; "><%- course.Description%></textarea>
+                                    <br>
+                                    <button type="submit">Save</button>
+                                </form>
+
+                            </div>
+
+
+                            <h3>
+                                <a class="single-text text-dark font-weight-light">Requirements of the Course</a>   <button id="formButton3" style="font-size:24px"> <i class="material-icons">border_color</i></button>
+                            </h3>
+
+                            <p id="requirements" style="white-space: pre-wrap;"><%= course.Requirements%></p>
+                            <div id="requirements_textarea" style="display: none">
+
+                                <form id="paper" method="post" action="/instructor/course-details/<%= course.Course_id%>">
+
+                                    <textarea placeholder="Enter something funny." id="text" name="requirements" rows="4" style="overflow: hidden; word-wrap: break-word; resize: none; height: 500px; "><%= course.Requirements%></textarea>
+                                    <br>
+                                    <button type="submit">Save</button>
+                                </form>
+
+                            </div>
                         </div>
 
 
@@ -249,15 +357,15 @@
                                 <h4>Course Materials</h4>
                                 <ul class="list-group single">
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        Course Materials Type -1
+                                        <a href="#">Course Materials Type -1</a>
                                         <span class="badge badge-primary badge-pill">14</span>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        Course Materials Type -4
+                                        <a href="#">Course Materials Type -1</a>
                                         <span class="badge badge-primary badge-pill">2</span>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        Course Materials Type -3
+                                        <a href="#">Course Materials Type -1</a>
                                         <span class="badge badge-primary badge-pill">1</span>
                                     </li>
                                 </ul>
@@ -465,6 +573,31 @@
 </script>
 <!-- //here ends scrolling icon -->
 <!-- start-smoth-scrolling -->
+
+
+<script>
+    $("#formButton").click(function(){
+        $("#introduction_textarea").toggle();
+        $("#introduction").css({
+            'display': 'none'
+        });
+    });
+
+    $("#formButton2").click(function(){
+        $("#description_textarea").toggle();
+        $("#description").css({
+            'display': 'none'
+        });
+    });
+
+
+        $("#formButton3").click(function(){
+            $("#requirements_textarea").toggle();
+            $("#requirements").css({
+                'display': 'none'
+            });
+        });
+</script>
 
 </body>
 </html>
