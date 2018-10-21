@@ -1,7 +1,6 @@
 
 
 
-
 <!--
 	Author: W3layouts
 	Author URL: http://w3layouts.com
@@ -70,7 +69,7 @@
                         </a>
                     </li>
                     <li class="nav-item mr-lg-3">
-                        <a class="nav-link" href="/about">Courses</a>
+                        <a class="nav-link" href="/instructor/courses/">Courses</a>
                     </li>
                     <li class="dropdown nav-item active mr-lg-3">
                         <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle ">
@@ -79,7 +78,7 @@
                         </a>
                         <ul class="dropdown-menu" role="menu">
                             <li class="nav-item">
-                                <a href="/course" class="nav-link">Profile</a>
+                                <a href="/instructor/profile" class="nav-link">Profile</a>
                             </li>
                             <li class="nav-item">
                                 <a href="/users/logout" class="nav-link">Logout</a>
@@ -117,7 +116,7 @@
     <div class="container">
         <div class="agileinfo-inner">
             <h2 class="text-center text-white">
-                Welcome <%= user.first_name%> <%= user.last_name%>
+                Offer A Course
             </h2>
         </div>
     </div>
@@ -129,80 +128,20 @@
         <li class="breadcrumb-item">
             <a href="/instructor/">Home</a>
         </li>
-        <li class="breadcrumb-item active" aria-current="page"></li>
+        <li class="breadcrumb-item">
+            <a href="/instructor/courses">Courses</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Offer a Courses</li>
     </ol>
 </nav>
 <!-- //breadcrumbs -->
 
 <!-- courses -->
 <section class="courses py-5">
+    <div class="container py-sm-3">
+        <h3 class="heading text-capitalize mb-lg-5 mb-4"> Enter Course Details</span> </h3>
 
-
-
-
-
-
-
-
-
-
-
-
-    <h1> create course</h1>
-    <br>
-    <head>
-
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-
-    </head>
-
-
-    <h1>edit </h1>
-
-
-    <form action="./add_course" method="post" class="p-3">
-        <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Course Title</label>
-            <input type="text" class="form-control" placeholder="Title" name="title" id="recipient-name2" required="">
-        </div>
-        <div class="form-group">
-            <select name="Department_id">
-                <option value="1">Comps</option>
-                <option value="2">IT</option>
-                <option value="3">Mech</option>
-                <option value="4">Civil</option>
-                <option value="5">Mech</option>
-                <option value="6">EC</option>
-                <option value="7">EEE</option>
-                <option value="8">Mining</option>
-                <option value="9">Meta</option>
-            </select>
-        </div>
-
-
-        <div class="right-w3l mt-4 mb-3">
-            <input type="submit" class="form-control" value="Add">
-        </div>
-    </form>
-    <br>
-    <a href="./">home</a>
-
-
-    <br>
-    <a href="./">home</a>
-
-
-
-
-
-
-
-
-
-
-
-
+    </div>
 </section>
 <!-- courses -->
 

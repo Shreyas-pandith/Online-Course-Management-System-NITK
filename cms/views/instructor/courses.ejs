@@ -69,7 +69,7 @@
                         </a>
                     </li>
                     <li class="nav-item mr-lg-3">
-                        <a class="nav-link" href="/about">Courses</a>
+                        <a class="nav-link" href="/instructor/courses/">Courses</a>
                     </li>
                     <li class="dropdown nav-item active mr-lg-3">
                         <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle ">
@@ -78,7 +78,7 @@
                         </a>
                         <ul class="dropdown-menu" role="menu">
                             <li class="nav-item">
-                                <a href="/course" class="nav-link">Profile</a>
+                                <a href="/instructor/profile" class="nav-link">Profile</a>
                             </li>
                             <li class="nav-item">
                                 <a href="/users/logout" class="nav-link">Logout</a>
@@ -116,7 +116,7 @@
     <div class="container">
         <div class="agileinfo-inner">
             <h2 class="text-center text-white">
-                Welcome <%= user.first_name%> <%= user.last_name%>
+                <a href="/instructor/offer-course" class="btn btn-primary"><i class="fas fa-graduation-cap"></i> <h5>Offer a Course</h5></a>
             </h2>
         </div>
     </div>
@@ -128,45 +128,78 @@
         <li class="breadcrumb-item">
             <a href="/instructor/">Home</a>
         </li>
-        <li class="breadcrumb-item active" aria-current="page"></li>
+        <li class="breadcrumb-item active" aria-current="page">Courses</li>
     </ol>
 </nav>
 <!-- //breadcrumbs -->
 
 <!-- courses -->
 <section class="courses py-5">
-
-
-
-
-
-    <h1>
-
-        courses
-    </h1>
-
-
-
-    <ul>
-        <% courses.forEach(function(course){ %>
-        <li>
-
-            <a href="./course/<%=course.Course_id%>"> <%= course.Course_Title %>  </a>
-            <br>
-            <%= course.Course_id %>
-
-        </li>
-        <hr>
-        <% }); %>
-    </ul>
-
-    <a href="./">home</a>
-
-
-
-
-
-
+    <div class="container py-sm-3">
+        <h3 class="heading text-capitalize mb-lg-5 mb-4"> Your courses</span> </h3>
+        <div class="row course-grids">
+            <div class="col-lg-4 col-md-6">
+                <div class="card">
+                    <img class="card-img-top" src="/images/image3.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">Graduation Course</h5>
+                        <p class="card-text mb-3">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="/instructor/courses/course-details" class="btn btn-primary"><i class="fas fa-graduation-cap"></i> View Course</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mt-md-0 mt-5">
+                <div class="card">
+                    <img class="card-img-top" src="/images/image2.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">Art Course</h5>
+                        <p class="card-text mb-3">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="/instructor/courses/course-details" class="btn btn-primary"><i class="fas fa-graduation-cap"></i> View Course</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mt-lg-0 mt-5">
+                <div class="card">
+                    <img class="card-img-top" src="/images/image1.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">Library Course</h5>
+                        <p class="card-text mb-3">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="/instructor/courses/course-details" class="btn btn-primary"><i class="fas fa-graduation-cap"></i> View Course</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mt-5">
+                <div class="card">
+                    <img class="card-img-top" src="/images/image2.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">Designing Course</h5>
+                        <p class="card-text mb-3">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="/instructor/courses/course-details" class="btn btn-primary"><i class="fas fa-graduation-cap"></i> View Course</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mt-5">
+                <div class="card">
+                    <img class="card-img-top" src="/images/image1.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">Abroad Courses</h5>
+                        <p class="card-text mb-3">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="/instructor/courses/course-details" class="btn btn-primary"><i class="fas fa-graduation-cap"></i> View Course</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mt-5">
+                <div class="card">
+                    <img class="card-img-top" src="/images/image3.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">Online Course</h5>
+                        <p class="card-text mb-3">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="/instructor/courses/course-details" class="btn btn-primary"><i class="fas fa-graduation-cap"></i> View Course</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 <!-- courses -->
 

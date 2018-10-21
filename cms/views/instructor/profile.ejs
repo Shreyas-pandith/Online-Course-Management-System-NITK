@@ -69,7 +69,7 @@
                         </a>
                     </li>
                     <li class="nav-item mr-lg-3">
-                        <a class="nav-link" href="/about">Courses</a>
+                        <a class="nav-link" href="/instructor/courses">Courses</a>
                     </li>
                     <li class="dropdown nav-item active mr-lg-3">
                         <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle ">
@@ -116,7 +116,7 @@
     <div class="container">
         <div class="agileinfo-inner">
             <h2 class="text-center text-white">
-                Welcome <%= user.first_name%> <%= user.last_name%>
+                Welcome  <%= instructor.First_Name%> <%= instructor.Last_Name%>
             </h2>
         </div>
     </div>
@@ -150,15 +150,23 @@
                 <form action="/instructor/profile/" method="post" class="p-3">
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">First Name</label>
-                        <input type="text" class="form-control" placeholder="First Name" name="fname" id="recipient-name2" value="<%= user.first_name%>">
+                        <input type="text" class="form-control" placeholder="First Name" name="fname" id="recipient-name2" value="<%= instructor.First_Name%>">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Middle Name</label>
+                        <input type="text" class="form-control" placeholder="Middle Name" name="mname" id="recipient-name2" value="<%= instructor.Middle_Name%>">
                     </div>
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Last Name</label>
-                        <input type="text" class="form-control" placeholder="Last Name" name="lname" id="recipient-name3" value="<%= user.last_name%>">
+                        <input type="text" class="form-control" placeholder="Last Name" name="lname" id="recipient-name3" value="<%= instructor.Last_Name%>">
                     </div>
                     <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Email id</label>
-                        <h5><%= user.email%></h5>
+                        <label for="recipient-name" class="col-form-label">PhoneNumber</label>
+                        <input type="text" class="form-control" placeholder="Phone Number" name="phone" id="recipient-name2" value="<%= instructor.Phone_Number%>">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Department</label>
+                        <input type="text" class="form-control" placeholder="Department" name="department" id="recipient-name2" value="<%= instructor.Department_id%>">
                     </div>
                     <div class="right-w3l mt-4 mb-3">
                         <input type="submit" class="form-control" value="Update Profile">

@@ -3,8 +3,6 @@ var router = express.Router();
 var connection=require('../db');
 
 
-
-
 // var passport=require('passport');
 // var LocalStrategy   = require('passport-local').Strategy;
 //
@@ -110,53 +108,64 @@ var connection=require('../db');
 
 router.get('/', function(req, res){
 
-    console.log(req.user);
-    connection.query("SELECT * FROM User_Instructor WHERE user_id = ? ",req.user ,function(err1,rows1){
-        if(err1) {
-            console.log(err1);
-            res.redirect('/users/login')
+    if(req.user) {
 
-        }
-        else {
-            connection.query("SELECT * FROM User WHERE id = ? ",req.user ,function(err2,rows2){
-                if(err2) {
-                    console.log(err2);
-                    res.redirect('/users/login')
+        connection.query("SELECT * FROM USER WHERE id = ?",req.user ,function(err1,rows1){
+            if(err1) {
+                console.log(err1);
+                res.redirect('/users/login')
 
-                }
-                else {
-                    res.render('instructor/home',{'user':rows2[0], 'instructor': rows1[0]});
-                }
-            });
-        }
-    });
+            }
+            else {
+                connection.query("SELECT * FROM INSTRUCTOR WHERE User_id = ?  ",req.user ,function(err2,rows2){
+                    if(err2) {
+                        console.log(err2);
+                        res.redirect('/users/login')
+
+                    }
+                    else {
+                        console.log(rows1[0]);
+                        res.render('instructor/home',{'user':rows1[0], 'instructor': rows2[0]});
+                    }
+                });
+            }
+        });
+    }
+    else{
+        return res.redirect('/users/login')
+    }
+
 });
+
+
+
+
 
 router.get('/profile', function(req, res, next) {
   if(req.user){
-      console.log('ddd');
-      connection.query("SELECT * FROM User_Instructor WHERE user_id = ? ",req.user ,function(err1,rows1){
+      connection.query("SELECT * FROM USER WHERE id = ?",req.user ,function(err1,rows1){
           if(err1) {
               console.log(err1);
               res.redirect('/users/login')
 
           }
           else {
-              connection.query("SELECT * FROM User WHERE id = ? ",req.user ,function(err2,rows2){
+              connection.query("SELECT * FROM INSTRUCTOR WHERE User_id = ?  ",req.user ,function(err2,rows2){
                   if(err2) {
                       console.log(err2);
                       res.redirect('/users/login')
 
                   }
                   else {
-                      res.render('instructor/profile',{'user':rows2[0], 'instructor': rows1[0]});
+                      console.log(rows1[0]);
+                      res.render('instructor/profile',{'user':rows1[0], 'instructor': rows2[0]});
                   }
               });
           }
       });
   }
   else {
-      res.redirect('/login/')
+      res.redirect('/users/login/')
   }
 
 });
@@ -164,25 +173,32 @@ router.get('/profile', function(req, res, next) {
 
 router.post('/profile', function(req, res){
     if(req.user){
+
+
+        req.checkBody('phone', 'Phone Number is Not Valid').isNumeric();
+
+
         console.log('ddd');
-        var first_name = req.body.fname;
-        var last_name = req.body.lname;
-        console.log(first_name);
-        connection.query("SELECT * FROM User_Instructor WHERE user_id = ? ",req.user ,function(err1,rows1){
+        var First_Name = req.body.fname;
+        var Middle_Name = req.body.mname;
+        var Last_Name = req.body.lname;
+
+
+        connection.query("SELECT * FROM USER WHERE id = ?",req.user ,function(err1,rows1){
             if(err1) {
                 console.log(err1);
                 res.redirect('/users/login')
 
             }
-            else {
-                connection.query("UPDATE User SET first_name = ? , last_name = ? WHERE id = ?",[first_name, last_name, req.user] ,function(err2,rows2){
+            else if(rows1[0].role === 'Instructor') {
+                connection.query("UPDATE INSTRUCTOR SET First_Name = ?, Middle_Name = ?, Last_Name = ? WHERE User_id = ?  ",[First_Name, Middle_Name, Last_Name,req.user] ,function(err2,rows2){
                     if(err2) {
                         console.log(err2);
                         res.redirect('/users/login')
 
                     }
                     else {
-                        res.redirect('/instructor/profile/')
+                        return res.redirect('/instructor/profile/')
                     }
                 });
             }
@@ -194,199 +210,218 @@ router.post('/profile', function(req, res){
 });
 
 
-
-router.post('/edit_profile', function(req, res){
-  if(req.user)
-  {
-        
-        var user={
-        
-        "Email":req.body.Email,
-      
-        "First_Name" :req.body.FN,
-        
-        "Middle_Name":req.body.MN,
-        "Last_Name": req.body.LN,
-        
-        "Phone_Number": req.body.Mobile
-        
-        
-        }
-
-      connection.query('UPDATE INSTRUCTOR SET ? where Instructor_id = ?',[user,req.user.Instructor_id], function (error, results, fields) {
-      if(error)
-      {
-
-      }else
-      {
-          res.redirect('./profile');
-      }
-      });
-
-  }
-  else
-      {
-        res.redirect('../');
-      }
-});
-
 router.get('/courses', function(req, res){
-    res.render('instructor/courses',{'message':req.flash('loginMessage'),'courses':''});
-  if(req.user)
-  {
-    connection.query("SELECT * FROM COURSE WHERE Instructor_id = ? ",req.user.Instructor_id ,function(err,rows){
-      if(err)
-      {
-        console.log("error");
+    if(req.user) {
 
-      }
-      else
-      {
-        res.render('instructor/courses',{'message':req.flash('loginMessage'),'courses':rows});
-      }
-  });
-    
+        connection.query("SELECT * FROM USER WHERE id = ?",req.user ,function(err1,rows1){
+            if(err1) {
+                console.log(err1);
+                res.redirect('/users/login')
 
- 
-  }
-});
+            }
+            else {
+                connection.query("SELECT * FROM INSTRUCTOR WHERE User_id = ?  ",req.user ,function(err2,rows2){
+                    if(err2) {
+                        console.log(err2);
+                        res.redirect('/users/login')
 
-
-
-router.get('/add_course', function(req, res){
-  if(req.user)
-  {
-
-  res.render('instructor/create_course',{user:req.user});
-  }
-  else
-  {
-    res.redirect('../');
-  }
-});
-
-router.post('/add_course', function(req, res){
-        if(req.user)
-        {
-          var course={
-              
-            "Course_Title": req.body.title,
-          
-          "Instructor_id":  req.user.Instructor_id,
-              "Department_id":1,
-        
-            
-            };
-
-          connection.query('INSERT INTO COURSE SET ? ',course, function (error, results, fields) {
-          if(error)
-          {
-                    console.log(error)
-          }else
-          {
-              res.redirect('./courses');
-          }
-          });
-
-          
-        }
-        else
-        {
-          res.redirect('../');
-        }
-});
-
-
-router.get('/course/(:id)', function(req, res){
-  if(req.user)
-  {
-    connection.query("SELECT * FROM COURSE WHERE Course_id = ? ",req.params.id ,function(err,rows){
-      if(err)
-      {
-        console.log("error");
-
-      }
-      else
-      { 
-        connection.query("SELECT * FROM DEPARTMENT WHERE Department_id = ? ",rows[0].Department_id ,function(err,result){
-                       
-          if(err)
-          {
-            console.log("error");
-    
-          }
-          else
-          {   
-            connection.query("SELECT * FROM COURSE_MATERIALS WHERE Course_id = ? ",req.params.id,function(err,result1){
-
-              if(err)
-              {
-                console.log("error");
-        
-              }
-              else
-              {
-                res.render('instructor/course',{'message':req.flash('loginMessage'),'course':rows[0],'department':result[0],'materials':result1});
-              }
-            });
-        
-          }
+                    }
+                    else {
+                        console.log(rows1[0]);
+                        res.render('instructor/courses',{'user':rows1[0], 'instructor': rows2[0]});
+                    }
+                });
+            }
         });
-       
-      }
-  });
- 
-  }
-  else{
-    res.redirect('../');
-  }
+    }
+    else{
+        return res.redirect('/users/login')
+    }
+});
+
+
+
+router.get('/courses/course-details/', function(req, res){
+    if(req.user) {
+
+        connection.query("SELECT * FROM USER WHERE id = ?",req.user ,function(err1,rows1){
+            if(err1) {
+                console.log(err1);
+                res.redirect('/users/login')
+
+            }
+            else {
+                connection.query("SELECT * FROM INSTRUCTOR WHERE User_id = ?  ",req.user ,function(err2,rows2){
+                    if(err2) {
+                        console.log(err2);
+                        res.redirect('/users/login')
+
+                    }
+                    else {
+                        console.log(rows1[0]);
+                        res.render('instructor/course',{'user':rows1[0], 'instructor': rows2[0]});
+                    }
+                });
+            }
+        });
+    }
+    else{
+        return res.redirect('/users/login')
+    }
 });
 
 
 
 
-router.get('/course/(:id)/add_material', function(req, res){
-  if(req.user)
-  {
-    res.render('instructor/add_material');
-  }else
-  {
-    res.redirect('../');
-  }
+router.get('/offer-course', function(req, res){
+    if(req.user) {
+
+        connection.query("SELECT * FROM USER WHERE id = ?",req.user ,function(err1,rows1){
+            if(err1) {
+                console.log(err1);
+                res.redirect('/users/login')
+
+            }
+            else {
+                connection.query("SELECT * FROM INSTRUCTOR WHERE User_id = ?  ",req.user ,function(err2,rows2){
+                    if(err2) {
+                        console.log(err2);
+                        res.redirect('/users/login')
+
+                    }
+                    else {
+                        console.log(rows1[0]);
+                        res.render('instructor/offer_course',{'user':rows1[0], 'instructor': rows2[0]});
+                    }
+                });
+            }
+        });
+    }
+    else{
+        return res.redirect('/users/login')
+    }
+});
+
+router.post('/offer-course', function(req, res){
+    if(req.user) {
+
+        connection.query("SELECT * FROM USER WHERE id = ?",req.user ,function(err1,rows1){
+            if(err1) {
+                console.log(err1);
+                res.redirect('/users/login')
+
+            }
+            else {
+                connection.query("SELECT * FROM INSTRUCTOR WHERE User_id = ?  ",req.user ,function(err2,rows2){
+                    if(err2) {
+                        console.log(err2);
+                        res.redirect('/users/login')
+
+                    }
+                    else {
+                        console.log(rows1[0]);
+                        res.redirect('/instructor/offer-course')
+                    }
+                });
+            }
+        });
+    }
+    else{
+        return res.redirect('/users/login')
+    }
 });
 
 
-router.post('/course/(:id)/add_material', function(req, res){
-  if(req.user)
-  {
-    var material={
-       'Topic': req.body.Topic,
-       'Remark':req.body.Remark ,
-       'Material':req.body.Material,
-       'Course_id': req.params.id,
-       'Instructor_id':req.user.Instructor_id,
+// router.get('/course/(:id)', function(req, res){
+//   if(req.user)
+//   {
+//     connection.query("SELECT * FROM COURSE WHERE Course_id = ? ",req.params.id ,function(err,rows){
+//       if(err)
+//       {
+//         console.log("error");
+//
+//       }
+//       else
+//       {
+//         connection.query("SELECT * FROM DEPARTMENT WHERE Department_id = ? ",rows[0].Department_id ,function(err,result){
+//
+//           if(err)
+//           {
+//             console.log("error");
+//
+//           }
+//           else
+//           {
+//             connection.query("SELECT * FROM COURSE_MATERIALS WHERE Course_id = ? ",req.params.id,function(err,result1){
+//
+//               if(err)
+//               {
+//                 console.log("error");
+//
+//               }
+//               else
+//               {
+//                 res.render('instructor/course',{'message':req.flash('loginMessage'),'course':rows[0],'department':result[0],'materials':result1});
+//               }
+//             });
+//
+//           }
+//         });
+//
+//       }
+//   });
+//
+//   }
+//   else{
+//     res.redirect('../');
+//   }
+// });
 
-      
-    };
-    
-    connection.query("INSERT INTO COURSE_MATERIALS SET  ? ",material ,function(err,result){
-                       
-      if(err)
-      {
-        console.log(err);
 
-      }
-      else
-      {
-       res.redirect('./');
-      }
-    });
 
-  }else
-  {
-    res.redirect('../');
-  }
-});
+
+// router.get('/course/(:id)/add_material', function(req, res){
+//   if(req.user)
+//   {
+//     res.render('instructor/add_material');
+//   }else
+//   {
+//     res.redirect('../');
+//   }
+// });
+//
+//
+// router.post('/course/(:id)/add_material', function(req, res){
+//   if(req.user)
+//   {
+//     var material={
+//        'Topic': req.body.Topic,
+//        'Remark':req.body.Remark ,
+//        'Material':req.body.Material,
+//        'Course_id': req.params.id,
+//        'Instructor_id':req.user.Instructor_id,
+//
+//
+//     };
+//
+//     connection.query("INSERT INTO COURSE_MATERIALS SET  ? ",material ,function(err,result){
+//
+//       if(err)
+//       {
+//         console.log(err);
+//
+//       }
+//       else
+//       {
+//        res.redirect('./');
+//       }
+//     });
+//
+//   }else
+//   {
+//     res.redirect('../');
+//   }
+// });
 
 
 module.exports = router;

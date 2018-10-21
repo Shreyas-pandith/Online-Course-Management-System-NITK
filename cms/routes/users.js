@@ -34,17 +34,12 @@ router.get('/register', function(req, res, next) {
 
 router.post('/register', function(req, res, next) {
 
-
-    req.checkBody('fname', 'Firsname field can not be empty').notEmpty();
-
     req.checkBody('psw', 'Password field can not be empty').notEmpty();
     req.checkBody('psw_repeat', 'Repeat Password field can not be empty').notEmpty();
     req.checkBody('psw_repeat', 'Repeat Password field must be equal to passwrd field').equals(req.body.psw);
 
     req.checkBody('email', 'Email field can not be empty').notEmpty();
     req.checkBody('email', 'Entered Email is not valid').isEmail();
-
-    req.checkBody('lname', 'Lastname field can not be empty').notEmpty();
 
 
     console.log(req.body.role);
@@ -61,8 +56,6 @@ router.post('/register', function(req, res, next) {
         bcrypt.hash(req.body.psw, saltRounds, function(err, hash) {
             // Store hash in your password DB.
             var userData = {
-                'first_name': req.body.fname,
-                'last_name': req.body.lname,
                 'email': req.body.email,
                 'password': hash,
                 'created': today,
@@ -70,7 +63,7 @@ router.post('/register', function(req, res, next) {
             };
 
 
-            db.query(`INSERT INTO User SET ?`, userData, function(err, rows, fields) {
+            db.query(`INSERT INTO USER SET ?`, userData, function(err, rows, fields) {
                 if (!err) {
 
                     db.query(`SELECT LAST_INSERT_ID() as user_id`, function (error, results, fields) {
@@ -79,10 +72,48 @@ router.post('/register', function(req, res, next) {
                             console.log(error);
                         }
 
-                        const user_id = results[0];
-                        console.log(user_id);
+                        console.log(results[0].user_id);
 
-                        return res.render('index', {message : ''});
+                        var user_id = results[0].user_id;
+
+                        var role = req.body.role;
+
+                        var sql = '';
+
+                        var data = {
+                            'User_id' : user_id
+                        };
+
+
+                        if(role === 'Student'){
+                            sql = "INSERT INTO STUDENT SET ?";
+                        }
+                        else {
+                            sql = "INSERT INTO INSTRUCTOR SET ?";
+                        }
+
+
+                        db.query(sql, data, function(err2,rows2){
+                            if(err2) {
+                                console.log(err2);
+
+                                db.query("DELETE FROM USER WHERE id = ?", user_id, function(err3,rows2){
+                                    if(err3) {
+                                        console.log(err3);
+                                        res.redirect('/users/register')
+                                    }
+                                    else {
+                                        res.redirect('/users/register')
+                                    }
+                                });
+
+                            }
+                            else {
+
+                                return res.redirect('/users/login/');
+
+                            }
+                        });
 
                     });
                 } else {
@@ -98,10 +129,11 @@ router.post('/register', function(req, res, next) {
 });
 
 
-router.get('/login', function(req, res, next) {
 
+router.get('/login', function(req, res, next) {
     res.render('login');
 });
+
 
 
 router.post('/login',
@@ -111,7 +143,7 @@ router.post('/login',
         // `req.user` contains the authenticated user.
 
 
-        db.query("SELECT * FROM User WHERE id = ? ",req.user ,function(err2,rows2){
+        db.query("SELECT * FROM USER WHERE id = ? ",req.user ,function(err2,rows2){
             if(err2) {
                 console.log(err2);
                 res.redirect('/users/login')
@@ -137,34 +169,11 @@ router.post('/login',
     });
 
 
+
 router.get('/logout', function(req, res, next) {
     req.logout();
     req.session.destroy();
     res.redirect('/');
-});
-
-
-
-router.get('/home', function(req, res, next) {
-
-    if(!req.isAuthenticated())
-    {
-        return res.redirect('/users/login/')
-    }
-
-
-    db.query(`SELECT * FROM users WHERE id = ?`,[req.user.user_id], function (error, results, fields) {
-
-        var user = {
-            fname : results[0].first_name,
-            lname : results[0].last_name,
-            email : results[0].email
-        };
-
-        res.render('home', {user : user});
-
-    });
-
 });
 
 
@@ -201,7 +210,7 @@ passport.use(new LocalStrategy({
     },
     function(req,username, password, done) {
 
-        db.query(`SELECT * FROM User WHERE email = ?`,[username], function (error, results, fields) {
+        db.query(`SELECT * FROM USER WHERE email = ?`,[username], function (error, results, fields) {
 
             if(!error) {
                 if (results.length === 0) {
