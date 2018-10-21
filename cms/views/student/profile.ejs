@@ -51,7 +51,7 @@
         <nav class="navbar navbar-expand-lg navbar-light py-sm-4 py-2">
             <!-- logo -->
             <h1>
-                <a class="navbar-brand" href="/instructor/"> <i class="fab fa-affiliatetheme"></i>
+                <a class="navbar-brand" href="/student/"> <i class="fab fa-affiliatetheme"></i>
                     Eduversity
                 </a>
             </h1>
@@ -64,12 +64,12 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-lg-auto text-center">
                     <li class="nav-item mr-lg-3">
-                        <a class="nav-link" href="/instructor/">Home
+                        <a class="nav-link" href="/student/">Home
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
                     <li class="nav-item mr-lg-3">
-                        <a class="nav-link" href="/about">Courses</a>
+                        <a class="nav-link" href="/student/courses">Courses</a>
                     </li>
                     <li class="dropdown nav-item active mr-lg-3">
                         <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle ">
@@ -78,7 +78,7 @@
                         </a>
                         <ul class="dropdown-menu" role="menu">
                             <li class="nav-item">
-                                <a href="/instructor/profile/" class="nav-link">Profile</a>
+                                <a href="/student/profile/" class="nav-link">Profile</a>
                             </li>
                             <li class="nav-item">
                                 <a href="/users/logout" class="nav-link">Logout</a>
@@ -116,7 +116,7 @@
     <div class="container">
         <div class="agileinfo-inner">
             <h2 class="text-center text-white">
-                Welcome <%= user.first_name%> <%= user.last_name%>
+                Welcome  <%= student.First_Name%> <%= student.Last_Name%>
             </h2>
         </div>
     </div>
@@ -126,7 +126,7 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="/instructor/">Home</a>
+            <a href="/student/">Home</a>
         </li>
         <li class="breadcrumb-item active" aria-current="page">Profile</li>
     </ol>
@@ -147,18 +147,26 @@
                 <h5 class="modal-title text-uppercase" id="exampleModalLabel1">My Profile</h5>
             </div>
             <div class="modal-body">
-                <form action="/instructor/profile/" method="post" class="p-3">
+                <form action="/student/profile/" method="post" class="p-3">
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">First Name</label>
-                        <input type="text" class="form-control" placeholder="First Name" name="fname" id="recipient-name2" value="<%= user.first_name%>">
+                        <input type="text" class="form-control" placeholder="First Name" name="fname" id="recipient-name2" value="<%= student.First_Name%>">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Middle Name</label>
+                        <input type="text" class="form-control" placeholder="Middle Name" name="mname" id="recipient-name2" value="<%= student.Middle_Name%>">
                     </div>
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Last Name</label>
-                        <input type="text" class="form-control" placeholder="Last Name" name="lname" id="recipient-name3" value="<%= user.last_name%>">
+                        <input type="text" class="form-control" placeholder="Last Name" name="lname" id="recipient-name3" value="<%= student.Last_Name%>">
                     </div>
                     <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Email id</label>
-                        <h5><%= user.email%></h5>
+                        <label for="recipient-name" class="col-form-label">PhoneNumber</label>
+                        <input type="text" class="form-control" placeholder="Phone Number" name="phone" id="recipient-name2" value="<%= student.Phone_Number%>">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Department</label>
+                        <input type="text" class="form-control" placeholder="Department" name="department" id="recipient-name2" value="<%= student.Department_id%>">
                     </div>
                     <div class="right-w3l mt-4 mb-3">
                         <input type="submit" class="form-control" value="Update Profile">
@@ -166,28 +174,9 @@
                 </form>
 
             </div>
-        </div>
+    </div>
 
-        <!-- //Login modal -->
-
-
-
-
-
-
-
-        <!--<h1>profile</h1>-->
-
-        <!--<br>-->
-
-        <!--<li><%= user.Instructor_id  %></li>-->
-        <!--<li><%= user.First_Name  %></li>-->
-        <!--<li><%= user.Last_Name  %></li>-->
-        <!--<li><%= user.Middle_Name  %></li>-->
-        <!--<li><%= user.Email  %></li>-->
-        <!--<li><%= user.Phone_Number  %></li>-->
-
-        <!--<li><%= user. Department_id  %></li>-->
+    <!-- //Login modal -->
 
 
 
@@ -195,8 +184,27 @@
 
 
 
+    <!--<h1>profile</h1>-->
 
-        <!--<a href="./">home</a>-->
+    <!--<br>-->
+
+    <!--<li><%= user.student_id  %></li>-->
+    <!--<li><%= user.First_Name  %></li>-->
+    <!--<li><%= user.Last_Name  %></li>-->
+    <!--<li><%= user.Middle_Name  %></li>-->
+    <!--<li><%= user.Email  %></li>-->
+    <!--<li><%= user.Phone_Number  %></li>-->
+
+    <!--<li><%= user. Department_id  %></li>-->
+
+
+
+
+
+
+
+
+    <!--<a href="./">home</a>-->
 
 
 

@@ -143,7 +143,7 @@ router.post('/login',
         // `req.user` contains the authenticated user.
 
 
-        db.query("SELECT * FROM USER WHERE id = ? ",req.user ,function(err2,rows2){
+        db.query("SELECT * FROM USER WHERE id = ?",req.user ,function(err2,rows2){
             if(err2) {
                 console.log(err2);
                 res.redirect('/users/login')
