@@ -240,7 +240,7 @@
     <!-- single page -->
     <div class="single-page py-5">
         <div class="container py-xl-5 py-lg-3">
-            <h2 class="tittle mb-xl-5 mb-4 text-dark text-uppercase font-weight-bold pl-4 py-3">Course Details Page</h2>
+            <h2 class="tittle mb-xl-5 mb-4 text-dark text-uppercase font-weight-bold pl-4 py-3">Announcement Details Page</h2>
             <div class="inner-sec">
                 <div class="row">
                     <!-- left side -->
@@ -262,54 +262,19 @@
 
 
                             <h3>
-                                <a class="single-text text-dark font-weight-light">Introduction To Course</a>   <button id="formButton" style="font-size:24px"> <i class="material-icons">border_color</i></button>
-                            </h3>
-                            <p id="introduction" style="white-space: pre-wrap;"><%= course.Introduction%></p>
-
-                            </p>
-                            <div id="introduction_textarea" style="display: none">
-
-                                <form id="paper" method="post" action="/instructor/course-details/<%= course.Course_id%>">
-
-                                    <textarea placeholder="Enter something funny." id="text" name="introduction" rows="4" style="overflow: hidden; word-wrap: break-word; resize: none; height: 500px; "><%= course.Introduction%></textarea>
-                                    <br>
-                                    <button type="submit">Save</button>
-                                </form>
-
-                            </div>
-
-                            <h3>
-                                <a class="single-text text-dark font-weight-light">Description of Course</a>   <button id="formButton2" style="font-size:24px"> <i class="material-icons">border_color</i></button>
+                                <a class="single-text text-dark font-weight-light">Announcement</a>
                             </h3>
 
-                            <p id="description" style="white-space: pre-wrap;"> <%= course.Description%> </p>
-                            <div id="description_textarea" style="display: none">
-
-                                <form id="paper" method="post" action="/instructor/course-details/<%= course.Course_id%>">
-
-                                    <textarea placeholder="Enter something funny." id="text" name="description" rows="4" style="overflow: hidden; word-wrap: break-word; resize: none; height: 500px; "><%- course.Description%></textarea>
-                                    <br>
-                                    <button type="submit">Save</button>
-                                </form>
-
-                            </div>
+                            <p id="description" style="white-space: pre-wrap;"> <%= announcement.Anouncement_Details%> </p>
 
 
                             <h3>
-                                <a class="single-text text-dark font-weight-light">Requirements of the Course</a>   <button id="formButton3" style="font-size:24px"> <i class="material-icons">border_color</i></button>
+                                <a class="single-text text-dark font-weight-light">Related Links</a>
                             </h3>
 
-                            <p id="requirements" style="white-space: pre-wrap;"><%= course.Requirements%></p>
-                            <div id="requirements_textarea" style="display: none">
-
-                                <form id="paper" method="post" action="/instructor/course-details/<%= course.Course_id%>">
-
-                                    <textarea placeholder="Enter something funny." id="text" name="requirements" rows="4" style="overflow: hidden; word-wrap: break-word; resize: none; height: 500px; "><%= course.Requirements%></textarea>
-                                    <br>
-                                    <button type="submit">Save</button>
-                                </form>
-
-                            </div>
+                            <ul><a href="<%= announcement.Link1%>"><%= announcement.Link1%></a></ul>
+                            <ul><a href="<%= announcement.Link2%>"><%= announcement.Link2%></a></ul>
+                            <ul><a href="<%= announcement.Link3%>"><%= announcement.Link3%></a></ul>
                         </div>
 
 
@@ -327,7 +292,7 @@
                                         <% for (var i=0;i<announcements.length ;i ++) {%>
                                             <li class="border-bottom mb-3 pb-3">
                                                 <i class="fas fa-angle-right mr-2"></i>
-                                                <a href="/instructor/course/announcement/<%= course.Course_id%>/<%= announcements[i].Anouncement_id%>" class="text-danger"><%= announcements[0].Short_Description%></a>
+                                                <a href="/instructor/course/announcement/<%= announcements[i].Anouncement_id%>" class="text-danger"><%= announcements[0].Short_Description%></a>
                                             </li>
                                         <% }%>
                                     <% } %>
@@ -343,92 +308,92 @@
                                     Make An Announcement
                                 </button>
                             </div>
-                            </div>
-                            <div class="tech-btm">
-                                <img src="images/g4.jpg" class="img-fluid rounded" alt="">
-                            </div>
+                        </div>
+                        <div class="tech-btm">
+                            <img src="images/g4.jpg" class="img-fluid rounded" alt="">
+                        </div>
 
 
-                            <div class="tech-btm">
-                                <h4>Course Materials</h4>
-                                <ul class="list-group single">
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <a href="#">Course Materials Type -1</a>
-                                        <span class="badge badge-primary badge-pill">14</span>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <a href="#">Course Materials Type -1</a>
-                                        <span class="badge badge-primary badge-pill">2</span>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <a href="#">Course Materials Type -1</a>
-                                        <span class="badge badge-primary badge-pill">1</span>
-                                    </li>
-                                </ul>
-                            </div>
+                        <div class="tech-btm">
+                            <h4>Course Materials</h4>
+                            <ul class="list-group single">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <a href="#">Course Materials Type -1</a>
+                                    <span class="badge badge-primary badge-pill">14</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <a href="#">Course Materials Type -1</a>
+                                    <span class="badge badge-primary badge-pill">2</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <a href="#">Course Materials Type -1</a>
+                                    <span class="badge badge-primary badge-pill">1</span>
+                                </li>
+                            </ul>
+                        </div>
 
-                            <div class="tech-btm">
-                                <h4>Top stories of the week</h4>
+                        <div class="tech-btm">
+                            <h4>Top stories of the week</h4>
 
-                                <div class="blog-grids row mb-3">
-                                    <div class="col-md-5 blog-grid-left">
-                                        <a href="single.html">
-                                            <img src="images/g3.jpg" class="img-fluid rounded" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="col-md-7 blog-grid-right">
+                            <div class="blog-grids row mb-3">
+                                <div class="col-md-5 blog-grid-left">
+                                    <a href="single.html">
+                                        <img src="images/g3.jpg" class="img-fluid rounded" alt="">
+                                    </a>
+                                </div>
+                                <div class="col-md-7 blog-grid-right">
 
-                                        <h5>
-                                            <a href="single.html">Pellentesque dui, non felis. Maecenas male non felis </a>
-                                        </h5>
-                                        <div class="sub-meta">
+                                    <h5>
+                                        <a href="single.html">Pellentesque dui, non felis. Maecenas male non felis </a>
+                                    </h5>
+                                    <div class="sub-meta">
 											<span>
 												<i class="far fa-clock"></i> 20 Jan, 2018</span>
-                                        </div>
                                     </div>
-
                                 </div>
-                                <div class="blog-grids row mb-3">
-                                    <div class="col-md-5 blog-grid-left">
-                                        <a href="single.html">
-                                            <img src="images/g1.jpg" class="img-fluid rounded" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="col-md-7 blog-grid-right">
-                                        <h5>
-                                            <a href="single.html">Pellentesque dui, non felis. Maecenas male non felis </a>
-                                        </h5>
-                                        <div class="sub-meta">
+
+                            </div>
+                            <div class="blog-grids row mb-3">
+                                <div class="col-md-5 blog-grid-left">
+                                    <a href="single.html">
+                                        <img src="images/g1.jpg" class="img-fluid rounded" alt="">
+                                    </a>
+                                </div>
+                                <div class="col-md-7 blog-grid-right">
+                                    <h5>
+                                        <a href="single.html">Pellentesque dui, non felis. Maecenas male non felis </a>
+                                    </h5>
+                                    <div class="sub-meta">
 											<span>
 												<i class="far fa-clock"></i> 20 Feb, 2018</span>
-                                        </div>
                                     </div>
-
                                 </div>
-                            </div>
 
-                            <div class="single-gd tech-btm">
-                                <h4>Recent Post</h4>
-                                <div class="blog-grids">
-                                    <div class="blog-grid-left">
-                                        <a href="single.html">
-                                            <img src="images/g2.jpg" class="img-fluid rounded" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="blog-grid-right">
-                                        <h5 class="mt-0">
-                                            <a href="single.html">Pellentesque dui, non felis. Maecenas male</a>
-                                        </h5>
-                                    </div>
-                                    <div class="clearfix"> </div>
-                                </div>
                             </div>
                         </div>
-                    </aside>
-                    <!-- //right side -->
+
+                        <div class="single-gd tech-btm">
+                            <h4>Recent Post</h4>
+                            <div class="blog-grids">
+                                <div class="blog-grid-left">
+                                    <a href="single.html">
+                                        <img src="images/g2.jpg" class="img-fluid rounded" alt="">
+                                    </a>
+                                </div>
+                                <div class="blog-grid-right">
+                                    <h5 class="mt-0">
+                                        <a href="single.html">Pellentesque dui, non felis. Maecenas male</a>
+                                    </h5>
+                                </div>
+                                <div class="clearfix"> </div>
+                            </div>
+                        </div>
                 </div>
+                </aside>
+                <!-- //right side -->
             </div>
         </div>
+    </div>
     </div>
 
 
@@ -636,12 +601,12 @@
     });
 
 
-        $("#formButton3").click(function(){
-            $("#requirements_textarea").toggle();
-            $("#requirements").css({
-                'display': 'none'
-            });
+    $("#formButton3").click(function(){
+        $("#requirements_textarea").toggle();
+        $("#requirements").css({
+            'display': 'none'
         });
+    });
 </script>
 
 </body>

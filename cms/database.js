@@ -235,7 +235,11 @@ function connectDatabase() {
                 let createTodos10 = `CREATE TABLE if not exists ANOUNCEMENT
                 (
                   Anouncement_id INT NOT NULL AUTO_INCREMENT,
-                  Anouncement_Details VARCHAR(255) NOT NULL,
+                  Short_Description VARCHAR(50),
+                  Anouncement_Details VARCHAR(255),
+                  Link1 VARCHAR(1000),
+                  Link2 VARCHAR(1000),
+                  Link3 VARCHAR(1000),
                   Course_id INT,
                   Instructor_id INT NOT NULL,
                   PRIMARY KEY (Anouncement_id),

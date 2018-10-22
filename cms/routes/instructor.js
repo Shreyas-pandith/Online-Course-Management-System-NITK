@@ -3,109 +3,6 @@ var router = express.Router();
 var connection=require('../db');
 
 
-// var passport=require('passport');
-// var LocalStrategy   = require('passport-local').Strategy;
-//
-//
-//
-// passport.use('local-login', new LocalStrategy({
-//   // by default, local strategy uses username and password, we will override with email
-//   usernameField : 'email',
-//   passwordField : 'password',
-//   passReqToCallback : true // allows us to pass back the entire request to the callback
-//
-// },
-// function(req, email, password, done) { // callback with email and password from our form
-//
-//   console.log("email",email);
-//   console.log("password",password);
-//    connection.query("SELECT * FROM INSTRUCTOR WHERE Email = ? ", email ,function(err,rows){
-//                if (err)
-//                 return done(err);
-//
-//                 if (rows.length==0) {
-//
-//                   console.log("sorry no user found");
-//               //    return done(null, false)
-//
-//              return done(null, false, req.flash('loginMessage', 'No user found.')); // req.flash is the way to set flashdata using connect-flash
-//                      }
-//
-//           // if the user is found but the password is wrong
-//                 if (!( rows[0].password == password))
-//                   {console.log("sorry");
-//                  // return done(null, false);
-//                   return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.')); // create the loginMessage and save it to session as flashdata
-//                   }
-//                 // all is well, return successful user
-//                 console.log("success");
-//                 req.flash('loginMessage', 'Successfully loggedin.');
-//                 return done(null, rows[0]);
-//
-//           });
-//
-//
-// }));
-//
-//
-//
-//
-//
-// router.post('/login',
-//   passport.authenticate('local-login', { successRedirect: '../instructor/',
-//                                    failureRedirect: '../',
-//                                    failureFlash: false,session:true})
-// );
-//
-//
-//
-//
-//
-// router.post('/signup', function(req, res, next) {
-//   // console.log("req",req.body);
-//   var today = new Date();
-//   console.log("req",req.body);
-//   var user={
-//
-//     "Email":req.body.email,
-//     "password":req.body.password,
-//
-//   }
-//
-//   connection.query('INSERT INTO INSTRUCTOR SET ?',user, function (error, results, fields) {
-//   if (error) {
-//     console.log("error ocurred",error);
-//     req.flash("loginMessage"," something went wrong ..Try again");
-//
-//     res.redirect('../');
-//   }else{
-//     console.log('The solution is: ', results);
-//     req.flash("loginMessage"," successfully registered NOW LOGIN");
-//
-//     res.redirect('../');
-//   }
-//   });
-// });
-//
-//
-//
-//
-//
-//
-//
-//
-// router.get('/logout', function(req, res){
-//   if(req.user)
-//   {
-//   req.session.destroy(function (err) {
-//     res.redirect('../'); //Inside a callback… bulletproof!
-//   });
-//     }
-// });
-
-
-
-
 router.get('/', function(req, res){
 
     if(req.user) {
@@ -275,8 +172,18 @@ router.get('/course-details/:id', function(req, res){
 
                             }
                             else {
-                                console.log(rows3[0]);
-                                res.render('instructor/course',{'user':rows1[0], 'instructor': rows2[0], 'course': rows3[0]});
+
+                                connection.query("SELECT * FROM ANOUNCEMENT WHERE Course_id = ?  AND Instructor_id = ? ",[req.params.id, rows2[0].Instructor_id] ,function(err4,rows4){
+                                    if(err4) {
+                                        console.log(err4);
+                                        res.redirect('/instructor/courses/')
+
+                                    }
+                                    else {
+                                        console.log(rows4[0]);
+                                        res.render('instructor/course',{'user':rows1[0], 'instructor': rows2[0], 'course': rows3[0], 'announcements': rows4});
+                                    }
+                                });
                             }
                         });
 
@@ -442,96 +349,126 @@ router.post('/offer-course', function(req, res){
 });
 
 
-// router.get('/course/(:id)', function(req, res){
-//   if(req.user)
-//   {
-//     connection.query("SELECT * FROM COURSE WHERE Course_id = ? ",req.params.id ,function(err,rows){
-//       if(err)
-//       {
-//         console.log("error");
-//
-//       }
-//       else
-//       {
-//         connection.query("SELECT * FROM DEPARTMENT WHERE Department_id = ? ",rows[0].Department_id ,function(err,result){
-//
-//           if(err)
-//           {
-//             console.log("error");
-//
-//           }
-//           else
-//           {
-//             connection.query("SELECT * FROM COURSE_MATERIALS WHERE Course_id = ? ",req.params.id,function(err,result1){
-//
-//               if(err)
-//               {
-//                 console.log("error");
-//
-//               }
-//               else
-//               {
-//                 res.render('instructor/course',{'message':req.flash('loginMessage'),'course':rows[0],'department':result[0],'materials':result1});
-//               }
-//             });
-//
-//           }
-//         });
-//
-//       }
-//   });
-//
-//   }
-//   else{
-//     res.redirect('../');
-//   }
-// });
+router.get('/course/announcement/:id1/:id2', function(req, res){
+    if(req.user) {
+
+        connection.query("SELECT * FROM USER WHERE id = ?",req.user ,function(err1,rows1){
+            if(err1) {
+                console.log(err1);
+                res.redirect('/users/login')
+
+            }
+            else {
+                connection.query("SELECT * FROM INSTRUCTOR WHERE User_id = ?  ",req.user ,function(err2,rows2){
+                    if(err2) {
+                        console.log(err2);
+                        res.redirect('/users/login')
+
+                    }
+                    else {
+                        connection.query("SELECT * FROM COURSE WHERE Course_id = ?  ",req.params.id1 ,function(err3,rows3){
+                            if(err3) {
+                                console.log(err3);
+                                res.redirect('/instructor/courses/')
+
+                            }
+                            else {
+
+                                connection.query("SELECT * FROM ANOUNCEMENT WHERE Course_id = ? AND Instructor_id",[req.params.id2, rows2[0].Instructor_id] ,function(err4,rows4){
+                                    if(err4) {
+                                        console.log(err4);
+                                        res.redirect('/instructor/courses/')
+
+                                    }
+                                    else {
+
+                                        connection.query("SELECT * FROM ANOUNCEMENT WHERE Anouncement_id = ? ",req.params.id2 ,function(err5,rows5){
+                                            if(err5) {
+                                                console.log(err5);
+                                                res.redirect('/instructor/courses/')
+
+                                            }
+                                            else {
+
+                                                console.log(rows5[0]);
+                                                res.render('instructor/announcement',{'user':rows1[0], 'instructor': rows2[0], 'course': rows3[0], 'announcement': rows5[0], 'announcements': rows4});
+                                            }
+                                        });
+
+
+                                    }
+                                });
+                            }
+                        });
+
+                    }
+                });
+            }
+        });
+    }
+    else{
+        return res.redirect('/users/login')
+    }
+});
 
 
 
+router.post('/course/announcement/:id', function(req, res){
+    if(req.user) {
 
-// router.get('/course/(:id)/add_material', function(req, res){
-//   if(req.user)
-//   {
-//     res.render('instructor/add_material');
-//   }else
-//   {
-//     res.redirect('../');
-//   }
-// });
-//
-//
-// router.post('/course/(:id)/add_material', function(req, res){
-//   if(req.user)
-//   {
-//     var material={
-//        'Topic': req.body.Topic,
-//        'Remark':req.body.Remark ,
-//        'Material':req.body.Material,
-//        'Course_id': req.params.id,
-//        'Instructor_id':req.user.Instructor_id,
-//
-//
-//     };
-//
-//     connection.query("INSERT INTO COURSE_MATERIALS SET  ? ",material ,function(err,result){
-//
-//       if(err)
-//       {
-//         console.log(err);
-//
-//       }
-//       else
-//       {
-//        res.redirect('./');
-//       }
-//     });
-//
-//   }else
-//   {
-//     res.redirect('../');
-//   }
-// });
+        connection.query("SELECT * FROM USER WHERE id = ?",req.user ,function(err1,rows1){
+            if(err1) {
+                console.log(err1);
+                res.redirect('/users/login')
+
+            }
+            else {
+                connection.query("SELECT * FROM INSTRUCTOR WHERE User_id = ?  ",req.user ,function(err2,rows2){
+                    if(err2) {
+                        console.log(err2);
+                        res.redirect('/users/login')
+
+                    }
+                    else {
+
+                        var description = req.body.description;
+                        var details = req.body.details;
+                        var link1 = req.body.link1;
+                        var link2 = req.body.link2;
+                        var link3 = req.body.link3;
+
+                        var data = {
+                            'Short_Description': description,
+                            'Anouncement_Details': details,
+                            'Link1': link1,
+                            'Link2': link2,
+                            'Link3': link3,
+                            'Course_id': req.params.id,
+                            'Instructor_id':rows2[0].Instructor_id
+                        };
+
+
+                        connection.query("INSERT INTO ANOUNCEMENT SET ? ",data ,function(err3,rows3){
+                            if(err3) {
+                                console.log(err3);
+                                res.redirect('/instructor/courses/')
+
+                            }
+                            else {
+                                console.log(rows3[0]);
+                                var url = '/instructor/course-details/' + req.params.id;
+                                res.redirect(url);
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    }
+    else{
+        return res.redirect('/users/login')
+    }
+});
 
 
 module.exports = router;
