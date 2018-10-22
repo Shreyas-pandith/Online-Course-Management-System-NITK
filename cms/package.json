@@ -21,7 +21,9 @@
     "flash": "^1.1.0",
     "http-errors": "~1.6.2",
     "morgan": "~1.9.0",
+    "multer": "^1.4.1",
     "mysql": "^2.16.0",
+    "nodemon": "^1.18.4",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0"
   }

@@ -223,7 +223,10 @@
         <li class="breadcrumb-item">
             <a href="/instructor/courses">Courses</a>
         </li>
-        <li class="breadcrumb-item active" aria-current="page">Course Name</li>
+        <li class="breadcrumb-item">
+            <a href="/instructor/course-details/<%= course.Course_id%>"><%= course.Course_Title%></a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Announcement</li>
     </ol>
 </nav>
 <!-- //breadcrumbs -->
@@ -292,7 +295,7 @@
                                         <% for (var i=0;i<announcements.length ;i ++) {%>
                                             <li class="border-bottom mb-3 pb-3">
                                                 <i class="fas fa-angle-right mr-2"></i>
-                                                <a href="/instructor/course/announcement/<%= announcements[i].Anouncement_id%>" class="text-danger"><%= announcements[0].Short_Description%></a>
+                                                <a href="/instructor/course/announcement/<%= course.Course_id%>/<%= announcements[i].Anouncement_id%>" class="text-danger"><%= announcements[i].Short_Description%></a>
                                             </li>
                                         <% }%>
                                     <% } %>
@@ -304,29 +307,29 @@
                                     </li>
                                 </ul>
                                 <br><button type="button" class="btn btn-info1 btn-lg-block w3ls-btn1 px-4 text-capitalize" data-toggle="modal"
-                                            aria-pressed="false" data-target="#exampleModal1" style="width: 100%">
+                                            aria-pressed="false" data-target="#exampleModal1" style="width: 100%; background-color: black;">
                                     Make An Announcement
                                 </button>
                             </div>
-                        </div>
+
                         <div class="tech-btm">
                             <img src="images/g4.jpg" class="img-fluid rounded" alt="">
                         </div>
 
 
-                        <div class="tech-btm">
+                        <div class="category-story tech-btm">
                             <h4>Course Materials</h4>
                             <ul class="list-group single">
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <a href="#">Course Materials Type -1</a>
+                                    <a href="/instructor/course/<%= course.Course_id%>/resources">Resources Section</a>
                                     <span class="badge badge-primary badge-pill">14</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <a href="#">Course Materials Type -1</a>
+                                    <a href="#">Assignment And Submissions</a>
                                     <span class="badge badge-primary badge-pill">2</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <a href="#">Course Materials Type -1</a>
+                                    <a href="#">Test And Examinations</a>
                                     <span class="badge badge-primary badge-pill">1</span>
                                 </li>
                             </ul>

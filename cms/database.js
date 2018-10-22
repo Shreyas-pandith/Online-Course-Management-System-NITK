@@ -133,9 +133,9 @@ function connectDatabase() {
                 let createTodos6 = `CREATE TABLE if not exists COURSE_MATERIALS
                 (
                   Material_id INT NOT NULL AUTO_INCREMENT,
-                  Topic VARCHAR(255) NOT NULL,
-                  Remark VARCHAR(255) NOT NULL,
-                  Material LONGBLOB,
+                  Name VARCHAR(255),
+                  Remark VARCHAR(255),
+                  Material TEXT,
                   Course_id INT NOT NULL,
                   Instructor_id INT NOT NULL,
                   PRIMARY KEY (Material_id),
@@ -240,6 +240,7 @@ function connectDatabase() {
                   Link1 VARCHAR(1000),
                   Link2 VARCHAR(1000),
                   Link3 VARCHAR(1000),
+                  Posted_on DATETIME,
                   Course_id INT,
                   Instructor_id INT NOT NULL,
                   PRIMARY KEY (Anouncement_id),
