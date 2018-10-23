@@ -21,7 +21,7 @@ router.get('/', function(req, res){
 
                     }
                     else {
-                        console.log(rows1[0]);
+                        //console.log(rows1[0]);
                         res.render('student/home',{'user':rows1[0], 'student': rows2[0]});
                     }
                 });
@@ -108,36 +108,6 @@ router.post('/profile', function(req, res){
 });
 
 
-router.get('/courses', function(req, res){
-    if(req.user) {
-
-        connection.query("SELECT * FROM USER WHERE id = ?",req.user ,function(err1,rows1){
-            if(err1) {
-                console.log(err1);
-                res.redirect('/users/login')
-
-            }
-            else {
-                connection.query("SELECT * FROM STUDENT WHERE User_id = ?  ",req.user ,function(err2,rows2){
-                    if(err2) {
-                        console.log(err2);
-                        res.redirect('/users/login')
-
-                    }
-                    else {
-                        console.log(rows1[0]);
-                        res.render('student/courses',{'user':rows1[0], 'student': rows2[0]});
-                    }
-                });
-            }
-        });
-    }
-    else{
-        return res.redirect('/users/login')
-    }
-});
-
-
 
 router.post('/search', function(req, res, next) {
 
@@ -158,15 +128,13 @@ router.post('/search', function(req, res, next) {
                     }
                     else {
 
-
-
                         connection.query(" SELECT * from (SELECT * FROM COURSE WHERE Course_Title like ?)A INNER JOIN INSTRUCTOR ON A.Instructor_id=INSTRUCTOR.Instructor_id",'%'+req.body.search+'%',function(err1,courses){
                             if(err1) {
 
                                 console.log(err1);
                             }
                             else {
-                                res.render('student/search/courses',{courses : courses});
+                                res.render('student/search/courses',{'user':rows1[0], 'student': rows2[0], courses : courses});
                             }
                         });
 
@@ -253,7 +221,7 @@ router.get('/search/course/:id', function(req, res, next) {
 
 
 
-router.get('/search/course/:id/join', function(req, res, next) {
+router.get('/course/:id/join', function(req, res, next) {
 
     if(req.user) {
 
@@ -298,17 +266,10 @@ router.get('/search/course/:id/join', function(req, res, next) {
         return res.redirect('/users/login')
     }
 
-
-
-
-
-
-
-
 });
 
 
-router.get('/mycourses', function(req, res){
+router.get('/courses', function(req, res){
     if(req.user) {
 
         connection.query("SELECT * FROM USER WHERE id = ?",req.user ,function(err1,rows1){
@@ -334,7 +295,6 @@ router.get('/mycourses', function(req, res){
                             }
                             else {
 
-
                                 res.render('student/mycourses',{'user':rows1[0], 'student': student,'courses':courses});
                             }
                         });
@@ -351,7 +311,7 @@ router.get('/mycourses', function(req, res){
 
 
 
-router.get('/mycourses/:id', function(req, res, next) {
+router.get('/course-details/:id', function(req, res, next) {
 
     if(req.user) {
 
@@ -370,30 +330,39 @@ router.get('/mycourses/:id', function(req, res, next) {
                     }
                     else {
 
-
-
-                        connection.query(" SELECT * from ENROLLED WHERE Course_id= ? and Student_id= ? ",[req.params.id,student[0].Student_id],function(err1,enrolled){
-                            if(err1) {
+                        connection.query(" SELECT * from ENROLLED WHERE Course_id= ? and Student_id= ? ",[req.params.id,student[0].Student_id],function(err3,enrolled){
+                            if(err3) {
 
                                 console.log(err1);
                                 res.redirect('/student');
                             }
                             else {
-                                if(enrolled.length ==0)
+                                if(enrolled.length === 0)
                                 {
                                     res.redirect('/student/mycourses');
                                 }else
                                 {
-                                    connection.query("select  * FROM COURSE where Course_id =?",req.params.id,function(err2,course){
-                                        if(err2) {
-                                            console.log(err2);
+                                    connection.query("select  * FROM COURSE where Course_id =?",req.params.id,function(err4,course){
+                                        if(err4) {
+                                            console.log(err4);
                                             res.redirect('/student');
 
                                         }
                                         else {
 
+                                            connection.query("select  * FROM ANOUNCEMENT where Course_id =?",req.params.id,function(err5,announcements){
+                                                if(err5) {
+                                                    console.log(err5);
+                                                    res.redirect('/student');
 
-                                            res.render('student/mycourse',{'user':rows1[0], 'student': student,'course':course[0]});
+                                                }
+                                                else {
+
+
+                                                    res.render('student/mycourse',{'user':rows1[0], 'student': student,'course':course[0], 'announcements': announcements});
+                                                }
+                                            });
+
                                         }
                                     });
 
@@ -411,12 +380,472 @@ router.get('/mycourses/:id', function(req, res, next) {
         return res.redirect('/users/login')
     }
 
+});
 
 
+router.get('/course/join', function(req, res, next) {
+
+    if(req.user) {
+
+        connection.query("SELECT * FROM USER WHERE id = ?",req.user ,function(err1,rows1){
+            if(err1) {
+                console.log(err1);
+                res.redirect('/users/login')
+
+            }
+            else {
+                connection.query("SELECT * FROM STUDENT WHERE User_id = ?  ",req.user ,function(err2,rows2){
+                    if(err2) {
+                        console.log(err2);
+                        res.redirect('/users/login')
+
+                    }
+                    else {
+
+                        connection.query(" SELECT * FROM COURSE WHERE Course_id NOT IN (SELECT Course_id FROM ENROLLED WHERE Student_id = ?) ",rows2[0].Student_id,function(err3,row3){
+                            if(err3) {
+                                console.log(err3);
+                                res.redirect('/student/mycourses');
+                            }
+                            else {
+                                console.log(row3);
+                                res.render('student/search/courses',{'user':rows1[0], 'student': rows2[0], courses : row3});
+                            }
+                        });
 
 
-
-
+                    }
+                });
+            }
+        });
+    }
+    else{
+        return res.redirect('/users/login')
+    }
 
 });
+
+
+router.get('/course/announcement/:id/:announcement_id', function(req, res, next) {
+
+    if(req.user) {
+
+        connection.query("SELECT * FROM USER WHERE id = ?",req.user ,function(err1,rows1){
+            if(err1) {
+                console.log(err1);
+                res.redirect('/users/login')
+
+            }
+            else {
+                connection.query("SELECT * FROM STUDENT WHERE User_id = ?  ",req.user ,function(err2,student){
+                    if(err2) {
+                        console.log(err2);
+                        res.redirect('/users/login')
+
+                    }
+                    else {
+
+                        connection.query(" SELECT * from ENROLLED WHERE Course_id= ? and Student_id= ? ",[req.params.id,student[0].Student_id],function(err3,enrolled){
+                            if(err3) {
+
+                                console.log(err1);
+                                res.redirect('/student');
+                            }
+                            else {
+                                if(enrolled.length === 0)
+                                {
+                                    res.redirect('/student/mycourses');
+                                }else
+                                {
+                                    connection.query("select  * FROM COURSE where Course_id =?",req.params.id,function(err4,course){
+                                        if(err4) {
+                                            console.log(err4);
+                                            res.redirect('/student');
+
+                                        }
+                                        else {
+
+                                            connection.query("select  * FROM ANOUNCEMENT where Course_id =?",req.params.id,function(err5,announcements){
+                                                if(err5) {
+                                                    console.log(err5);
+                                                    res.redirect('/student');
+
+                                                }
+                                                else {
+
+                                                    connection.query("select  * FROM ANOUNCEMENT where Anouncement_id =?",req.params.announcement_id,function(err5,announcement){
+                                                        if(err5) {
+                                                            console.log(err5);
+                                                            res.redirect('/student');
+
+                                                        }
+                                                        else {
+
+
+                                                            res.render('student/announcement',{'user':rows1[0], 'student': student,'course':course[0], 'announcements': announcements, 'announcement': announcement[0]});
+                                                        }
+                                                    });
+                                                }
+                                            });
+
+                                        }
+                                    });
+
+                                }
+                            }
+                        });
+
+
+                    }
+                });
+            }
+        });
+    }
+    else{
+        return res.redirect('/users/login')
+    }
+
+});
+
+router.get('/course/:course_id/resources/', function(req, res){
+    if(req.user) {
+
+        connection.query("SELECT * FROM USER WHERE id = ?",req.user ,function(err1,rows1){
+            if(err1) {
+                console.log(err1);
+                res.redirect('/users/login')
+
+            }
+            else {
+                connection.query("SELECT * FROM STUDENT WHERE User_id = ?  ",req.user ,function(err2,rows2){
+                    if(err2) {
+                        console.log(err2);
+                        res.redirect('/users/login')
+
+                    }
+                    else {
+                        connection.query("SELECT * FROM COURSE WHERE Course_id = ?  ",req.params.course_id ,function(err3,rows3){
+                            if(err3) {
+                                console.log(err3);
+                                res.redirect('/student/courses/')
+
+                            }
+                            else {
+
+                                connection.query("SELECT * FROM ANOUNCEMENT WHERE Course_id = ? ORDER BY -Posted_on",[req.params.course_id] ,function(err4,rows4){
+                                    if(err4) {
+                                        console.log(err4);
+                                        res.redirect('/student/courses/')
+
+                                    }
+                                    else {
+
+                                        connection.query("SELECT * FROM COURSE_MATERIALS WHERE Course_id = ?",[req.params.course_id] ,function(err5,rows5){
+                                            if(err5) {
+                                                console.log(err5);
+                                                res.redirect('/student/courses/')
+
+                                            }
+                                            else {
+                                                console.log(rows5);
+                                                res.render('student/resources',{'user':rows1[0], 'student': rows2[0], 'course': rows3[0], 'announcements': rows4, 'resources': rows5});
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+                        });
+
+                    }
+                });
+            }
+        });
+    }
+    else{
+        return res.redirect('/users/login')
+    }
+});
+
+
+router.get('/course/:course_id/resources/:resource_id', function (req, res) {
+
+    if(req.user) {
+
+        connection.query("SELECT * FROM USER WHERE id = ?",req.user ,function(err1,rows1){
+            if(err1) {
+                console.log(err1);
+                res.redirect('/users/login')
+
+            }
+            else {
+                connection.query("SELECT * FROM STUDENT WHERE User_id = ?  ",req.user ,function(err2,rows2){
+                    if(err2) {
+                        console.log(err2);
+                        res.redirect('/users/login')
+
+                    }
+                    else {
+                        connection.query("SELECT * FROM COURSE WHERE Course_id = ?  ",req.params.course_id ,function(err3,rows3){
+                            if(err3) {
+                                console.log(err3);
+                                res.redirect('/student/courses/')
+
+                            }
+                            else {
+
+                                connection.query("SELECT * FROM COURSE_MATERIALS WHERE Material_id = ?",[req.params.resource_id] ,function(err4,rows4){
+                                    if(err4) {
+                                        console.log(err4);
+                                        res.redirect('/student/courses/')
+
+                                    }
+                                    else {
+                                        console.log(rows4[0].Material);
+                                        res.sendFile(rows4[0].Material);
+
+                                    }
+                                });
+                            }
+                        });
+
+                    }
+                });
+            }
+        });
+    }
+    else{
+        return res.redirect('/users/login')
+    }
+});
+
+
+
+router.get('/course/:course_id/assignments/', function(req, res){
+    if(req.user) {
+
+        connection.query("SELECT * FROM USER WHERE id = ?",req.user ,function(err1,rows1){
+            if(err1) {
+                console.log(err1);
+                res.redirect('/users/login')
+
+            }
+            else {
+                connection.query("SELECT * FROM STUDENT WHERE User_id = ?  ",req.user ,function(err2,rows2){
+                    if(err2) {
+                        console.log(err2);
+                        res.redirect('/users/login')
+
+                    }
+                    else {
+                        connection.query("SELECT * FROM COURSE WHERE Course_id = ?  ",req.params.course_id ,function(err3,rows3){
+                            if(err3) {
+                                console.log(err3);
+                                res.redirect('/student/courses/')
+
+                            }
+                            else {
+
+                                connection.query("SELECT * FROM ANOUNCEMENT WHERE Course_id = ? ORDER BY -Posted_on",[req.params.course_id] ,function(err4,rows4){
+                                    if(err4) {
+                                        console.log(err4);
+                                        res.redirect('/student/courses/')
+
+                                    }
+                                    else {
+
+                                        connection.query("SELECT * FROM ASSIGNMENT WHERE Course_id = ?",[req.params.course_id] ,function(err5,rows5){
+                                            if(err5) {
+                                                console.log(err5);
+                                                res.redirect('/student/courses/')
+
+                                            }
+                                            else {
+
+                                                console.log(rows5);
+                                                res.render('student/assignment',{'user':rows1[0], 'student': rows2[0], 'course': rows3[0], 'announcements': rows4, 'assignments': rows5});
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+                        });
+
+                    }
+                });
+            }
+        });
+    }
+    else{
+        return res.redirect('/users/login')
+    }
+});
+
+
+router.get('/course/:course_id/assignments/:assignment_id', function (req, res) {
+
+    if(req.user) {
+
+        connection.query("SELECT * FROM USER WHERE id = ?",req.user ,function(err1,rows1){
+            if(err1) {
+                console.log(err1);
+                res.redirect('/users/login')
+
+            }
+            else {
+                connection.query("SELECT * FROM STUDENT WHERE User_id = ?  ",req.user ,function(err2,rows2){
+                    if(err2) {
+                        console.log(err2);
+                        res.redirect('/users/login')
+
+                    }
+                    else {
+                        connection.query("SELECT * FROM COURSE WHERE Course_id = ?  ",req.params.course_id ,function(err3,rows3){
+                            if(err3) {
+                                console.log(err3);
+                                res.redirect('/student/courses/')
+
+                            }
+                            else {
+
+                                connection.query("SELECT * FROM ASSIGNMENT WHERE Assignment_id = ?",[req.params.assignment_id] ,function(err4,rows4){
+                                    if(err4) {
+                                        console.log(err4);
+                                        res.redirect('/student/courses/')
+
+                                    }
+                                    else {
+                                        console.log(rows4[0]);
+                                        res.sendFile(rows4[0].Assignment_File);
+
+                                    }
+                                });
+                            }
+                        });
+
+                    }
+                });
+            }
+        });
+    }
+    else{
+        return res.redirect('/users/login')
+    }
+});
+
+
+router.get('/course/:course_id/tests/', function(req, res){
+    if(req.user) {
+
+        connection.query("SELECT * FROM USER WHERE id = ?",req.user ,function(err1,rows1){
+            if(err1) {
+                console.log(err1);
+                res.redirect('/users/login')
+
+            }
+            else {
+                connection.query("SELECT * FROM STUDENT WHERE User_id = ?  ",req.user ,function(err2,rows2){
+                    if(err2) {
+                        console.log(err2);
+                        res.redirect('/users/login')
+
+                    }
+                    else {
+                        connection.query("SELECT * FROM COURSE WHERE Course_id = ?  ",req.params.course_id ,function(err3,rows3){
+                            if(err3) {
+                                console.log(err3);
+                                res.redirect('/student/courses/')
+
+                            }
+                            else {
+
+                                connection.query("SELECT * FROM ANOUNCEMENT WHERE Course_id = ? ORDER BY -Posted_on",[req.params.course_id] ,function(err4,rows4){
+                                    if(err4) {
+                                        console.log(err4);
+                                        res.redirect('/student/courses/')
+
+                                    }
+                                    else {
+
+                                        connection.query("SELECT * FROM TESTS WHERE Course_id = ?",[req.params.course_id] ,function(err5,rows5){
+                                            if(err5) {
+                                                console.log(err5);
+                                                res.redirect('/student/courses/')
+
+                                            }
+                                            else {
+
+                                                console.log(rows5);
+                                                res.render('student/tests',{'user':rows1[0], 'instructor': rows2[0], 'course': rows3[0], 'announcements': rows4, 'tests': rows5});
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+                        });
+
+                    }
+                });
+            }
+        });
+    }
+    else{
+        return res.redirect('/users/login')
+    }
+});
+
+
+
+router.get('/course/:course_id/tests/:test_id', function (req, res) {
+
+    if(req.user) {
+
+        connection.query("SELECT * FROM USER WHERE id = ?",req.user ,function(err1,rows1){
+            if(err1) {
+                console.log(err1);
+                res.redirect('/users/login')
+
+            }
+            else {
+                connection.query("SELECT * FROM STUDENT WHERE User_id = ?  ",req.user ,function(err2,rows2){
+                    if(err2) {
+                        console.log(err2);
+                        res.redirect('/users/login')
+
+                    }
+                    else {
+                        connection.query("SELECT * FROM COURSE WHERE Course_id = ?  ",req.params.course_id ,function(err3,rows3){
+                            if(err3) {
+                                console.log(err3);
+                                res.redirect('/student/courses/')
+
+                            }
+                            else {
+
+                                connection.query("SELECT * FROM TESTS WHERE Test_id = ?",[req.params.test_id] ,function(err4,rows4){
+                                    if(err4) {
+                                        console.log(err4);
+                                        res.redirect('/student/courses/')
+
+                                    }
+                                    else {
+                                        console.log(rows4[0].Question_Paper);
+                                        res.sendFile(rows4[0].Question_Paper);
+
+                                    }
+                                });
+                            }
+                        });
+
+                    }
+                });
+            }
+        });
+    }
+    else{
+        return res.redirect('/users/login')
+    }
+});
+
+
+
 module.exports = router;

@@ -116,7 +116,7 @@
     <div class="container">
         <div class="agileinfo-inner">
             <h2 class="text-center text-white">
-                <a href="/student/offer-course" class="btn btn-primary"><i class="fas fa-graduation-cap"></i> <h5>Join a Course</h5></a>
+                <a href="/student/course/join" class="btn btn-primary"><i class="fas fa-graduation-cap"></i> <h5>Join a Course</h5></a>
             </h2>
         </div>
     </div>
@@ -152,7 +152,7 @@
                                 <h6 class="card-title"> Instructor : <a href="/search/instructor/<%=courses[i].Instructor_id%> "><%= courses[i].First_Name%> <%= courses[i].Middle_Name%> <%= courses[i].Last_Name%></a></h6>
 
                                 <p class="card-text mb-3">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a href="/student/mycourses/<%= courses[i].Course_id%>" class="btn btn-primary"><i class="fas fa-graduation-cap"></i> OPEN</a>
+                                <a href="/student/course-details/<%= courses[i].Course_id%>" class="btn btn-primary"><i class="fas fa-graduation-cap"></i> OPEN</a>
                             </div>
                         </div>
                     </div>

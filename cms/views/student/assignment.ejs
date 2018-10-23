@@ -1,6 +1,3 @@
-
-
-
 <!--
 	Author: W3layouts
 	Author URL: http://w3layouts.com
@@ -38,6 +35,7 @@
     <!--web font-->
     <link href="//fonts.googleapis.com/css?family=PT+Sans+Caption:400,700&amp;subset=cyrillic,cyrillic-ext,latin-ext" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
     <!--//web font-->
 
     <style>
@@ -143,7 +141,7 @@
         <nav class="navbar navbar-expand-lg navbar-light py-sm-4 py-2">
             <!-- logo -->
             <h1>
-                <a class="navbar-brand" href="/instructor/"> <i class="fab fa-affiliatetheme"></i>
+                <a class="navbar-brand" href="/student/"> <i class="fab fa-affiliatetheme"></i>
                     Eduversity
                 </a>
             </h1>
@@ -156,12 +154,12 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-lg-auto text-center">
                     <li class="nav-item mr-lg-3">
-                        <a class="nav-link" href="/instructor/">Home
+                        <a class="nav-link" href="/student/">Home
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
                     <li class="nav-item mr-lg-3">
-                        <a class="nav-link" href="/student/courses/">My Courses</a>
+                        <a class="nav-link" href="/student/courses/">Courses</a>
                     </li>
                     <li class="dropdown nav-item active mr-lg-3">
                         <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle ">
@@ -170,7 +168,7 @@
                         </a>
                         <ul class="dropdown-menu" role="menu">
                             <li class="nav-item">
-                                <a href="/instructor/profile" class="nav-link">Profile</a>
+                                <a href="/student/profile" class="nav-link">Profile</a>
                             </li>
                             <li class="nav-item">
                                 <a href="/users/logout" class="nav-link">Logout</a>
@@ -186,8 +184,8 @@
                                 <!-- cd-header-buttons -->
                             </div>
                             <div id="cd-search" class="cd-search">
-                                <form action="/student/search" method="post">
-                                    <input name="search" type="search" placeholder="Click enter after typing...">
+                                <form action="#" method="post">
+                                    <input name="Search" type="search" placeholder="Click enter after typing...">
                                 </form>
                             </div>
                         </div>
@@ -208,7 +206,7 @@
     <div class="container">
         <div class="agileinfo-inner">
             <h2 class="text-center text-white">
-                Course Details
+                Course Name
             </h2>
         </div>
     </div>
@@ -218,12 +216,15 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="/instructor/">Home</a>
+            <a href="/student/">Home</a>
         </li>
         <li class="breadcrumb-item">
-            <a href="/instructor/courses">Courses</a>
+            <a href="/student/courses/">Courses</a>
         </li>
-        <li class="breadcrumb-item active" aria-current="page">Course Details</li>
+        <li class="breadcrumb-item">
+            <a href="/student/course-details/<%= course.Course_id%>"><%= course.Course_Title%></a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Test And Announcement</li>
     </ol>
 </nav>
 <!-- //breadcrumbs -->
@@ -235,63 +236,161 @@
 
 
 
-
-
     <!-- single page -->
     <div class="single-page py-5">
         <div class="container py-xl-5 py-lg-3">
-            <h2 class="tittle mb-xl-5 mb-4 text-dark text-uppercase font-weight-bold pl-4 py-3">  <%= course.Course_Title%></h2>
+
             <div class="inner-sec">
                 <div class="row">
                     <!-- left side -->
                     <div class="col-lg-8 left-blog-info text-left">
                         <div class="blog-grid-top">
-                            <div class="b-grid-top">
-                                <div class="blog_info_left_grid">
-                                    <a href="single.html">
-                                        <img src="/images/4.jpg" class="img-fluid" alt="">
-                                    </a>
-                                </div>
-                            </div>
+
+                            <h2 class="tittle mb-xl-5 mb-4 text-dark text-uppercase font-weight-bold pl-4 py-3">Course Assignment Section</h2>
+                            <div class="category-story tech-btm">
+                            <ul class="list-group single" >
 
 
+                                <% if (assignments) { %>
+                                    <% for (var i=0;i<assignments.length ;i ++) {%>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center" >
+                                            <a><%= assignments[i].Assignment_Name%></a><br><br><br>
+                                            <a href="/student/course/<%= course.Course_id%>/assignments/<%= assignments[i].Assignment_id%>">Assignment Paper</a><br><br><br>
+                                            <a href="/student/course/<%= course.Course_id%>/assignment/<%= assignments[i].Assignment_id%>/submissions">Submit</a><br><br><br>
+                                        </li>
+                                    <% }%>
+                                <% } %>
 
-
-
-
-                            <h3>
-                                <a class="single-text text-dark font-weight-light">Introduction To Course</a>
-                            </h3>
-                            <p id="introduction" style="white-space: pre-wrap;">  <%= course.Introduction%></p>
-
-                            </p>
-
-
-                            <h3>
-                                <a class="single-text text-dark font-weight-light">Description of Course</a>                              </h3>
-
-                            <p id="description" style="white-space: pre-wrap;">  <%= course.Description%> </p>
-
-
-
-                            <h3>
-                                <a class="single-text text-dark font-weight-light">Requirements of the Course</a>
-                            </h3>
-
-                            <p id="requirements" style="white-space: pre-wrap;"> <%= course.Requirements%></p>
-
-                            <br>
-                            <a href="/student/course/<%= course.Course_id%>/join" class="btn btn-primary"><i class="fas fa-graduation-cap"></i> Join Course</a>
-
+                            </ul>
                         </div>
 
 
-                    </div>
-                    <!-- //left side -->
 
                 </div>
+
+
+
+
+
             </div>
+
+
+            <!-- //left side -->
+            <!-- right side -->
+            <aside class="col-lg-4 right-blog-con text-right mt-lg-0 mt-5">
+                <div class="right-blog-info text-left">
+                    <div class="category-story tech-btm">
+                        <h4>Recent Announcements</h4>
+                        <ul class="list-unstyled">
+
+
+                            <% if (announcements) { %>
+                                <% for (var i=0;i<announcements.length ;i ++) {%>
+                                    <li class="border-bottom mb-3 pb-3">
+                                        <i class="fas fa-angle-right mr-2"></i>
+                                        <a href="/student/course/announcement/<%= course.Course_id%>/<%= announcements[i].Anouncement_id%>" class="text-danger"><%= announcements[i].Short_Description%></a>
+                                    </li>
+                                <% }%>
+                            <% } %>
+
+
+                            <li>
+                                <i class="fas fa-angle-right mr-3"></i>
+                                <a href="#" class="text-danger">...............Older Announcemenets</a>
+                            </li>
+                        </ul>
+                        <br><button type="button" class="btn btn-info1 btn-lg-block w3ls-btn1 px-4 text-capitalize" data-toggle="modal"
+                                    aria-pressed="false" data-target="#exampleModal1" style="width: 100%; background-color: black;">
+                            Make An Announcement
+                        </button>
+                    </div>
+
+                    <div class="tech-btm">
+                        <img src="images/g4.jpg" class="img-fluid rounded" alt="">
+                    </div>
+
+
+                    <div class="category-story tech-btm">
+                        <h4>Course Materials</h4>
+                        <ul class="list-group single">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <a href="/student/course/<%= course.Course_id%>/resources">Resources Section</a>
+                                <span class="badge badge-primary badge-pill">14</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <a href="/student/course/<%= course.Course_id%>/assignments">Assignment And Submissions</a>
+                                <span class="badge badge-primary badge-pill">2</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <a href="/student/course/<%= course.Course_id%>/tests">Test And Examinations</a>
+                                <span class="badge badge-primary badge-pill">1</span>
+                            </li>
+                        </ul>
+                    </div>
+
+
+                    <div class="tech-btm">
+                        <h4>Top stories of the week</h4>
+
+                        <div class="blog-grids row mb-3">
+                            <div class="col-md-5 blog-grid-left">
+                                <a href="single.html">
+                                    <img src="images/g3.jpg" class="img-fluid rounded" alt="">
+                                </a>
+                            </div>
+                            <div class="col-md-7 blog-grid-right">
+
+                                <h5>
+                                    <a href="single.html">Pellentesque dui, non felis. Maecenas male non felis </a>
+                                </h5>
+                                <div class="sub-meta">
+											<span>
+												<i class="far fa-clock"></i> 20 Jan, 2018</span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="blog-grids row mb-3">
+                            <div class="col-md-5 blog-grid-left">
+                                <a href="single.html">
+                                    <img src="images/g1.jpg" class="img-fluid rounded" alt="">
+                                </a>
+                            </div>
+                            <div class="col-md-7 blog-grid-right">
+                                <h5>
+                                    <a href="single.html">Pellentesque dui, non felis. Maecenas male non felis </a>
+                                </h5>
+                                <div class="sub-meta">
+											<span>
+												<i class="far fa-clock"></i> 20 Feb, 2018</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="single-gd tech-btm">
+                        <h4>Recent Post</h4>
+                        <div class="blog-grids">
+                            <div class="blog-grid-left">
+                                <a href="single.html">
+                                    <img src="images/g2.jpg" class="img-fluid rounded" alt="">
+                                </a>
+                            </div>
+                            <div class="blog-grid-right">
+                                <h5 class="mt-0">
+                                    <a href="single.html">Pellentesque dui, non felis. Maecenas male</a>
+                                </h5>
+                            </div>
+                            <div class="clearfix"> </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+            <!-- //right side -->
         </div>
+    </div>
+    </div>
     </div>
 
 
@@ -388,7 +487,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="/instructor/course/announcement/<%= course.Course_id%>" method="post" class="p-3">
+                <form action="/student/course/announcement/<%= course.Course_id%>" method="post" class="p-3">
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Describe Announcement in 30 Characters</label><br>
                         <textarea maxlength="50" style="width: 100%;" name="description"></textarea>
@@ -414,6 +513,85 @@
                     <div class="form-group">
                         <label for="recipient-name1" class="col-form-label">Link 3</label>
                         <input type="" class="form-control" placeholder="Link 3" name="link3" id="recipient-name6" required="">
+                    </div>
+                    <div class="right-w3l mt-4 mb-3">
+                        <input type="submit" class="form-control" value="Create account">
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- //Register modal -->
+
+
+
+
+<!-- Test modal -->
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-uppercase" id="exampleModalLabel2">Add A Resource</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="/student/course/<%= course.Course_id%>/tests" method="post" class="p-3" enctype="multipart/form-data">
+
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Test Name</label>
+                        <input type="text" class="form-control" placeholder="Resource Name" name="resource_name" id="recipient-name4" required="">
+                    </div>
+                    <!--   <div class="form-group">
+                         <label for="recipient-name" class="col-form-label">Mobile Number</label>
+                         <input type="text" class="form-control" placeholder="Mobile Number" name="Name" id="recipient-name5" required="">
+                       </div>
+                     -->
+                    <div class="form-group">
+                        <label for="recipient-name1" class="col-form-label">Question Paper</label>
+                        <input type="file" class="form-control" placeholder="Upload File" name="file" id="recipient-name6" required="">
+                    </div>
+                    <div class="right-w3l mt-4 mb-3">
+                        <input type="submit" class="form-control" value="Create account">
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- //Register modal -->
+
+
+
+<!-- Test modal -->
+<div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-uppercase" id="exampleModalLabel3">Add A Resource</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="/student/course/<%= course.Course_id%>/assignments" method="post" class="p-3" enctype="multipart/form-data">
+
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Assignment Name</label>
+                        <input type="text" class="form-control" placeholder="Resource Name" name="resource_name" id="recipient-name4" required="">
+                    </div>
+                    <!--   <div class="form-group">
+                         <label for="recipient-name" class="col-form-label">Mobile Number</label>
+                         <input type="text" class="form-control" placeholder="Mobile Number" name="Name" id="recipient-name5" required="">
+                       </div>
+                     -->
+                    <div class="form-group">
+                        <label for="recipient-name1" class="col-form-label">Assignment File</label>
+                        <input type="file" class="form-control" placeholder="Upload File" name="file" id="recipient-name6" required="">
                     </div>
                     <div class="right-w3l mt-4 mb-3">
                         <input type="submit" class="form-control" value="Create account">

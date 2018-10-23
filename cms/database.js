@@ -6,7 +6,7 @@ function connectDatabase() {
         db = mysql.createConnection({
             host     : 'localhost',
             user     : 'root',
-            password : 'student',
+            password : '',
             database : 'DBMS'
         });
 
@@ -367,8 +367,8 @@ function connectDatabase() {
                   Student_id INT NOT NULL,
                   PRIMARY KEY (Submission_id),
                   FOREIGN KEY (Course_id) REFERENCES COURSE(Course_id),
-                  FOREIGN KEY (Instructor_id) REFERENCES INSTRUCTOR(Instructor_id)
-                  FOREIGN KEY (Student_id) REFERENCES STUDENT(Student_id)
+                  FOREIGN KEY (Instructor_id) REFERENCES INSTRUCTOR(Instructor_id),
+                  FOREIGN KEY (Student_id) REFERENCES STUDENT(Student_id),
                   FOREIGN KEY (Assignment_id) REFERENCES ASSIGNMENT(Assignment_id)
                 ) 
                 ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci`;
