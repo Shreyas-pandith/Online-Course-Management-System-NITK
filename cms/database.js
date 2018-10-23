@@ -362,12 +362,14 @@ function connectDatabase() {
                   Submission_id INT NOT NULL AUTO_INCREMENT,
                   Submission_File TEXT,
                   Course_id INT NOT NULL,
+                  Assignment_id INT NOT NULL,
                   Instructor_id INT NOT NULL,
                   Student_id INT NOT NULL,
-                  PRIMARY KEY (Assignment_id),
+                  PRIMARY KEY (Submission_id),
                   FOREIGN KEY (Course_id) REFERENCES COURSE(Course_id),
                   FOREIGN KEY (Instructor_id) REFERENCES INSTRUCTOR(Instructor_id)
                   FOREIGN KEY (Student_id) REFERENCES STUDENT(Student_id)
+                  FOREIGN KEY (Assignment_id) REFERENCES ASSIGNMENT(Assignment_id)
                 ) 
                 ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci`;
 
