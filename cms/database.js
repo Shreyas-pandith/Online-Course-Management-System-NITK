@@ -4,10 +4,10 @@ var db;
 function connectDatabase() {
     if (!db) {
         db = mysql.createConnection({
-            host : 'localhost',
-            user : 'root',
-            password : 'dpsp1191',
-            database :'dbms1'
+            host     : 'localhost',
+            user     : 'root',
+            password : 'student',
+            database : 'DBMS'
         });
 
         db.connect(function(err){
@@ -159,10 +159,10 @@ function connectDatabase() {
                 let createTodos7 = `CREATE TABLE if not exists TESTS
                 (
                   Test_id INT NOT NULL AUTO_INCREMENT,
-                  Test_Name VARCHAR(100) NOT NULL,
-                  Maximun_Marks INT NOT NULL,
-                  Question_Paper LONGBLOB,
-                  Answer_Key LONGBLOB,
+                  Test_Name VARCHAR(100),
+                  Maximun_Marks INT,
+                  Question_Paper TEXT,
+                  Answer_Key TEXT,
                   Course_id INT NOT NULL,
                   Instructor_id INT NOT NULL,
                   PRIMARY KEY (Test_id),
@@ -329,6 +329,53 @@ function connectDatabase() {
                         console.log(err.message);
                     }
                     console.log('Enrolled table created');
+                });
+
+
+
+                let createTodos14 = `CREATE TABLE if not exists ASSIGNMENT
+                (
+                  Assignment_id INT NOT NULL AUTO_INCREMENT,
+                  Assignment_Name VARCHAR(100),
+                  Maximun_Marks INT,
+                  Assignment_File TEXT,
+                  Solutions TEXT,
+                  Course_id INT NOT NULL,
+                  Instructor_id INT NOT NULL,
+                  PRIMARY KEY (Assignment_id),
+                  FOREIGN KEY (Course_id) REFERENCES COURSE(Course_id),
+                  FOREIGN KEY (Instructor_id) REFERENCES INSTRUCTOR(Instructor_id)
+                ) 
+                ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci`;
+
+                db.query(createTodos14, function(err, results, fields) {
+                    if (err) {
+                        console.log(err.message);
+                    }
+                    console.log('Assignment table created');
+                });
+
+
+
+                let createTodos15 = `CREATE TABLE if not exists SUBMISSION
+                (
+                  Submission_id INT NOT NULL AUTO_INCREMENT,
+                  Submission_File TEXT,
+                  Course_id INT NOT NULL,
+                  Instructor_id INT NOT NULL,
+                  Student_id INT NOT NULL,
+                  PRIMARY KEY (Assignment_id),
+                  FOREIGN KEY (Course_id) REFERENCES COURSE(Course_id),
+                  FOREIGN KEY (Instructor_id) REFERENCES INSTRUCTOR(Instructor_id)
+                  FOREIGN KEY (Student_id) REFERENCES STUDENT(Student_id)
+                ) 
+                ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci`;
+
+                db.query(createTodos15, function(err, results, fields) {
+                    if (err) {
+                        console.log(err.message);
+                    }
+                    console.log('Submission table created');
                 });
 
 
