@@ -224,7 +224,7 @@
         <li class="breadcrumb-item">
             <a href="/instructor/course-details/<%= course.Course_id%>"><%= course.Course_Title%></a>
         </li>
-        <li class="breadcrumb-item active" aria-current="page">Test And Announcement</li>
+        <li class="breadcrumb-item active" aria-current="page">Students</li>
     </ol>
 </nav>
 <!-- //breadcrumbs -->
@@ -246,21 +246,67 @@
                     <div class="col-lg-8 left-blog-info text-left">
                         <div class="blog-grid-top">
 
-                            <h2 class="tittle mb-xl-5 mb-4 text-dark text-uppercase font-weight-bold pl-4 py-3">Course Test Section<a href="" data-toggle="modal" aria-pressed="false" data-target="#exampleModal2">  <i class="fas fa-plus-circle" style="color: red"></i></a></h2>
+                            <h2 class="tittle mb-xl-5 mb-4 text-dark text-uppercase font-weight-bold pl-4 py-3">Q&A  (Question And Answers)</h2>
                             <div class="category-story tech-btm"">
                             <ul class="list-group single" >
 
 
-                                <% if (tests) { %>
-                                    <% for (var i=0;i<tests.length ;i ++) {%>
-                                        <li class="list-group-item d-flex justify-content-between align-items-center" >
-                                            <a><%= tests[i].Test_Name%></a><br><br><br>
-                                            <a href="/instructor/course/<%= course.Course_id%>/tests/<%= tests[i].Test_id%>">Question Paper</a><br><br><br>
-                                            <a href="#">Answer Key</a><br><br><br>
-                                            <a href="/instructor/course/<%=course.Course_id%>/tests/<%= tests[i].Test_id%>/delete"><i class="fas fa-trash" style="color: red"></i></a>
-                                        </li>
-                                    <% }%>
-                                <% } %>
+
+                                <li class="list-group-item">
+                                    <a>Question Asked By </a><br><br><br>
+                                    <a>Question: </a><br><br><br>
+                                    <a>Answers:</a>
+                                    <ul style="margin-left: 10%">
+                                        <li>Answer 1 Lorem Ipsum convallis diam consequat magna vulputate malesuada. id dignissim sapien velit id felis ac cursus eros. Cras a ornare elit</li><br>
+                                        <li>Answer 1 Lorem Ipsum convallis diam consequat magna vulputate malesuada. id dignissim sapien velit id felis ac cursus eros. Cras a ornare eli</li><br>
+                                        <li>Answer 1 Lorem Ipsum convallis diam consequat magna vulputate malesuada. id dignissim sapien velit id felis ac cursus eros. Cras a ornare eli</li><br>
+                                    </ul>
+
+                                    <form action="#" method="post">
+                                        <div class="form-group">
+                                            <textarea class="form-control" name="question" placeholder="Your Answer..." required=""></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary submit" style="margin-left: 86%">Post</button>
+                                    </form>
+                                </li><br><br>
+
+
+                                <li class="list-group-item">
+                                    <a>Question Asked By </a><br><br><br>
+                                    <a>Question: </a><br><br><br>
+                                    <a>Answers:</a>
+                                    <ul style="margin-left: 10%">
+                                        <li>Answer 1 Lorem Ipsum convallis diam consequat magna vulputate malesuada. id dignissim sapien velit id felis ac cursus eros. Cras a ornare elit</li><br>
+                                        <li>Answer 1 Lorem Ipsum convallis diam consequat magna vulputate malesuada. id dignissim sapien velit id felis ac cursus eros. Cras a ornare eli</li><br>
+                                        <li>Answer 1 Lorem Ipsum convallis diam consequat magna vulputate malesuada. id dignissim sapien velit id felis ac cursus eros. Cras a ornare eli</li><br>
+                                    </ul>
+
+                                    <form action="#" method="post">
+                                        <div class="form-group">
+                                            <textarea class="form-control" name="question" placeholder="Your Answer..." required=""></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary submit" style="margin-left: 86%">Post</button>
+                                    </form>
+                                </li><br><br>
+
+
+                                <li class="list-group-item">
+                                    <a>Question Asked By </a><br><br><br>
+                                    <a>Question: </a><br><br><br>
+                                    <a>Answers:</a>
+                                    <ul style="margin-left: 10%">
+                                        <li>Answer 1 Lorem Ipsum convallis diam consequat magna vulputate malesuada. id dignissim sapien velit id felis ac cursus eros. Cras a ornare elit</li><br>
+                                        <li>Answer 1 Lorem Ipsum convallis diam consequat magna vulputate malesuada. id dignissim sapien velit id felis ac cursus eros. Cras a ornare eli</li><br>
+                                        <li>Answer 1 Lorem Ipsum convallis diam consequat magna vulputate malesuada. id dignissim sapien velit id felis ac cursus eros. Cras a ornare eli</li><br>
+                                    </ul>
+
+                                    <form action="#" method="post">
+                                        <div class="form-group">
+                                            <textarea class="form-control" name="question" placeholder="Your Answer..." required=""></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary submit" style="margin-left: 86%">Post</button>
+                                    </form>
+                                </li><br><br>
 
                             </ul>
                         </div>
@@ -270,16 +316,35 @@
 
                     </div>
 
+                    <div class="comment-top">
+                        <h4>Ask a Question</h4>
+                        <div class="comment-bottom">
+                            <form action="#" method="post">
+                                <div class="form-group">
+                                    <input class="form-control" type="text" name="subject" placeholder="Subject" required="">
+                                </div>
+                                <div class="form-group">
+                                    <textarea class="form-control" name="question" placeholder="Your Question..." required=""></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary submit">Post</button>
+                            </form>
+                        </div>
+                    </div>
 
 
 
 
-                </div>
+
+
+
+            </div>
+
+
 
 
                 <!-- //left side -->
                 <!-- right side -->
-                <aside class="col-lg-4 right-blog-con text-right mt-lg-0 mt-5">
+                <aside class="col-lg-4 right-blog-con text-right mt-lg-0 mt-5"">
                     <div class="right-blog-info text-left">
                         <div class="category-story tech-btm">
                             <h4>Recent Announcements</h4>

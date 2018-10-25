@@ -6,7 +6,7 @@ function connectDatabase() {
         db = mysql.createConnection({
             host     : 'localhost',
             user     : 'root',
-            password : '',
+            password : 'mysql',
             database : 'DBMS'
         });
 
@@ -36,7 +36,7 @@ function connectDatabase() {
                 (
                   Department_id INT NOT NULL AUTO_INCREMENT,
                   Department_Name VARCHAR(255) NOT NULL,
-                  PRIMARY KEY (Department_id)
+                  PRIMARY KEY (Department_id, Department_Name)
                 ) 
                 ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci`;
 
@@ -46,6 +46,34 @@ function connectDatabase() {
                     }
                     console.log('Department table created');
                 });
+
+
+                // let Departments = [
+                //     'Chemical Engineering',
+                //     'Civil Engineering',
+                //     'Computer Engineering',
+                //     'Electrical  and  Electronics Engineering',
+                //     'Electronics & Communication Engineering',
+                //     'Information  Technology',
+                //     'Mechanical Engineering',
+                //     'Metallurgical  & Materials Engineering',
+                //     'Mining Engineering'
+                // ];
+                // console.log(Departments[1]);
+                // for(let i=0;i<Departments.length;i++)
+                // {
+                //     let data = {
+                //         'Department_Name' : Departments[i]
+                //     };
+                //     let createTodos = `INSERT INTO DEPARTMENT SET ?`;
+                //
+                //     db.query(createTodos, data, function(err, results, fields) {
+                //         if (err) {
+                //             console.log(err.message);
+                //         }
+                //         console.log( Departments[i] + ' inserted');
+                //     });
+                // }
 
 
 
@@ -391,7 +419,7 @@ function connectDatabase() {
                 console.log('Database is connected!');
 
             } else {
-                console.log('Error connecting database.....!');
+                throw err;
             }
         });
     }
