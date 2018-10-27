@@ -129,6 +129,15 @@
     </ol>
 </nav>
 <!-- //breadcrumbs -->
+<marquee behavior="scroll" direction="left"><h4 style="color: red; display: inline;">New Announcements..........   </h4>
+    <% if(announcement){%>
+        <% for(var i=0;i<announcement.length;i++) {%>
+            <h4 style="color: #60aeff; display: inline;">Course Name :</h4>
+            <a href="/student/course/announcement/<%= announcement[i].Course_id%>/<%= announcement[i].Anouncement_id%>"><h4 style=" display: inline;"><%= announcement[i].Short_Description%></h4></a>
+        <%}%>
+    <%}%>
+</marquee>
+
 
 <!-- courses -->
 <section class="courses py-5">
