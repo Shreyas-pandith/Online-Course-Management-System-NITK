@@ -10,7 +10,7 @@ var logger = require('morgan');
 
 var passport = require('passport');
 var mysql_store = require('express-mysql-session')(session);
-var flash = require('connect-flash');
+var flash = require('express-flash-notification');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -29,7 +29,6 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 
-//app.use(require('flash')());
 
 
 
@@ -85,6 +84,7 @@ app.use(function (req, res, next) {
     res.locals.messages = require('express-messages')(req, res);
     next();
 });
+app.use(flash(app));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

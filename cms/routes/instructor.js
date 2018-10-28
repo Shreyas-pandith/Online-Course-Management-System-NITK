@@ -40,6 +40,7 @@ router.get('/', function(req, res){
                     }
                     else {
                         console.log(rows1[0]);
+
                         res.render('instructor/home',{'user':rows1[0], 'instructor': rows2[0]});
                     }
                 });
@@ -56,37 +57,7 @@ router.get('/', function(req, res){
 
 
 
-router.get('/profile', function(req, res, next) {
-  if(req.user){
-      connection.query("SELECT * FROM USER WHERE id = ?",req.user ,function(err1,rows1){
-          if(err1) {
-              console.log(err1);
-              res.redirect('/users/login')
-
-          }
-          else {
-              connection.query("SELECT * FROM INSTRUCTOR WHERE User_id = ?  ",req.user ,function(err2,rows2){
-                  if(err2) {
-                      console.log(err2);
-                      res.redirect('/users/login')
-
-                  }
-                  else {
-                      console.log(rows1[0]);
-                      res.render('instructor/profile',{'user':rows1[0], 'instructor': rows2[0]});
-                  }
-              });
-          }
-      });
-  }
-  else {
-      res.redirect('/users/login/')
-  }
-
-});
-
-
-router.post('/profile', function(req, res){
+router.post('/profile', function(req, res, next){
     if(req.user){
 
 
@@ -113,7 +84,8 @@ router.post('/profile', function(req, res){
 
                     }
                     else {
-                        return res.redirect('/instructor/profile/')
+                        req.flash( 'Profile Succesfully Updated');
+                        next();
                     }
                 });
             }
@@ -123,6 +95,100 @@ router.post('/profile', function(req, res){
         res.redirect('/login/')
     }
 });
+
+
+
+
+
+router.get('/profile', function(req, res, next) {
+    if(req.user){
+        connection.query("SELECT * FROM USER WHERE id = ?",req.user ,function(err1,rows1){
+            if(err1) {
+                console.log(err1);
+                res.redirect('/users/login')
+
+            }
+            else {
+                connection.query("SELECT * FROM INSTRUCTOR WHERE User_id = ?  ",req.user ,function(err2,rows2){
+                    if(err2) {
+                        console.log(err2);
+                        res.redirect('/users/login')
+
+                    }
+                    else {
+                        console.log(rows1[0]);
+                        res.render('instructor/profile',{'user':rows1[0], 'instructor': rows2[0]});
+                    }
+                });
+            }
+        });
+    }
+    else {
+        res.redirect('/users/login/')
+    }
+
+});
+
+
+router.post('/offer-course', function(req, res){
+    if(req.user) {
+
+        connection.query("SELECT * FROM USER WHERE id = ?",req.user ,function(err1,rows1){
+            if(err1) {
+                console.log(err1);
+                res.redirect('/users/login')
+
+            }
+            else {
+                connection.query("SELECT * FROM INSTRUCTOR WHERE User_id = ?  ",req.user ,function(err2,rows2){
+                    if(err2) {
+                        console.log(err2);
+                        res.redirect('/users/login')
+
+                    }
+                    else {
+                        console.log(rows1[0]);
+
+
+                        var data = {
+                            'Course_Title': req.body.title,
+                            'Course_Code': req.body.code,
+                            'Instructor_id': rows2[0].Instructor_id
+                        };
+
+                        connection.query("INSERT INTO COURSE SET  ? ",data ,function(err3,rows3){
+                            if(err3) {
+                                console.log(err3);
+                                res.redirect('/offer-course')
+
+                            }
+                            else {
+
+                                connection.query("SELECT LAST_INSERT_ID() as id" ,function(err4,rows4){
+                                    if(err4) {
+                                        console.log(err4);
+                                        res.redirect('/offer-course')
+
+                                    }
+                                    else {
+                                        console.log(rows4[0]);
+                                        url = '/instructor/course-details/' + rows4[0].id;
+                                        return res.redirect(url);
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    }
+    else{
+        return res.redirect('/users/login')
+    }
+});
+
+
 
 
 router.get('/courses', function(req, res){
@@ -307,63 +373,7 @@ router.get('/offer-course', function(req, res){
     }
 });
 
-router.post('/offer-course', function(req, res){
-    if(req.user) {
 
-        connection.query("SELECT * FROM USER WHERE id = ?",req.user ,function(err1,rows1){
-            if(err1) {
-                console.log(err1);
-                res.redirect('/users/login')
-
-            }
-            else {
-                connection.query("SELECT * FROM INSTRUCTOR WHERE User_id = ?  ",req.user ,function(err2,rows2){
-                    if(err2) {
-                        console.log(err2);
-                        res.redirect('/users/login')
-
-                    }
-                    else {
-                        console.log(rows1[0]);
-
-
-                        var data = {
-                            'Course_Title': req.body.title,
-                            'Course_Code': req.body.code,
-                            'Instructor_id': rows2[0].Instructor_id
-                        };
-
-                        connection.query("INSERT INTO COURSE SET  ? ",data ,function(err3,rows3){
-                            if(err3) {
-                                console.log(err3);
-                                res.redirect('/offer-course')
-
-                            }
-                            else {
-
-                                connection.query("SELECT LAST_INSERT_ID() as id" ,function(err4,rows4){
-                                    if(err4) {
-                                        console.log(err4);
-                                        res.redirect('/offer-course')
-
-                                    }
-                                    else {
-                                        console.log(rows4[0]);
-                                        url = '/instructor/course-details/' + rows4[0].id;
-                                        return res.redirect(url);
-                                    }
-                                });
-                            }
-                        });
-                    }
-                });
-            }
-        });
-    }
-    else{
-        return res.redirect('/users/login')
-    }
-});
 
 
 router.get('/course/announcement/:id1/:id2', function(req, res){
