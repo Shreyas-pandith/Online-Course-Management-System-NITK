@@ -174,24 +174,7 @@
                                 <a href="/users/logout" class="nav-link">Logout</a>
                             </li>
                         </ul>
-                    <li>
-                        <!-- search --->
-                        <div class="search-bar-agileits">
-                            <div class="cd-main-header">
-                                <ul class="cd-header-buttons">
-                                    <li><a class="cd-search-trigger" href="#cd-search"> <span></span></a></li>
-                                </ul>
-                                <!-- cd-header-buttons -->
-                            </div>
-                            <div id="cd-search" class="cd-search">
-                                <form action="#" method="post">
-                                    <input name="Search" type="search" placeholder="Click enter after typing...">
-                                </form>
-                            </div>
-                        </div>
-                        <!-- search --->
 
-                    </li>
                 </ul>
             </div>
             <!-- //main nav -->
@@ -206,7 +189,7 @@
     <div class="container">
         <div class="agileinfo-inner">
             <h2 class="text-center text-white">
-                Course Name
+                <%= course.Course_Title%> (<%= course.Course_Code%>)
             </h2>
         </div>
     </div>
@@ -224,7 +207,7 @@
         <li class="breadcrumb-item">
             <a href="/instructor/course-details/<%= course.Course_id%>"><%= course.Course_Title%></a>
         </li>
-        <li class="breadcrumb-item active" aria-current="page">Test And Announcement</li>
+        <li class="breadcrumb-item active" aria-current="page">Announcements</li>
     </ol>
 </nav>
 <!-- //breadcrumbs -->
@@ -246,47 +229,26 @@
                     <div class="col-lg-8 left-blog-info text-left">
                         <div class="blog-grid-top">
 
-                            <h2 class="tittle mb-xl-5 mb-4 text-dark text-uppercase font-weight-bold pl-4 py-3">Course Test Result section</h2>
+                            <h2 class="tittle mb-xl-5 mb-4 text-dark text-uppercase font-weight-bold pl-4 py-3">Course Announcement Section</h2>
                             <div class="category-story tech-btm"">
                             <ul class="list-group single" >
 
 
-                                <form action="/instructor/course/<%= course.Course_id%>/tests/<%= test.Test_id%>/results" method="post" class="p-3">
+                                    <% if (announcements) { %>
+                                        <% for (var i=0;i<announcements.length ;i ++) {%>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <a href="/instructor/course/announcement/<%= course.Course_id%>/<%= announcements[i].Anouncement_id%>"><%= announcements[i].Short_Description%></a><br><br><br>
+                                            <a ><%= announcements[i].Posted_on%></a><br><br><br>
+                                        </li><br><br><br>
 
-                                    <li class="list-group-item d-flex justify-content-between align-items-center" >
-                                        <a style="color: red">Student name</a><br><br><br>
-                                        <a style="color: red">Roll Number</a><br><br><br>
-                                        <a style="color: red">Marks Obtained</a><br><br><br>
-                                    </li>
 
-                                    <% if (results) { %>
-                                        <% for (var i=0;i<results.length ;i ++) {%>
-                                            <li class="list-group-item d-flex justify-content-between align-items-center" >
-                                                <a><%= results[i].First_Name%>  <%=students[i].Last_Name%></a><br><br><br>
-                                                <a><%= results[i].Roll_Number%></a><br><br><br>
-                                                <div class="form-group">
-                                                    <label style="display: inline">Marks Obtained : </label>
-                                                    <input style="display: inline" type="number" class="form-control" placeholder="" name="marks" id="recipient-name4" required="" value="<%= results[i].Marks_Obtained%>" min="0" max="<%= test.Maximun_Marks%>">
-                                                </div>
-                                            </li>
                                         <% }%>
                                     <% } %>
 
 
-                                        <li class="list-group-item d-flex justify-content-between align-items-center" >
-
-                                                <input type="submit" class="form-control" value="Upload Results">
-
-                                        </li>
-
-
-
-                                </form>
-
 
                             </ul>
                         </div>
-
 
 
 
@@ -361,62 +323,7 @@
                         </div>
 
 
-                        <div class="tech-btm">
-                            <h4>Top stories of the week</h4>
 
-                            <div class="blog-grids row mb-3">
-                                <div class="col-md-5 blog-grid-left">
-                                    <a href="single.html">
-                                        <img src="images/g3.jpg" class="img-fluid rounded" alt="">
-                                    </a>
-                                </div>
-                                <div class="col-md-7 blog-grid-right">
-
-                                    <h5>
-                                        <a href="single.html">Pellentesque dui, non felis. Maecenas male non felis </a>
-                                    </h5>
-                                    <div class="sub-meta">
-											<span>
-												<i class="far fa-clock"></i> 20 Jan, 2018</span>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="blog-grids row mb-3">
-                                <div class="col-md-5 blog-grid-left">
-                                    <a href="single.html">
-                                        <img src="images/g1.jpg" class="img-fluid rounded" alt="">
-                                    </a>
-                                </div>
-                                <div class="col-md-7 blog-grid-right">
-                                    <h5>
-                                        <a href="single.html">Pellentesque dui, non felis. Maecenas male non felis </a>
-                                    </h5>
-                                    <div class="sub-meta">
-											<span>
-												<i class="far fa-clock"></i> 20 Feb, 2018</span>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="single-gd tech-btm">
-                            <h4>Recent Post</h4>
-                            <div class="blog-grids">
-                                <div class="blog-grid-left">
-                                    <a href="single.html">
-                                        <img src="images/g2.jpg" class="img-fluid rounded" alt="">
-                                    </a>
-                                </div>
-                                <div class="blog-grid-right">
-                                    <h5 class="mt-0">
-                                        <a href="single.html">Pellentesque dui, non felis. Maecenas male</a>
-                                    </h5>
-                                </div>
-                                <div class="clearfix"> </div>
-                            </div>
-                        </div>
                     </div>
                 </aside>
                 <!-- //right side -->
@@ -571,7 +478,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="/instructor/course/<%= course.Course_id%>/tests" method="post" class="p-3" enctype="multipart/form-data">
+                <form action="/instructor/course/<%= course.Course_id%>/assignments" method="post" class="p-3" enctype="multipart/form-data">
 
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Test Name</label>

@@ -206,7 +206,7 @@
     <div class="container">
         <div class="agileinfo-inner">
             <h2 class="text-center text-white">
-                Course Name
+                <%= course.Course_Title%> (<%= course.Course_Code%>)
             </h2>
         </div>
     </div>
@@ -224,7 +224,7 @@
         <li class="breadcrumb-item">
             <a href="/instructor/course-details/<%= course.Course_id%>"><%= course.Course_Title%></a>
         </li>
-        <li class="breadcrumb-item active" aria-current="page">Test And Announcement</li>
+        <li class="breadcrumb-item active" aria-current="page">Test And Examinations</li>
     </ol>
 </nav>
 <!-- //breadcrumbs -->
@@ -305,7 +305,7 @@
 
                                 <li>
                                     <i class="fas fa-angle-right mr-3"></i>
-                                    <a href="#" class="text-danger">...............Older Announcemenets</a>
+                                    <a href="/instructor/course/<%= course.Course_id%>/announcements" class="text-danger">...............Older Announcemenets</a>
                                 </li>
                             </ul>
                             <br><button type="button" class="btn btn-info1 btn-lg-block w3ls-btn1 px-4 text-capitalize" data-toggle="modal"
@@ -314,9 +314,6 @@
                             </button>
                         </div>
 
-                        <div class="tech-btm">
-                            <img src="images/g4.jpg" class="img-fluid rounded" alt="">
-                        </div>
 
 
                         <div class="category-story tech-btm">
@@ -346,62 +343,6 @@
                         </div>
 
 
-                        <div class="tech-btm">
-                            <h4>Top stories of the week</h4>
-
-                            <div class="blog-grids row mb-3">
-                                <div class="col-md-5 blog-grid-left">
-                                    <a href="single.html">
-                                        <img src="images/g3.jpg" class="img-fluid rounded" alt="">
-                                    </a>
-                                </div>
-                                <div class="col-md-7 blog-grid-right">
-
-                                    <h5>
-                                        <a href="single.html">Pellentesque dui, non felis. Maecenas male non felis </a>
-                                    </h5>
-                                    <div class="sub-meta">
-											<span>
-												<i class="far fa-clock"></i> 20 Jan, 2018</span>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="blog-grids row mb-3">
-                                <div class="col-md-5 blog-grid-left">
-                                    <a href="single.html">
-                                        <img src="images/g1.jpg" class="img-fluid rounded" alt="">
-                                    </a>
-                                </div>
-                                <div class="col-md-7 blog-grid-right">
-                                    <h5>
-                                        <a href="single.html">Pellentesque dui, non felis. Maecenas male non felis </a>
-                                    </h5>
-                                    <div class="sub-meta">
-											<span>
-												<i class="far fa-clock"></i> 20 Feb, 2018</span>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="single-gd tech-btm">
-                            <h4>Recent Post</h4>
-                            <div class="blog-grids">
-                                <div class="blog-grid-left">
-                                    <a href="single.html">
-                                        <img src="images/g2.jpg" class="img-fluid rounded" alt="">
-                                    </a>
-                                </div>
-                                <div class="blog-grid-right">
-                                    <h5 class="mt-0">
-                                        <a href="single.html">Pellentesque dui, non felis. Maecenas male</a>
-                                    </h5>
-                                </div>
-                                <div class="clearfix"> </div>
-                            </div>
-                        </div>
                     </div>
                 </aside>
                 <!-- //right side -->
@@ -564,7 +505,7 @@
                     </div>
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Maximum Marks</label>
-                        <input type="text" class="form-control" placeholder="Maximum Marks" name="test_marks" id="recipient-name4" required="">
+                        <input type="number" class="form-control" placeholder="Maximum Marks" name="test_marks" id="recipient-name4" required="">
                     </div>
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Date of Conduct</label>
@@ -583,60 +524,6 @@
 
 
 
-<!-- Test modal -->
-<div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title text-uppercase" id="exampleModalLabel3">Add Question Paper</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form action="/instructor/course/<%= course.Course_id%>/tests/my_id_value/question" method="post" class="p-3" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Question Paper</label>
-                        <input type="file" class="form-control" placeholder="Question Paper" name="file" id="recipient-name4" required="">
-                    </div>
-                    <div class="right-w3l mt-4 mb-3">
-                        <input type="submit" class="form-control" value="Add Question paper">
-                    </div>
-                </form>
-
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-
-<!-- Test modal -->
-<div class="modal fade" id="exampleModal4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title text-uppercase" id="exampleModalLabel4">Add Answer Key</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form action="/instructor/course/<%= course.Course_id%>/tests/my_id_value/answer" method="post" class="p-3" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Answer Key</label>
-                        <input type="file" class="form-control" placeholder="Question Paper" name="file" id="recipient-name4" required="">
-                    </div>
-                    <div class="right-w3l mt-4 mb-3">
-                        <input type="submit" class="form-control" value="Add Answer Key">
-                    </div>
-                </form>
-
-            </div>
-        </div>
-    </div>
-</div>
 
 
 
