@@ -784,8 +784,19 @@ router.get('/course/:course_id/tests/', function(req, res){
                                             }
                                             else {
 
-                                                console.log(rows5);
-                                                res.render('student/tests',{'user':rows1[0], 'instructor': rows2[0], 'course': rows3[0], 'announcements': rows4, 'tests': rows5});
+                                                connection.query("SELECT * FROM TEST_RESULTS WHERE Test_id IN (SELECT Test_id FROM TESTS WHERE Course_id = ?)",[req.params.course_id] ,function(err6,rows6){
+                                                    if(err6) {
+                                                        console.log(err6);
+                                                        res.redirect('/student/courses/')
+
+                                                    }
+                                                    else {
+
+                                                        console.log(rows6);
+                                                        res.render('student/tests',{'user':rows1[0], 'student': rows2[0], 'course': rows3[0], 'announcements': rows4, 'tests': rows5, 'results': rows6});
+                                                    }
+                                                });
+
                                             }
                                         });
                                     }
@@ -805,7 +816,7 @@ router.get('/course/:course_id/tests/', function(req, res){
 
 
 
-router.get('/course/:course_id/tests/:test_id', function (req, res) {
+router.get('/course/:course_id/tests/:test_id/question', function (req, res) {
 
     if(req.user) {
 
@@ -840,6 +851,58 @@ router.get('/course/:course_id/tests/:test_id', function (req, res) {
                                     else {
                                         console.log(rows4[0].Question_Paper);
                                         res.sendFile(rows4[0].Question_Paper);
+
+                                    }
+                                });
+                            }
+                        });
+
+                    }
+                });
+            }
+        });
+    }
+    else{
+        return res.redirect('/users/login')
+    }
+});
+
+
+router.get('/course/:course_id/tests/:test_id/answer', function (req, res) {
+
+    if(req.user) {
+
+        connection.query("SELECT * FROM USER WHERE id = ?",req.user ,function(err1,rows1){
+            if(err1) {
+                console.log(err1);
+                res.redirect('/users/login')
+
+            }
+            else {
+                connection.query("SELECT * FROM STUDENT WHERE User_id = ?  ",req.user ,function(err2,rows2){
+                    if(err2) {
+                        console.log(err2);
+                        res.redirect('/users/login')
+
+                    }
+                    else {
+                        connection.query("SELECT * FROM COURSE WHERE Course_id = ?  ",req.params.course_id ,function(err3,rows3){
+                            if(err3) {
+                                console.log(err3);
+                                res.redirect('/student/courses/')
+
+                            }
+                            else {
+
+                                connection.query("SELECT * FROM TESTS WHERE Test_id = ?",[req.params.test_id] ,function(err4,rows4){
+                                    if(err4) {
+                                        console.log(err4);
+                                        res.redirect('/student/courses/')
+
+                                    }
+                                    else {
+                                        console.log(rows4[0].Answer_Key);
+                                        res.sendFile(rows4[0].Answer_Key);
 
                                     }
                                 });

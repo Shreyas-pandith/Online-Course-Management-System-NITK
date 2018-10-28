@@ -15,11 +15,11 @@ var storage = multer.diskStorage({
 
 var upload = multer({
     storage: storage,
-}).single('file');
+}).fields([{ name: 'question', maxCount: 1 }, { name: 'answer', maxCount: 1 }]);
 
 
 router.get('/', function(req, res){
-
+    console.log('ashdgasgdhsad');
     if(req.user) {
 
         connection.query("SELECT * FROM USER WHERE id = ?",req.user ,function(err1,rows1){
@@ -745,6 +745,7 @@ router.get('/course/:course_id/resources/:resource_id/delete', function (req, re
 
 
 router.get('/course/:course_id/tests/', function(req, res){
+    console.log('aasgshdggf');
     if(req.user) {
 
         connection.query("SELECT * FROM USER WHERE id = ?",req.user ,function(err1,rows1){
@@ -815,7 +816,78 @@ router.get('/course/:course_id/tests/', function(req, res){
 
 
 
-router.post('/course/:course_id/tests/', function (req, res) {
+router.get('/course/:course_id/tests/:test_id/edit', function(req, res){
+    if(req.user) {
+
+        connection.query("SELECT * FROM USER WHERE id = ?",req.user ,function(err1,rows1){
+            if(err1) {
+                console.log(err1);
+                res.redirect('/users/login')
+
+            }
+            else {
+                connection.query("SELECT * FROM INSTRUCTOR WHERE User_id = ?  ",req.user ,function(err2,rows2){
+                    if(err2) {
+                        console.log(err2);
+                        res.redirect('/users/login')
+
+                    }
+                    else {
+                        connection.query("SELECT * FROM COURSE WHERE Course_id = ?  ",req.params.course_id ,function(err3,rows3){
+                            if(err3) {
+                                console.log(err3);
+                                res.redirect('/instructor/courses/')
+
+                            }
+                            else {
+
+                                connection.query("SELECT * FROM ANOUNCEMENT WHERE Course_id = ?  AND Instructor_id = ? ORDER BY -Posted_on",[req.params.course_id, rows2[0].Instructor_id] ,function(err4,rows4){
+                                    if(err4) {
+                                        console.log(err4);
+                                        res.redirect('/instructor/courses/')
+
+                                    }
+                                    else {
+
+                                        connection.query("SELECT * FROM TESTS WHERE Course_id = ? AND Instructor_id = ?",[req.params.course_id, rows2[0].Instructor_id] ,function(err5,rows5){
+                                            if(err5) {
+                                                console.log(err5);
+                                                res.redirect('/instructor/courses/')
+
+                                            }
+                                            else {
+
+                                                connection.query("SELECT * FROM TESTS WHERE Test_id",[req.params.test_id] ,function(err6,rows6){
+                                                    if(err6) {
+                                                        console.log(err6);
+                                                        res.redirect('/instructor/courses/')
+
+                                                    }
+                                                    else {
+                                                        console.log(rows6);
+                                                        res.render('instructor/test_edit',{'user':rows1[0], 'instructor': rows2[0], 'course': rows3[0], 'announcements': rows4, 'tests': rows5, 'test': rows6[0]});
+                                                    }
+                                                });
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+                        });
+
+                    }
+                });
+            }
+        });
+    }
+    else{
+        return res.redirect('/users/login')
+    }
+});
+
+
+
+router.post('/course/:course_id/tests/:test_id/edit', function (req, res) {
     console.log('bbbnvnb');
     upload(req, res, function (err) {
         if (err instanceof multer.MulterError) {
@@ -845,19 +917,115 @@ router.post('/course/:course_id/tests/', function (req, res) {
 
                         }
                         else {
+                            connection.query("SELECT * FROM COURSE WHERE Course_id = ?  ",req.params.course_id ,function(err3,rows3){
+                                if(err3) {
+                                    console.log(err3);
+                                    res.redirect('/instructor/courses/')
 
-                            // Material_id INT NOT NULL AUTO_INCREMENT,
-                            //     Topic VARCHAR(255),
-                            //     Remark VARCHAR(255),
-                            //     Material LONGBLOB,
-                            //     Course_id INT NOT NULL,
-                            //     Instructor_id INT NOT NULL,
-                            console.log(req.file);
-                            var data = {
-                                'Test_Name': req.body.resource_name,
-                                'Question_Paper' : path.join(__dirname, "../public/uploads/" + req.file.filename),
+                                }
+                                else {
+
+                                    connection.query("SELECT * FROM ANOUNCEMENT WHERE Course_id = ?  AND Instructor_id = ? ORDER BY -Posted_on",[req.params.course_id, rows2[0].Instructor_id] ,function(err4,rows4){
+                                        if(err4) {
+                                            console.log(err4);
+                                            res.redirect('/instructor/courses/')
+
+                                        }
+                                        else {
+
+                                            connection.query("SELECT * FROM TESTS WHERE Course_id = ? AND Instructor_id = ?",[req.params.course_id, rows2[0].Instructor_id] ,function(err5,rows5){
+                                                if(err5) {
+                                                    console.log(err5);
+                                                    res.redirect('/instructor/courses/')
+
+                                                }
+                                                else {
+
+                                                    connection.query("SELECT * FROM TESTS WHERE Test_id",[req.params.test_id] ,function(err6,rows6){
+                                                        if(err6) {
+                                                            console.log(err6);
+                                                            res.redirect('/instructor/courses/')
+
+                                                        }
+                                                        else {
+                                                            console.log(req.files['answer']);
+
+                                                            var question = rows6[0].Question_Paper;
+                                                            var answer = rows6[0].Answer_Key;
+                                                            var date = rows6[0].Date;
+
+                                                            if(req.files['question']){
+                                                                 question = path.join(__dirname, "../public/uploads/" + req.files['question'][0].filename);
+                                                            }
+
+
+                                                            if(req.files['answer']){
+                                                                 answer = path.join(__dirname, "../public/uploads/" + req.files['answer'][0].filename);
+                                                            }
+
+                                                            if(req.body.test_date){
+                                                                date = req.body.test_date;
+                                                            }
+
+
+                                                            connection.query("UPDATE TESTS SET Test_Name = ?, Maximun_Marks = ?, Date = ?, Question_Paper = ?, Answer_Key = ?",[req.body.test_name, req.body.test_marks,date,question, answer] ,function(err7,rows7){
+                                                                if(err7) {
+                                                                    console.log(err7);
+                                                                    res.redirect('/instructor/courses/')
+
+                                                                }
+                                                                else {
+                                                                    console.log(req.files);
+                                                                    var url = '/instructor/course/' + req.params.course_id + '/tests/';
+                                                                    res.redirect(url);
+                                                                }
+                                                            });
+
+                                                        }
+                                                    });
+                                                }
+                                            });
+                                        }
+                                    });
+                                }
+                            });
+
+                        }
+                    });
+                }
+            });
+        }
+        else{
+            return res.redirect('/users/login')
+        }
+    });
+});
+
+
+router.post('/course/:course_id/tests/', function (req, res) {
+
+        if(req.user) {
+
+            connection.query("SELECT * FROM USER WHERE id = ?",req.user ,function(err1,rows1){
+                if(err1) {
+                    console.log(err1);
+                    res.redirect('/users/login')
+
+                }
+                else {
+                    connection.query("SELECT * FROM INSTRUCTOR WHERE User_id = ?  ",req.user ,function(err2,rows2){
+                        if(err2) {
+                            console.log(err2);
+                            res.redirect('/users/login')
+
+                        }
+                        else {
+                            let data = {
+                                'Test_Name': req.body.test_name,
+                                'Maximun_Marks':req.body.test_marks,
                                 'Course_id': req.params.course_id,
-                                'Instructor_id': rows2[0].Instructor_id
+                                'Instructor_id': rows2[0].Instructor_id,
+                                'Date': req.params.test_date
                             };
                             console.log(data);
                             connection.query("INSERT INTO TESTS SET ?",data ,function(err4,rows4){
@@ -881,12 +1049,11 @@ router.post('/course/:course_id/tests/', function (req, res) {
         else{
             return res.redirect('/users/login')
         }
-    });
 });
 
 
 
-router.get('/course/:course_id/tests/:test_id', function (req, res) {
+router.get('/course/:course_id/tests/:test_id/question', function (req, res) {
 
     if(req.user) {
 
@@ -921,6 +1088,58 @@ router.get('/course/:course_id/tests/:test_id', function (req, res) {
                                     else {
                                         console.log(rows4[0].Question_Paper);
                                         res.sendFile(rows4[0].Question_Paper);
+
+                                    }
+                                });
+                            }
+                        });
+
+                    }
+                });
+            }
+        });
+    }
+    else{
+        return res.redirect('/users/login')
+    }
+});
+
+
+router.get('/course/:course_id/tests/:test_id/answer', function (req, res) {
+
+    if(req.user) {
+
+        connection.query("SELECT * FROM USER WHERE id = ?",req.user ,function(err1,rows1){
+            if(err1) {
+                console.log(err1);
+                res.redirect('/users/login')
+
+            }
+            else {
+                connection.query("SELECT * FROM INSTRUCTOR WHERE User_id = ?  ",req.user ,function(err2,rows2){
+                    if(err2) {
+                        console.log(err2);
+                        res.redirect('/users/login')
+
+                    }
+                    else {
+                        connection.query("SELECT * FROM COURSE WHERE Course_id = ?  ",req.params.course_id ,function(err3,rows3){
+                            if(err3) {
+                                console.log(err3);
+                                res.redirect('/instructor/courses/')
+
+                            }
+                            else {
+
+                                connection.query("SELECT * FROM TESTS WHERE Test_id = ?",[req.params.test_id] ,function(err4,rows4){
+                                    if(err4) {
+                                        console.log(err4);
+                                        res.redirect('/instructor/courses/')
+
+                                    }
+                                    else {
+                                        console.log(rows4[0].Answer_Key);
+                                        res.sendFile(rows4[0].Answer_Key);
 
                                     }
                                 });
@@ -982,24 +1201,250 @@ router.get('/course/:course_id/tests/:test_id/delete', function (req, res) {
                                             else {
 
 
-                                                connection.query("DELETE FROM TESTS WHERE Test_id = ?",[req.params.test_id] ,function(err5,rows5){
+                                                fs.unlink(rows4[0].Answer_Key, (err5) => {
                                                     if(err5) {
                                                         console.log(err5);
                                                         res.redirect('/instructor/courses/')
 
                                                     }
                                                     else {
-                                                        console.log('File was deleted');
-                                                        var url = '/instructor/course/' + req.params.course_id + '/tests/';
+
+
+                                                        connection.query("DELETE FROM TESTS WHERE Test_id = ?",[req.params.test_id] ,function(err5,rows5){
+                                                            if(err5) {
+                                                                console.log(err5);
+                                                                res.redirect('/instructor/courses/')
+
+                                                            }
+                                                            else {
+                                                                console.log('File was deleted');
+                                                                var url = '/instructor/course/' + req.params.course_id + '/tests/';
+                                                                res.redirect(url);
+
+                                                            }
+                                                        });
+
+
+
+                                                    }
+                                                });
+                                            }
+                                        });
+
+                                    }
+                                });
+                            }
+                        });
+
+                    }
+                });
+            }
+        });
+    }
+    else{
+        return res.redirect('/users/login')
+    }
+});
+
+
+
+
+
+
+router.get('/course/:course_id/tests/:test_id/results', function(req, res){
+    if(req.user) {
+
+        connection.query("SELECT * FROM USER WHERE id = ?",req.user ,function(err1,rows1){
+            if(err1) {
+                console.log(err1);
+                res.redirect('/users/login')
+
+            }
+            else {
+                connection.query("SELECT * FROM INSTRUCTOR WHERE User_id = ?  ",req.user ,function(err2,rows2){
+                    if(err2) {
+                        console.log(err2);
+                        res.redirect('/users/login')
+
+                    }
+                    else {
+                        connection.query("SELECT * FROM COURSE WHERE Course_id = ?  ",req.params.course_id ,function(err3,rows3){
+                            if(err3) {
+                                console.log(err3);
+                                res.redirect('/instructor/courses/')
+
+                            }
+                            else {
+
+                                connection.query("SELECT * FROM ANOUNCEMENT WHERE Course_id = ?  AND Instructor_id = ? ORDER BY -Posted_on",[req.params.course_id, rows2[0].Instructor_id] ,function(err4,rows4){
+                                    if(err4) {
+                                        console.log(err4);
+                                        res.redirect('/instructor/courses/')
+
+                                    }
+                                    else {
+
+                                        connection.query("SELECT * FROM TESTS WHERE Test_id = ? ",[req.params.test_id] ,function(err5,rows5){
+                                            if(err5) {
+                                                console.log(err5);
+                                                res.redirect('/instructor/courses/')
+
+                                            }
+                                            else {
+
+                                                connection.query("SELECT * FROM STUDENT WHERE Student_id IN (SELECT Student_id FROM ENROLLED WHERE Course_id = ?) ORDER BY Student_id",[req.params.course_id] ,function(err6,rows6){
+                                                    if(err6) {
+                                                        console.log(err6);
+                                                        res.redirect('/instructor/courses/')
+
+                                                    }
+                                                    else {
+
+
+                                                        connection.query("SELECT * FROM TEST_RESULTS WHERE Student_id IN (SELECT Student_id FROM ENROLLED WHERE Course_id = ?) ORDER BY Student_id",[req.params.course_id] ,function(err7,rows7){
+                                                            if(err7) {
+                                                                console.log(err7);
+                                                                res.redirect('/instructor/courses/')
+
+                                                            }
+                                                            else {
+
+                                                                console.log(rows7);
+                                                                res.render('instructor/upload_result',{'user':rows1[0], 'instructor': rows2[0], 'course': rows3[0], 'announcements': rows4, 'students': rows6, 'test':rows5[0], 'results': rows7});
+
+                                                            }
+                                                        });
+
+                                                    }
+                                                });
+
+                                            }
+                                        });
+
+
+
+                                    }
+                                });
+                            }
+                        });
+
+                    }
+                });
+            }
+        });
+    }
+    else{
+        return res.redirect('/users/login')
+    }
+});
+
+
+
+
+router.post('/course/:course_id/tests/:test_id/results', function(req, res){
+    if(req.user) {
+
+        connection.query("SELECT * FROM USER WHERE id = ?",req.user ,function(err1,rows1){
+            if(err1) {
+                console.log(err1);
+                res.redirect('/users/login')
+
+            }
+            else {
+                connection.query("SELECT * FROM INSTRUCTOR WHERE User_id = ?  ",req.user ,function(err2,rows2){
+                    if(err2) {
+                        console.log(err2);
+                        res.redirect('/users/login')
+
+                    }
+                    else {
+                        connection.query("SELECT * FROM COURSE WHERE Course_id = ?  ",req.params.course_id ,function(err3,rows3){
+                            if(err3) {
+                                console.log(err3);
+                                res.redirect('/instructor/courses/')
+
+                            }
+                            else {
+
+                                connection.query("SELECT * FROM ANOUNCEMENT WHERE Course_id = ?  AND Instructor_id = ? ORDER BY -Posted_on",[req.params.course_id, rows2[0].Instructor_id] ,function(err4,rows4){
+                                    if(err4) {
+                                        console.log(err4);
+                                        res.redirect('/instructor/courses/')
+
+                                    }
+                                    else {
+
+                                        connection.query("SELECT * FROM TESTS WHERE Test_id = ? ",[req.params.test_id] ,function(err5,rows5){
+                                            if(err5) {
+                                                console.log(err5);
+                                                res.redirect('/instructor/courses/')
+
+                                            }
+                                            else {
+
+                                                connection.query("SELECT * FROM STUDENT WHERE Student_id IN (SELECT Student_id FROM ENROLLED WHERE Course_id = ?) ORDER BY Student_id",[req.params.course_id] ,function(err6,rows6){
+                                                    if(err6) {
+                                                        console.log(err6);
+                                                        res.redirect('/instructor/courses/')
+
+                                                    }
+                                                    else {
+
+                                                        let m = req.body.marks;
+
+                                                        for(let i=0;i<rows6.length;i++)
+                                                        {console.log('aasgshdggf');
+                                                            let data = {
+                                                                'Marks_Obtained':m[i],
+                                                                'Test_id':req.params.test_id,
+                                                                'Student_id': rows6[i].Student_id
+                                                            };
+
+                                                            connection.query("SELECT * FROM TEST_RESULTS WHERE Test_id = ? AND Student_id = ?",[req.params.test_id,rows6[i].Student_id] ,function(err7,rows7){
+                                                                if(err7) {
+                                                                    console.log(err5);
+                                                                    res.redirect('/instructor/courses/')
+
+                                                                }
+                                                                else {
+                                                                    if(rows7.length === 0){
+                                                                        connection.query("INSERT INTO TEST_RESULTS SET ? ",data ,function(err8,rows8){
+                                                                            if(err8) {
+                                                                                console.log(err8);
+                                                                                res.redirect('/instructor/courses/')
+
+                                                                            }
+                                                                        });
+                                                                    }
+                                                                    else {
+
+                                                                        connection.query("UPDATE TEST_RESULTS SET Marks_Obtained = ? WHERE Test_id = ? AND Student_id = ? ",[m[i],req.params.test_id,rows6[i].Student_id] ,function(err8,rows8){
+                                                                            if(err8) {
+                                                                                console.log(err8);
+                                                                                res.redirect('/instructor/courses/')
+
+                                                                            }
+                                                                        });
+
+                                                                    }
+                                                                }
+                                                            });
+
+
+
+                                                        }
+
+                                                        console.log(rows6);
+                                                        var url = '/instructor/course/' + req.params.course_id+ '/tests/';
                                                         res.redirect(url);
 
                                                     }
                                                 });
 
-
-
                                             }
                                         });
+
+
 
                                     }
                                 });
@@ -1371,7 +1816,7 @@ router.get('/course/:course_id/students', function(req, res){
                                     }
                                     else {
 
-                                        connection.query("SELECT * FROM ENROLLED WHERE Course_id = ?",[req.params.course_i] ,function(err5,rows5){
+                                        connection.query("SELECT * FROM STUDENT WHERE Student_id IN (SELECT Student_id FROM ENROLLED WHERE Course_id = ?)",[req.params.course_id] ,function(err5,rows5){
                                             if(err5) {
                                                 console.log(err4);
                                                 res.redirect('/instructor/courses/')

@@ -31,53 +31,6 @@ function connectDatabase() {
 
 
 
-
-                let createTodos2 = `CREATE TABLE if not exists DEPARTMENT
-                (
-                  Department_id INT NOT NULL AUTO_INCREMENT,
-                  Department_Name VARCHAR(255) NOT NULL,
-                  PRIMARY KEY (Department_id, Department_Name)
-                ) 
-                ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci`;
-
-                db.query(createTodos2, function(err, results, fields) {
-                    if (err) {
-                        console.log(err.message);
-                    }
-                    console.log('Department table created');
-                });
-
-
-                // let Departments = [
-                //     'Chemical Engineering',
-                //     'Civil Engineering',
-                //     'Computer Engineering',
-                //     'Electrical  and  Electronics Engineering',
-                //     'Electronics & Communication Engineering',
-                //     'Information  Technology',
-                //     'Mechanical Engineering',
-                //     'Metallurgical  & Materials Engineering',
-                //     'Mining Engineering'
-                // ];
-                // console.log(Departments[1]);
-                // for(let i=0;i<Departments.length;i++)
-                // {
-                //     let data = {
-                //         'Department_Name' : Departments[i]
-                //     };
-                //     let createTodos = `INSERT INTO DEPARTMENT SET ?`;
-                //
-                //     db.query(createTodos, data, function(err, results, fields) {
-                //         if (err) {
-                //             console.log(err.message);
-                //         }
-                //         console.log( Departments[i] + ' inserted');
-                //     });
-                // }
-
-
-
-
                 let createTodos3 = `CREATE TABLE if not exists STUDENT
                 (
                   Student_id INT NOT NULL AUTO_INCREMENT,
@@ -89,8 +42,7 @@ function connectDatabase() {
                   Phone_Number NUMERIC(11),
                   Department_id INT,
                   PRIMARY KEY (Student_id),
-                  FOREIGN KEY (Department_id) REFERENCES DEPARTMENT(Department_id),
-                  FOREIGN KEY (User_id) REFERENCES USER(id)
+                  FOREIGN KEY (User_id) REFERENCES USER(id) ON DELETE CASCADE
                 ) 
                 ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci`;
 
@@ -115,8 +67,7 @@ function connectDatabase() {
                   Phone_Number NUMERIC(11),
                   Department_id INT,
                   PRIMARY KEY (Instructor_id),
-                  FOREIGN KEY (Department_id) REFERENCES DEPARTMENT(Department_id),
-                  FOREIGN KEY (User_id) REFERENCES USER(id)
+                  FOREIGN KEY (User_id) REFERENCES USER(id) ON DELETE CASCADE
                 ) 
                 ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci`;
 
@@ -143,8 +94,7 @@ function connectDatabase() {
                   Description TEXT,
                   Requirements TEXT,
                   PRIMARY KEY (Course_id),
-                  FOREIGN KEY (Instructor_id) REFERENCES INSTRUCTOR(Instructor_id),
-                  FOREIGN KEY (Department_id) REFERENCES DEPARTMENT(Department_id)
+                  FOREIGN KEY (Instructor_id) REFERENCES INSTRUCTOR(Instructor_id)
                 ) 
                 ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci`;
 
@@ -167,7 +117,7 @@ function connectDatabase() {
                   Course_id INT NOT NULL,
                   Instructor_id INT NOT NULL,
                   PRIMARY KEY (Material_id),
-                  FOREIGN KEY (Course_id) REFERENCES COURSE(Course_id),
+                  FOREIGN KEY (Course_id) REFERENCES COURSE(Course_id) ON DELETE CASCADE,
                   FOREIGN KEY (Instructor_id) REFERENCES INSTRUCTOR(Instructor_id)
                 ) 
                 ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci`;
@@ -193,8 +143,9 @@ function connectDatabase() {
                   Answer_Key TEXT,
                   Course_id INT NOT NULL,
                   Instructor_id INT NOT NULL,
+                  Date DATE,
                   PRIMARY KEY (Test_id),
-                  FOREIGN KEY (Course_id) REFERENCES COURSE(Course_id),
+                  FOREIGN KEY (Course_id) REFERENCES COURSE(Course_id) ON DELETE CASCADE,
                   FOREIGN KEY (Instructor_id) REFERENCES INSTRUCTOR(Instructor_id)
                 ) 
                 ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci`;
@@ -217,7 +168,7 @@ function connectDatabase() {
                   Test_id INT NOT NULL,
                   Student_id INT NOT NULL,
                   PRIMARY KEY (Result_id),
-                  FOREIGN KEY (Test_id) REFERENCES TESTS(Test_id),
+                  FOREIGN KEY (Test_id) REFERENCES TESTS(Test_id) ON DELETE CASCADE,
                   FOREIGN KEY (Student_id) REFERENCES STUDENT(Student_id)
                 ) 
                 ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci`;
@@ -243,8 +194,8 @@ function connectDatabase() {
                   Student_id INT NOT NULL,
                   Course_id INT NOT NULL,
                   PRIMARY KEY (Grade_id),
-                  FOREIGN KEY (Student_id) REFERENCES STUDENT(Student_id),
-                  FOREIGN KEY (Course_id) REFERENCES COURSE(Course_id)
+                  FOREIGN KEY (Student_id) REFERENCES STUDENT(Student_id) ON DELETE CASCADE,
+                  FOREIGN KEY (Course_id) REFERENCES COURSE(Course_id) ON DELETE CASCADE
                 ) 
                 ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci`;
 
@@ -272,7 +223,7 @@ function connectDatabase() {
                   Course_id INT,
                   Instructor_id INT NOT NULL,
                   PRIMARY KEY (Anouncement_id),
-                  FOREIGN KEY (Course_id) REFERENCES COURSE(Course_id),
+                  FOREIGN KEY (Course_id) REFERENCES COURSE(Course_id) ON DELETE CASCADE,
                   FOREIGN KEY (Instructor_id) REFERENCES INSTRUCTOR(Instructor_id)
                 ) 
                 ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci`;
@@ -301,7 +252,7 @@ function connectDatabase() {
                   Course_id INT NOT NULL,
                   PRIMARY KEY (Q_A_id),
                   FOREIGN KEY (Student_id) REFERENCES STUDENT(Student_id),
-                  FOREIGN KEY (Course_id) REFERENCES COURSE(Course_id)
+                  FOREIGN KEY (Course_id) REFERENCES COURSE(Course_id) ON DELETE CASCADE
                 ) 
                 ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci`;
 
@@ -328,7 +279,7 @@ function connectDatabase() {
                   Course_id INT,
                   Name VARCHAR(255),
                   PRIMARY KEY (Answer_id),
-                  FOREIGN KEY (Q_A_id) REFERENCES Q_A(Q_A_id),
+                  FOREIGN KEY (Q_A_id) REFERENCES Q_A(Q_A_id) ON DELETE CASCADE,
                   FOREIGN KEY (Instructor_id) REFERENCES INSTRUCTOR(Instructor_id),
                   FOREIGN KEY (Student_id) REFERENCES STUDENT(Student_id)
                 ) 
@@ -352,8 +303,8 @@ function connectDatabase() {
                   Course_id INT NOT NULL,
                   Student_id INT NOT NULL,
                   PRIMARY KEY (Course_id, Student_id),
-                  FOREIGN KEY (Course_id) REFERENCES COURSE(Course_id),
-                  FOREIGN KEY (Student_id) REFERENCES STUDENT(Student_id)
+                  FOREIGN KEY (Course_id) REFERENCES COURSE(Course_id) ON DELETE CASCADE,
+                  FOREIGN KEY (Student_id) REFERENCES STUDENT(Student_id) ON DELETE CASCADE
                 ) 
                 ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci`;
 
@@ -376,7 +327,7 @@ function connectDatabase() {
                   Course_id INT NOT NULL,
                   Instructor_id INT NOT NULL,
                   PRIMARY KEY (Assignment_id),
-                  FOREIGN KEY (Course_id) REFERENCES COURSE(Course_id),
+                  FOREIGN KEY (Course_id) REFERENCES COURSE(Course_id) ON DELETE CASCADE,
                   FOREIGN KEY (Instructor_id) REFERENCES INSTRUCTOR(Instructor_id)
                 ) 
                 ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci`;
@@ -399,10 +350,10 @@ function connectDatabase() {
                   Instructor_id INT NOT NULL,
                   Student_id INT NOT NULL,
                   PRIMARY KEY (Submission_id),
-                  FOREIGN KEY (Course_id) REFERENCES COURSE(Course_id),
+                  FOREIGN KEY (Course_id) REFERENCES COURSE(Course_id) ON DELETE CASCADE,
                   FOREIGN KEY (Instructor_id) REFERENCES INSTRUCTOR(Instructor_id),
-                  FOREIGN KEY (Student_id) REFERENCES STUDENT(Student_id),
-                  FOREIGN KEY (Assignment_id) REFERENCES ASSIGNMENT(Assignment_id)
+                  FOREIGN KEY (Student_id) REFERENCES STUDENT(Student_id) ON DELETE CASCADE,
+                  FOREIGN KEY (Assignment_id) REFERENCES ASSIGNMENT(Assignment_id) ON DELETE CASCADE
                 ) 
                 ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci`;
 

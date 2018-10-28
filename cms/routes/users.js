@@ -156,6 +156,7 @@ router.post('/login',
                     res.redirect('/student/')
                 }
                 else if(role === 'Instructor'){
+                    console.log('ashdgasgdhsad');
                     res.redirect('/instructor/')
                 }
                 else{

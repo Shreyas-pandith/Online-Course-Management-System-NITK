@@ -255,8 +255,19 @@
                                     <% for (var i=0;i<tests.length ;i ++) {%>
                                         <li class="list-group-item d-flex justify-content-between align-items-center" >
                                             <a><%= tests[i].Test_Name%></a><br><br><br>
-                                            <a href="/instructor/course/<%= course.Course_id%>/tests/<%= tests[i].Test_id%>">Question Paper</a><br><br><br>
-                                            <a href="#">Answer Key</a><br><br><br>
+                                            <% if(tests[i].Question_Paper === null){%>
+                                                <a href="/instructor/course/<%= course.Course_id%>/tests/<%= tests[i].Test_id%>/edit" >  Question Paper </a><br><br><br>
+                                            <% } else  {%>
+                                                <a href="/instructor/course/<%= course.Course_id%>/tests/<%= tests[i].Test_id%>/question">Question Paper</a><br><br><br>
+                                            <%}%>
+                                            <% if(tests[i].Answer_Key === null){%>
+                                                <a href="/instructor/course/<%= course.Course_id%>/tests/<%= tests[i].Test_id%>/edit">  Answer Key </a><br><br><br>
+                                            <% } else  {%>
+                                                <a href="/instructor/course/<%= course.Course_id%>/tests/<%= tests[i].Test_id%>/answer">Answer Key</a><br><br><br>
+                                            <%}%>
+
+                                            <a href="/instructor/course/<%= course.Course_id%>/tests/<%= tests[i].Test_id%>/results">Update Results</a><br><br><br>
+                                            <a href="/instructor/course/<%=course.Course_id%>/tests/<%= tests[i].Test_id%>/edit"><i class="fas fa-pencil-alt" style="color: red"></i></a>
                                             <a href="/instructor/course/<%=course.Course_id%>/tests/<%= tests[i].Test_id%>/delete"><i class="fas fa-trash" style="color: red"></i></a>
                                         </li>
                                     <% }%>
@@ -266,11 +277,7 @@
                         </div>
 
 
-
-
                     </div>
-
-
 
 
 
@@ -543,29 +550,28 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-uppercase" id="exampleModalLabel2">Add A Resource</h5>
+                <h5 class="modal-title text-uppercase" id="exampleModalLabel2">Conduct a test</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form action="/instructor/course/<%= course.Course_id%>/tests" method="post" class="p-3" enctype="multipart/form-data">
+                <form action="/instructor/course/<%= course.Course_id%>/tests" method="post" class="p-3" >
 
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Test Name</label>
-                        <input type="text" class="form-control" placeholder="Resource Name" name="resource_name" id="recipient-name4" required="">
+                        <input type="text" class="form-control" placeholder="Test Name" name="test_name" id="recipient-name4" required="">
                     </div>
-                    <!--   <div class="form-group">
-                         <label for="recipient-name" class="col-form-label">Mobile Number</label>
-                         <input type="text" class="form-control" placeholder="Mobile Number" name="Name" id="recipient-name5" required="">
-                       </div>
-                     -->
                     <div class="form-group">
-                        <label for="recipient-name1" class="col-form-label">Question Paper</label>
-                        <input type="file" class="form-control" placeholder="Upload File" name="file" id="recipient-name6" required="">
+                        <label for="recipient-name" class="col-form-label">Maximum Marks</label>
+                        <input type="text" class="form-control" placeholder="Maximum Marks" name="test_marks" id="recipient-name4" required="">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Date of Conduct</label>
+                        <input type="date" class="form-control" placeholder="Date of Conduct" name="test_date" id="recipient-name4" required="">
                     </div>
                     <div class="right-w3l mt-4 mb-3">
-                        <input type="submit" class="form-control" value="Create account">
+                        <input type="submit" class="form-control" value="Add Test">
                     </div>
                 </form>
 
@@ -582,29 +588,19 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-uppercase" id="exampleModalLabel3">Add A Resource</h5>
+                <h5 class="modal-title text-uppercase" id="exampleModalLabel3">Add Question Paper</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form action="/instructor/course/<%= course.Course_id%>/assignments" method="post" class="p-3" enctype="multipart/form-data">
-
+                <form action="/instructor/course/<%= course.Course_id%>/tests/my_id_value/question" method="post" class="p-3" enctype="multipart/form-data">
                     <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Assignment Name</label>
-                        <input type="text" class="form-control" placeholder="Resource Name" name="resource_name" id="recipient-name4" required="">
-                    </div>
-                    <!--   <div class="form-group">
-                         <label for="recipient-name" class="col-form-label">Mobile Number</label>
-                         <input type="text" class="form-control" placeholder="Mobile Number" name="Name" id="recipient-name5" required="">
-                       </div>
-                     -->
-                    <div class="form-group">
-                        <label for="recipient-name1" class="col-form-label">Assignment File</label>
-                        <input type="file" class="form-control" placeholder="Upload File" name="file" id="recipient-name6" required="">
+                        <label for="recipient-name" class="col-form-label">Question Paper</label>
+                        <input type="file" class="form-control" placeholder="Question Paper" name="file" id="recipient-name4" required="">
                     </div>
                     <div class="right-w3l mt-4 mb-3">
-                        <input type="submit" class="form-control" value="Create account">
+                        <input type="submit" class="form-control" value="Add Question paper">
                     </div>
                 </form>
 
@@ -612,7 +608,36 @@
         </div>
     </div>
 </div>
-<!-- //Register modal -->
+
+
+
+
+<!-- Test modal -->
+<div class="modal fade" id="exampleModal4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-uppercase" id="exampleModalLabel4">Add Answer Key</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="/instructor/course/<%= course.Course_id%>/tests/my_id_value/answer" method="post" class="p-3" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Answer Key</label>
+                        <input type="file" class="form-control" placeholder="Question Paper" name="file" id="recipient-name4" required="">
+                    </div>
+                    <div class="right-w3l mt-4 mb-3">
+                        <input type="submit" class="form-control" value="Add Answer Key">
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 

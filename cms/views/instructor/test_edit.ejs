@@ -141,7 +141,7 @@
         <nav class="navbar navbar-expand-lg navbar-light py-sm-4 py-2">
             <!-- logo -->
             <h1>
-                <a class="navbar-brand" href="/student/"> <i class="fab fa-affiliatetheme"></i>
+                <a class="navbar-brand" href="/instructor/"> <i class="fab fa-affiliatetheme"></i>
                     Eduversity
                 </a>
             </h1>
@@ -154,12 +154,12 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-lg-auto text-center">
                     <li class="nav-item mr-lg-3">
-                        <a class="nav-link" href="/student/">Home
+                        <a class="nav-link" href="/instructor/">Home
                             <span class="sr-only">(current)</span>
                         </a>
                     </li>
                     <li class="nav-item mr-lg-3">
-                        <a class="nav-link" href="/student/courses/">Courses</a>
+                        <a class="nav-link" href="/instructor/courses/">Courses</a>
                     </li>
                     <li class="dropdown nav-item active mr-lg-3">
                         <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle ">
@@ -168,7 +168,7 @@
                         </a>
                         <ul class="dropdown-menu" role="menu">
                             <li class="nav-item">
-                                <a href="/student/profile" class="nav-link">Profile</a>
+                                <a href="/instructor/profile" class="nav-link">Profile</a>
                             </li>
                             <li class="nav-item">
                                 <a href="/users/logout" class="nav-link">Logout</a>
@@ -216,15 +216,18 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="/student/">Home</a>
+            <a href="/instructor/">Home</a>
         </li>
         <li class="breadcrumb-item">
-            <a href="/student/courses/">Courses</a>
+            <a href="/instructor/courses/">Courses</a>
         </li>
         <li class="breadcrumb-item">
-            <a href="/student/course-details/<%= course.Course_id%>"><%= course.Course_Title%></a>
+            <a href="/instructor/course-details/<%= course.Course_id%>"><%= course.Course_Title%></a>
         </li>
-        <li class="breadcrumb-item active" aria-current="page">Test And Announcement</li>
+        <li class="breadcrumb-item">
+            <a href="/instructor/course/<%= course.Course_id%>/tests">Test And Examinations</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page"><%= test.Test_Name%></li>
     </ol>
 </nav>
 <!-- //breadcrumbs -->
@@ -246,47 +249,52 @@
                     <div class="col-lg-8 left-blog-info text-left">
                         <div class="blog-grid-top">
 
-                            <h2 class="tittle mb-xl-5 mb-4 text-dark text-uppercase font-weight-bold pl-4 py-3">Course Test Section</h2>
-                            <div class="category-story tech-btm"">
+                           <div class="category-story tech-btm"">
                             <ul class="list-group single" >
 
 
-                                <% if (tests) { %>
-                                    <% for (var i=0;i<tests.length ;i ++) {%>
-                                        <li class="list-group-item d-flex justify-content-between align-items-center" >
-                                            <a><%= tests[i].Test_Name%></a><br><br><br>
-                                            <% if (tests[i].Question_Paper == null){%>
-                                                <a>Question Paper</a><br><br><br>
-                                            <%}else{%>
-                                                <a href="/student/course/<%= course.Course_id%>/tests/<%= tests[i].Test_id%>/question">Question Paper</a><br><br><br>
-                                            <%}%>
+                                <% if (test) { %>
+                                <div class="modal-dialog" role="document" style="width: 100%;">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title text-uppercase" id="exampleModalLabel1"><%= test.Test_Name%></h5>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="/instructor/course/<%= course.Course_id%>/tests/<%= test.Test_id%>/edit" method="post" class="p-3" enctype="multipart/form-data">
+                                                <div class="form-group">
+                                                    <label for="recipient-name" class="col-form-label">Test Name</label>
+                                                    <input type="text" class="form-control" placeholder="Test Name" name="test_name" id="recipient-name4" value="<%= test.Test_Name%>">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="recipient-name" class="col-form-label">Maximum Marks</label>
+                                                    <input type="text" class="form-control" placeholder="Maximum Marks" name="test_marks" id="recipient-name4" value="<%= test.Maximun_Marks%>">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="recipient-name" class="col-form-label">Date of Conduct <br> <h3 style="color:blue;">Current date : <%= test.Date%></h3></label>
+                                                    <input type="date" class="form-control" placeholder="Date of Conduct" name="test_date" id="recipient-name4" value="<%= test.Date%>" >
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="recipient-name" class="col-form-label">Question Paper <br> <h3 style="color:blue;">Current Question Paper : <% if(test.Question_Paper === null){%> None  <%} else{ %>  <a href="/instructor/course/<%= course.Course_id%>/tests/<%= test.Test_id%>/question">Click here</a> <%}%></h3></label>
+                                                    <input type="file" class="form-control" placeholder="Question Paper" name="question" id="recipient-name4" value="<%= test.Question_Paper%>">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="recipient-name" class="col-form-label">Answer Key <br> <h3 style="color:blue;">Current Question Paper : <% if(test.Answer_Key === null){%> None  <%} else{ %>  <a href="/instructor/course/<%= course.Course_id%>/tests/<%= test.Test_id%>/answer">Click here</a> <%}%></h3></label>
+                                                    <input type="file" class="form-control" placeholder="Question Paper" name="answer" id="recipient-name4" value="<%= test.Answer_Key%>">
+                                                </div>
+                                                <div class="right-w3l mt-4 mb-3">
+                                                    <input type="submit" class="form-control" value="Update Test Information">
+                                                </div>
+                                            </form>
 
-                                            <% if (tests[i].Answer_Key == null){%>
-                                                <a>Answer Key</a><br><br><br>
-                                            <%}else{%>
-                                                <a href="/student/course/<%= course.Course_id%>/tests/<%= tests[i].Test_id%>/answer">Answer Key</a><br><br><br>
-                                            <%}%>
-                                            <a>Maximun Marks : 10</a><br><br><br>
-                                            <% if (results) { %>
-                                                <% for (var j=0;j<results.length ;j ++) {%>
-                                                <% if (results[j].Student_id === student.Student_id && results[j].Test_id === tests[i].Test_id){%>
-                                                        <a>Marks Obtained : <%= results[j].Marks_Obtained%></a><br><br><br>
-                                                    <%}%>
-                                                <% }%>
-                                            <% } %>
-                                        </li>
-                                    <% }%>
+                                        </div>
+                                    </div>
                                 <% } %>
 
                             </ul>
                         </div>
 
 
-
-
                     </div>
-
-
 
 
 
@@ -306,7 +314,7 @@
                                     <% for (var i=0;i<announcements.length ;i ++) {%>
                                         <li class="border-bottom mb-3 pb-3">
                                             <i class="fas fa-angle-right mr-2"></i>
-                                            <a href="/student/course/announcement/<%= course.Course_id%>/<%= announcements[i].Anouncement_id%>" class="text-danger"><%= announcements[i].Short_Description%></a>
+                                            <a href="/instructor/course/announcement/<%= course.Course_id%>/<%= announcements[i].Anouncement_id%>" class="text-danger"><%= announcements[i].Short_Description%></a>
                                         </li>
                                     <% }%>
                                 <% } %>
@@ -317,7 +325,10 @@
                                     <a href="#" class="text-danger">...............Older Announcemenets</a>
                                 </li>
                             </ul>
-
+                            <br><button type="button" class="btn btn-info1 btn-lg-block w3ls-btn1 px-4 text-capitalize" data-toggle="modal"
+                                        aria-pressed="false" data-target="#exampleModal1" style="width: 100%; background-color: black;">
+                                Make An Announcement
+                            </button>
                         </div>
 
                         <div class="tech-btm">
@@ -329,19 +340,23 @@
                             <h4>Course Materials</h4>
                             <ul class="list-group single">
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <a href="/student/course/<%= course.Course_id%>/resources">Resources Section</a>
+                                    <a href="/instructor/course/<%= course.Course_id%>/resources">Resources Section</a>
                                     <span class="badge badge-primary badge-pill">14</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <a href="/student/course/<%= course.Course_id%>/assignments">Assignment And Submissions</a>
+                                    <a href="/instructor/course/<%= course.Course_id%>/assignments">Assignment And Submissions</a>
                                     <span class="badge badge-primary badge-pill">2</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <a href="/student/course/<%= course.Course_id%>/tests">Test And Examinations</a>
+                                    <a href="/instructor/course/<%= course.Course_id%>/tests">Test And Examinations</a>
                                     <span class="badge badge-primary badge-pill">1</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <a href="/student/course/<%= course.Course_id%>/qa">Q&A</a>
+                                    <a href="/instructor/course/<%= course.Course_id%>/students">Students</a>
+                                    <span class="badge badge-primary badge-pill">1</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <a href="/instructor/course/<%= course.Course_id%>/qa">Q&A</a>
                                     <span class="badge badge-primary badge-pill">1</span>
                                 </li>
                             </ul>
@@ -506,7 +521,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="/student/course/announcement/<%= course.Course_id%>" method="post" class="p-3">
+                <form action="/instructor/course/announcement/<%= course.Course_id%>" method="post" class="p-3">
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Describe Announcement in 30 Characters</label><br>
                         <textarea maxlength="50" style="width: 100%;" name="description"></textarea>
@@ -552,29 +567,28 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-uppercase" id="exampleModalLabel2">Add A Resource</h5>
+                <h5 class="modal-title text-uppercase" id="exampleModalLabel2">Conduct a test</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form action="/student/course/<%= course.Course_id%>/tests" method="post" class="p-3" enctype="multipart/form-data">
+                <form action="/instructor/course/<%= course.Course_id%>/tests" method="post" class="p-3" >
 
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Test Name</label>
-                        <input type="text" class="form-control" placeholder="Resource Name" name="resource_name" id="recipient-name4" required="">
+                        <input type="text" class="form-control" placeholder="Test Name" name="test_name" id="recipient-name4" required="">
                     </div>
-                    <!--   <div class="form-group">
-                         <label for="recipient-name" class="col-form-label">Mobile Number</label>
-                         <input type="text" class="form-control" placeholder="Mobile Number" name="Name" id="recipient-name5" required="">
-                       </div>
-                     -->
                     <div class="form-group">
-                        <label for="recipient-name1" class="col-form-label">Question Paper</label>
-                        <input type="file" class="form-control" placeholder="Upload File" name="file" id="recipient-name6" required="">
+                        <label for="recipient-name" class="col-form-label">Maximum Marks</label>
+                        <input type="text" class="form-control" placeholder="Maximum Marks" name="test_marks" id="recipient-name4" required="">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Date of Conduct</label>
+                        <input type="date" class="form-control" placeholder="Date of Conduct" name="test_date" id="recipient-name4" required="">
                     </div>
                     <div class="right-w3l mt-4 mb-3">
-                        <input type="submit" class="form-control" value="Create account">
+                        <input type="submit" class="form-control" value="Add Test">
                     </div>
                 </form>
 
@@ -585,43 +599,6 @@
 <!-- //Register modal -->
 
 
-
-<!-- Test modal -->
-<div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title text-uppercase" id="exampleModalLabel3">Add A Resource</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form action="/student/course/<%= course.Course_id%>/assignments" method="post" class="p-3" enctype="multipart/form-data">
-
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Assignment Name</label>
-                        <input type="text" class="form-control" placeholder="Resource Name" name="resource_name" id="recipient-name4" required="">
-                    </div>
-                    <!--   <div class="form-group">
-                         <label for="recipient-name" class="col-form-label">Mobile Number</label>
-                         <input type="text" class="form-control" placeholder="Mobile Number" name="Name" id="recipient-name5" required="">
-                       </div>
-                     -->
-                    <div class="form-group">
-                        <label for="recipient-name1" class="col-form-label">Assignment File</label>
-                        <input type="file" class="form-control" placeholder="Upload File" name="file" id="recipient-name6" required="">
-                    </div>
-                    <div class="right-w3l mt-4 mb-3">
-                        <input type="submit" class="form-control" value="Create account">
-                    </div>
-                </form>
-
-            </div>
-        </div>
-    </div>
-</div>
-<!-- //Register modal -->
 
 
 

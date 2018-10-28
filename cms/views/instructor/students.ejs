@@ -251,10 +251,16 @@
                             <ul class="list-group single" >
 
 
+
+                                <% if (students) { %>
+                                    <% for (var i=0;i<students.length ;i ++) {%>
                                         <li class="list-group-item d-flex justify-content-between align-items-center" >
-                                            <a>Student Name</a><br><br><br>
-                                            <a href="">Roll Number</a><br><br><br>
+                                            <a><%= students[i].First_Name%></a><br><br><br>
+                                            <a><%= students[i].Last_Name%></a><br><br><br>
+                                            <a>Student ID</a><br><br><br>
                                         </li>
+                                    <% }%>
+                                <% } %>
 
 
                             </ul>

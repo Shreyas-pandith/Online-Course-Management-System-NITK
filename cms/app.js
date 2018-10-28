@@ -16,6 +16,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var instructorRouter=require('./routes/instructor');
 var studentRouter=require('./routes/student');
+var sqlinjection = require('sql-injection');
 
 
 var app = express();
@@ -29,6 +30,14 @@ app.set('view engine', 'ejs');
 
 
 //app.use(require('flash')());
+
+
+
+//Injections
+//app.use(sqlinjection);
+
+
+
 
 
 
@@ -98,7 +107,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
 
 
 module.exports = app;
