@@ -6,8 +6,8 @@ function connectDatabase() {
         db = mysql.createConnection({
             host     : 'localhost',
             user     : 'root',
-            password : 'mysql',
-            database : 'DBMS'
+            password : 'dpsp1191',
+            database : 'dbms2'
         });
 
         db.connect(function(err){

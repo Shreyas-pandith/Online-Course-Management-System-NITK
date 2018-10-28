@@ -255,32 +255,49 @@
                             </div>
 
 
+                            <div class="card">
 
-
-
-
-                            <h3>
-                                <a class="single-text text-dark font-weight-light">Introduction To Course</a>
-                            </h3>
-                            <p id="introduction" style="white-space: pre-wrap;">  <%= course.Introduction%></p>
-
-                            </p>
-
-
-                            <h3>
-                                <a class="single-text text-dark font-weight-light">Description of Course</a>                              </h3>
-
-                            <p id="description" style="white-space: pre-wrap;">  <%= course.Description%> </p>
-
-
-
-                            <h3>
-                                <a class="single-text text-dark font-weight-light">Requirements of the Course</a>
-                            </h3>
-
-                            <p id="requirements" style="white-space: pre-wrap;"> <%= course.Requirements%></p>
-
+                                <div class="card-header">
+                                    <h3>
+                                        <a class="single-text text-dark font-weight-light">Introduction To Course</a>
+                                    </h3>
+                                </div>
+                                <div class="card-body">
+                                    <p id="introduction" style="white-space: pre-wrap;">  <%= course.Introduction%></p>
+                                </div>
+                            </div>
                             <br>
+                            <div class="card">
+
+                                <div class="card-header">
+                                    <h3>
+                                        <a class="single-text text-dark font-weight-light">Description of Course</a>                              </h3>
+
+
+
+
+                                </div>
+                                <div class="card-body">
+                                    <p id="description" style="white-space: pre-wrap;">  <%= course.Description%> </p>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="card">
+
+                                <div class="card-header">
+                                    <h3>
+                                        <a class="single-text text-dark font-weight-light">Requirements of the Course</a>
+                                    </h3>
+
+
+                                </div>
+                                <div class="card-body">
+                                    <p id="requirements" style="white-space: pre-wrap;"> <%= course.Requirements%></p>
+                                </div>
+                            </div>
+
+                              <br>
+
                             <a href="/student/course/<%= course.Course_id%>/join" class="btn btn-primary"><i class="fas fa-graduation-cap"></i> Join Course</a>
 
                         </div>

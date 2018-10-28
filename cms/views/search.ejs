@@ -111,8 +111,8 @@
                                 <!-- cd-header-buttons -->
                             </div>
                             <div id="cd-search" class="cd-search">
-                                <form action="#" method="post">
-                                    <input name="Search" type="search" placeholder="Click enter after typing...">
+                                <form action="/search" method="post">
+                                    <input name="Search" type="search" placeholder="Search for courses...">
                                 </form>
                             </div>
                         </div>
@@ -168,7 +168,7 @@
 
                                 <h6 class="card-title"> Instructor : <a href="/search/instructor/<%=courses[i].Instructor_id%> "><%= courses[i].First_Name%> <%= courses[i].Middle_Name%> <%= courses[i].Last_Name%></a></h6>
                                 
-                                <p class="card-text mb-3">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                <p class="card-text mb-3"><%=courses[i].Introduction%></p>
                                 <a href="/search/course/<%= courses[i].Course_id%>" class="btn btn-primary"><i class="fas fa-graduation-cap"></i> View Course</a>
                             </div>
                         </div>
