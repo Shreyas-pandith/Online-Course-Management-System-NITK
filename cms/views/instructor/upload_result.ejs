@@ -253,18 +253,20 @@
 
                                 <form action="/instructor/course/<%= course.Course_id%>/tests/<%= test.Test_id%>/results" method="post" class="p-3">
 
-                                    <% if (students) { %>
-                                        <% for (var i=0;i<students.length ;i ++) {%>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center" >
+                                        <a style="color: red">Student name</a><br><br><br>
+                                        <a style="color: red">Roll Number</a><br><br><br>
+                                        <a style="color: red">Marks Obtained</a><br><br><br>
+                                    </li>
+
+                                    <% if (results) { %>
+                                        <% for (var i=0;i<results.length ;i ++) {%>
                                             <li class="list-group-item d-flex justify-content-between align-items-center" >
-                                                <a><%= students[i].First_Name%>  <%=students[i].Last_Name%></a><br><br><br>
-                                                <a>Student ID</a><br><br><br>
+                                                <a><%= results[i].First_Name%>  <%=students[i].Last_Name%></a><br><br><br>
+                                                <a><%= results[i].Roll_Number%></a><br><br><br>
                                                 <div class="form-group">
-                                                    <% if(results.length !== 0){%>
-                                                        <input type="number" class="form-control" placeholder="Marks Obtained" name="marks" id="recipient-name4" required="" value="<%= results[i].Marks_Obtained%>">
-                                                    <%}%>
-                                                        <% if(results.length === 0){%>
-                                                            <input type="number" class="form-control" placeholder="Marks Obtained" name="marks" id="recipient-name4" required="" value="">
-                                                        <%}%>
+                                                    <label style="display: inline">Marks Obtained : </label>
+                                                    <input style="display: inline" type="number" class="form-control" placeholder="" name="marks" id="recipient-name4" required="" value="<%= results[i].Marks_Obtained%>" min="0" max="<%= test.Maximun_Marks%>">
                                                 </div>
                                             </li>
                                         <% }%>
@@ -318,7 +320,7 @@
 
                                 <li>
                                     <i class="fas fa-angle-right mr-3"></i>
-                                    <a href="#" class="text-danger">...............Older Announcemenets</a>
+                                    <a href="/instructor/course/<%= course.Course_id%>/announcements" class="text-danger">...............Older Announcemenets</a>
                                 </li>
                             </ul>
                             <br><button type="button" class="btn btn-info1 btn-lg-block w3ls-btn1 px-4 text-capitalize" data-toggle="modal"

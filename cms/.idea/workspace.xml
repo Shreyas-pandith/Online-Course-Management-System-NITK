@@ -1,44 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5cc45993-6fc1-44ef-bc5c-4ed60012fcb5" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/views/about.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/about.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/contact.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/contact.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/index.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/index.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/instructor/add_material.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/instructor/add_material.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/instructor/announcement.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/instructor/announcement.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/instructor/assignment.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/instructor/assignment.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/instructor/course.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/instructor/course.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/instructor/courses.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/instructor/courses.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/instructor/home.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/instructor/home.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/instructor/offer_course.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/instructor/offer_course.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/instructor/profile.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/instructor/profile.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/instructor/qa.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/instructor/qa.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/instructor/resources.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/instructor/resources.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/instructor/students.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/instructor/students.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/instructor/submissions.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/instructor/submissions.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/instructor/test_edit.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/instructor/test_edit.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/instructor/tests.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/instructor/tests.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/instructor/upload_result.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/instructor/upload_result.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/login.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/login.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/register.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/register.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/search.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/search.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/search/course.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/search/course.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/search/instructor.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/search/instructor.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/services.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/services.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/student/announcement.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/student/announcement.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/student/assignment.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/student/assignment.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/student/home.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/student/home.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/student/mycourse.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/student/mycourse.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/student/mycourses.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/student/mycourses.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/student/profile.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/student/profile.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/student/qa.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/student/qa.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/student/resources.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/student/resources.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/student/search/course.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/student/search/course.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/student/search/courses.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/student/search/courses.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/student/submit_assignment.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/student/submit_assignment.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/student/tests.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/student/tests.ejs" afterDir="false" />
-    </list>
+    <list default="true" id="5cc45993-6fc1-44ef-bc5c-4ed60012fcb5" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -72,12 +35,14 @@
         <counts>
           <entry key="ejs" value="2313" />
           <entry key="js" value="27" />
+          <entry key="txt" value="22" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="EJS" value="2313" />
           <entry key="JavaScript" value="27" />
+          <entry key="PLAIN_TEXT" value="22" />
         </counts>
       </usages-collector>
     </session>
@@ -332,25 +297,32 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1540746388981</updated>
-      <workItem from="1540746392399" duration="8186000" />
+      <workItem from="1540746392399" duration="8468000" />
     </task>
+    <task id="LOCAL-00001" summary="frontend updated">
+      <created>1540755275089</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1540755275089</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8186000" />
+    <option name="totallyTimeSpent" value="8468000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="697" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="npm" side_tool="true" />
       <window_info id="Favorites" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24960254" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24960254" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" />
-      <window_info anchor="bottom" id="Terminal" visible="true" weight="0.38475177" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info anchor="bottom" id="Terminal" sideWeight="0.49920508" visible="true" weight="0.38475177" />
+      <window_info active="true" anchor="bottom" id="Event Log" sideWeight="0.5007949" side_tool="true" visible="true" weight="0.38475177" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
@@ -368,6 +340,10 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="frontend updated" />
+    <option name="LAST_COMMIT_MESSAGE" value="frontend updated" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/db.js">
