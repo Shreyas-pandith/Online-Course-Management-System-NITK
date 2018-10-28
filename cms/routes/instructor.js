@@ -17,6 +17,9 @@ var upload = multer({
     storage: storage,
 }).fields([{ name: 'question', maxCount: 1 }, { name: 'answer', maxCount: 1 }]);
 
+var upload1 = multer({
+    storage: storage,
+}).single('file');
 
 router.get('/', function(req, res){
     console.log('ashdgasgdhsad');
@@ -547,7 +550,7 @@ router.get('/course/:course_id/resources/', function(req, res){
 
 router.post('/course/:course_id/resources/', function (req, res) {
     console.log('bbbnvnb');
-    upload(req, res, function (err) {
+    upload1(req, res, function (err) {
         if (err instanceof multer.MulterError) {
             // A Multer error occurred when uploading.
             console.log(err);
@@ -1527,7 +1530,7 @@ router.get('/course/:course_id/assignments/', function(req, res){
 
 router.post('/course/:course_id/assignments/', function (req, res) {
     console.log('bbbnvnb');
-    upload(req, res, function (err) {
+    upload1(req, res, function (err) {
         if (err instanceof multer.MulterError) {
             // A Multer error occurred when uploading.
             console.log(err);
@@ -1763,8 +1766,19 @@ router.get('/course/:course_id/assignment/:assignment_id/submissions', function(
                                     }
                                     else {
 
-                                        console.log(rows4);
-                                        res.render('instructor/submissions',{'user':rows1[0], 'instructor': rows2[0], 'course': rows3[0], 'announcements': rows4});
+                                        connection.query("SELECT * FROM SUBMISSION, STUDENT WHERE Assignment_id = ? AND SUBMISSION.Student_id = STUDENT.Student_id",[req.params.assignment_id] ,function(err4,rows5){
+                                            if(err4) {
+                                                console.log(err4);
+                                                res.redirect('/instructor/courses/')
+
+                                            }
+                                            else {
+
+                                                console.log(rows5);
+                                                res.render('instructor/submissions',{'user':rows1[0], 'instructor': rows2[0], 'course': rows3[0], 'announcements': rows4, 'submissions': rows5});
+
+                                            }
+                                        });
 
                                     }
                                 });
@@ -2042,6 +2056,77 @@ router.post('/course/:course_id/:question_id/', function(req, res){
 
                             }
                         });
+                    }
+                });
+            }
+        });
+    }
+    else{
+        return res.redirect('/users/login')
+    }
+});
+
+
+router.get('/course/:course_id/assignment/:submission_id/submission', function (req, res) {
+    if(req.user) {
+
+        connection.query("SELECT * FROM USER WHERE id = ?",req.user ,function(err1,rows1){
+            if(err1) {
+                console.log(err1);
+                res.redirect('/users/login')
+
+            }
+            else {
+                connection.query("SELECT * FROM INSTRUCTOR WHERE User_id = ?  ",req.user ,function(err2,rows2){
+                    if(err2) {
+                        console.log(err2);
+                        res.redirect('/users/login')
+
+                    }
+                    else {
+                        connection.query("SELECT * FROM COURSE WHERE Course_id = ?  ",req.params.course_id ,function(err3,rows3){
+                            if(err3) {
+                                console.log(err3);
+                                res.redirect('/instructor/courses/')
+
+                            }
+                            else {
+
+                                connection.query("SELECT * FROM ANOUNCEMENT WHERE Course_id = ? ORDER BY -Posted_on",[req.params.course_id] ,function(err4,rows4){
+                                    if(err4) {
+                                        console.log(err4);
+                                        res.redirect('/instructor/courses/')
+
+                                    }
+                                    else {
+
+                                        connection.query("SELECT * FROM ASSIGNMENT WHERE Assignment_id = ?",[req.params.assignment_id] ,function(err5,rows5){
+                                            if(err5) {
+                                                console.log(err5);
+                                                res.redirect('/instructor/courses/')
+
+                                            }
+                                            else {
+
+                                                connection.query("SELECT * FROM SUBMISSION WHERE Submission_id = ?",[req.params.submission_id] ,function(err6,rows6){
+                                                    if(err6) {
+                                                        console.log(err6);
+                                                        res.redirect('/instructor/courses/')
+
+                                                    }
+                                                    else {
+
+                                                        console.log(rows6);
+                                                        res.sendFile(rows6[0].Submission_File);
+                                                    }
+                                                });
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+                        });
+
                     }
                 });
             }

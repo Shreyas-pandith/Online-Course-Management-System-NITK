@@ -254,21 +254,22 @@
                             <ul class="list-group single" >
 
 
-                                <li class="list-group-item d-flex justify-content-between align-items-center" >
-                                    <a>Student 1</a><br><br><br>
-                                    <a href="">Submission</a><br><br><br>
-                                </li>
+                                <% if(submissions){%>
+
+                                    <% for(var i=0;i<submissions.length;i++){%>
+
+                                        <li class="list-group-item d-flex justify-content-between align-items-center" >
+                                            <a><%= submissions[i].First_Name%></a><br><br><br>
+                                            <a><%= submissions[i].Last_Name%></a><br><br><br>
+                                            <a ><%= submissions[i].Roll_Number%></a><br><br><br>
+                                            <a href="/instructor/course/<%= course.Course_id%>/assignment/<%= submissions[i].Submission_id%>/submission">View Submission</a><br><br><br>
+                                        </li>
+
+                                    <%}%>
+                                <%}%>
 
 
-                                <li class="list-group-item d-flex justify-content-between align-items-center" >
-                                    <a>Student 1</a><br><br><br>
-                                    <a href="">Submission</a><br><br><br>
-                                </li>
 
-                                <li class="list-group-item d-flex justify-content-between align-items-center" >
-                                    <a>Student 1</a><br><br><br>
-                                    <a href="">Submission</a><br><br><br>
-                                </li>
 
                             </ul>
                         </div>
@@ -346,62 +347,8 @@
                         </div>
 
 
-                        <div class="tech-btm">
-                            <h4>Top stories of the week</h4>
 
-                            <div class="blog-grids row mb-3">
-                                <div class="col-md-5 blog-grid-left">
-                                    <a href="single.html">
-                                        <img src="images/g3.jpg" class="img-fluid rounded" alt="">
-                                    </a>
-                                </div>
-                                <div class="col-md-7 blog-grid-right">
 
-                                    <h5>
-                                        <a href="single.html">Pellentesque dui, non felis. Maecenas male non felis </a>
-                                    </h5>
-                                    <div class="sub-meta">
-											<span>
-												<i class="far fa-clock"></i> 20 Jan, 2018</span>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="blog-grids row mb-3">
-                                <div class="col-md-5 blog-grid-left">
-                                    <a href="single.html">
-                                        <img src="images/g1.jpg" class="img-fluid rounded" alt="">
-                                    </a>
-                                </div>
-                                <div class="col-md-7 blog-grid-right">
-                                    <h5>
-                                        <a href="single.html">Pellentesque dui, non felis. Maecenas male non felis </a>
-                                    </h5>
-                                    <div class="sub-meta">
-											<span>
-												<i class="far fa-clock"></i> 20 Feb, 2018</span>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="single-gd tech-btm">
-                            <h4>Recent Post</h4>
-                            <div class="blog-grids">
-                                <div class="blog-grid-left">
-                                    <a href="single.html">
-                                        <img src="images/g2.jpg" class="img-fluid rounded" alt="">
-                                    </a>
-                                </div>
-                                <div class="blog-grid-right">
-                                    <h5 class="mt-0">
-                                        <a href="single.html">Pellentesque dui, non felis. Maecenas male</a>
-                                    </h5>
-                                </div>
-                                <div class="clearfix"> </div>
-                            </div>
-                        </div>
                     </div>
                 </aside>
                 <!-- //right side -->

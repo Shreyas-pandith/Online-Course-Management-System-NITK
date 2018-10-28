@@ -80,16 +80,20 @@ router.post('/register', function(req, res, next) {
 
                         var sql = '';
 
-                        var data = {
-                            'User_id' : user_id
-                        };
-
+                        var data;
 
                         if(role === 'Student'){
                             sql = "INSERT INTO STUDENT SET ?";
+                            data = {
+                                'User_id' : user_id,
+                                'Roll_Number' : 'ROLLNO' + 10000 + user_id
+                            };
                         }
                         else {
                             sql = "INSERT INTO INSTRUCTOR SET ?";
+                            data = {
+                                'User_id' : user_id
+                            };
                         }
 
 
