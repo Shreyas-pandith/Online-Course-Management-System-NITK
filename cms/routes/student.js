@@ -276,7 +276,7 @@ router.get('/course/:id/join', function(req, res, next) {
                                 console.log(err1);
                             }
                             else {
-                                res.redirect('/student/mycourses');
+                                res.redirect('/student/courses');
                             }
                         });
 

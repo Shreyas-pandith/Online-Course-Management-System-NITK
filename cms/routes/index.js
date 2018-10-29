@@ -3,7 +3,7 @@ var router = express.Router();
 var connection=require('../db');
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' ,message: req.flash('loginMessage')});
+  res.render('index', { title: 'Express'});
 });
 
 router.get('/course', function(req, res, next) {

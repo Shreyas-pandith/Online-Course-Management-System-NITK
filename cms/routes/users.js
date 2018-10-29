@@ -1,6 +1,10 @@
 var express = require('express');
 var router = express.Router();
+var csrf = require('csurf');
+var bodyParser = require('body-parser');
 
+var csrfProtection = csrf({ cookie: true });
+var parseForm = bodyParser.urlencoded({ extended: false });
 
 //Database
 var db = require('../db');
@@ -20,19 +24,19 @@ var LocalStrategy = require('passport-local').Strategy;
 
 
 
-router.get('/', function(req, res, next) {
+router.get('/', csrfProtection,  function(req, res, next) {
     res.send(req.user);
 });
 
 
 
-router.get('/register', function(req, res, next) {
-    res.render('register', { messages: ''});
+router.get('/register', csrfProtection,  function(req, res, next) {
+    res.render('register', { csrfToken: req.csrfToken() });
 });
 
 
 
-router.post('/register', function(req, res, next) {
+router.post('/register', parseForm, csrfProtection, function(req, res, next) {
 
     req.checkBody('psw', 'Password field can not be empty').notEmpty();
     req.checkBody('psw_repeat', 'Repeat Password field can not be empty').notEmpty();
@@ -114,15 +118,19 @@ router.post('/register', function(req, res, next) {
                             }
                             else {
 
-                                return res.redirect('/users/login/');
+                                //return res.redirect('/users/login/');
+                                req.flash('Successfully Registered.Please Login');
+                                //next();
+                                return res.render('login')
 
                             }
                         });
 
                     });
                 } else {
+                    req.flash('Email Already Exists');
                     console.log(err);
-                    return res.render('register', { messages : err})
+                    return res.render('register', { csrfToken: req.csrfToken() })
                 }
             });
         });
@@ -134,7 +142,7 @@ router.post('/register', function(req, res, next) {
 
 
 
-router.get('/login', function(req, res, next) {
+router.get('/login',  csrfProtection, function(req, res, next) {
     res.render('login');
 });
 
@@ -149,8 +157,8 @@ router.post('/login',
 
         db.query("SELECT * FROM USER WHERE id = ?",req.user ,function(err2,rows2){
             if(err2) {
-                console.log(err2);
-                res.redirect('/users/login')
+                req.flash('User Does not Exists');
+                return res.render('login', { csrfToken: req.csrfToken() })
 
             }
             else {
@@ -164,7 +172,9 @@ router.post('/login',
                     res.redirect('/instructor/')
                 }
                 else{
-                    res.redirect('/users/')
+                    req.flash('User Does not Exists');
+                    console.log(err);
+                    return res.render('login', { csrfToken: req.csrfToken() })
                 }
             }
         });

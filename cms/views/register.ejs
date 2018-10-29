@@ -152,21 +152,7 @@
 
 
 
-
-<% if (messages) { %>
-    <% for (var i=0;i<messages.length ;i ++) {%>
-        <div class="alert alert-danger">
-            <strong><%= messages[i].msg%>.</strong>
-        </div>
-    <% }%>
-<% } %>
-
-
-
-
-
-
-
+<%- locals.flash%>
 
 
 <!-- courses -->
@@ -179,6 +165,7 @@
                     </div>
                     <div class="modal-body">
                     <form action="/users/register/" method="post" class="p-3">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken%>">
                         <div class="form-group">
                             <label for="recipient-name" class="col-form-label">Email id</label>
                             <input type="email" class="form-control" placeholder="Email id" name="email" id="recipient-name4" required="">
