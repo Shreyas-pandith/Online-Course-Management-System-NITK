@@ -6,8 +6,8 @@ function connectDatabase() {
         db = mysql.createConnection({
             host     : 'localhost',
             user     : 'root',
-            password : 'mysql',
-            database : 'DBMS'
+            password : 'dpsp1191',
+            database : 'dbms2'
         });
 
         db.connect(function(err){
@@ -384,6 +384,32 @@ function connectDatabase() {
                         console.log(err.message);
                     }
                     console.log('Attendance table created');
+                });
+
+
+                let createTodos17 = `CREATE TABLE if not exists Reply
+                (
+                  Reply_id INT NOT NULL AUTO_INCREMENT,
+                  Reply VARCHAR(2500) NOT NULL,
+                  Q_A_id INT NOT NULL,
+                  Answer_id INT NOT NULL,
+                  Instructor_id INT,
+                  Student_id INT,
+                  Course_id INT,
+                  Name VARCHAR(255),
+                  PRIMARY KEY (Reply_id),
+                  FOREIGN KEY (Answer_id) REFERENCES Answer(Answer_id) ON DELETE CASCADE,
+                  FOREIGN KEY (Q_A_id) REFERENCES Q_A(Q_A_id) ON DELETE CASCADE,
+                  FOREIGN KEY (Instructor_id) REFERENCES INSTRUCTOR(Instructor_id),
+                  FOREIGN KEY (Student_id) REFERENCES STUDENT(Student_id)
+                ) 
+                ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci`;
+
+                db.query(createTodos17, function(err, results, fields) {
+                    if (err) {
+                        console.log(err.message);
+                    }
+                    console.log('Answer table created');
                 });
 
 

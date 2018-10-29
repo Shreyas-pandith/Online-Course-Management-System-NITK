@@ -1941,10 +1941,22 @@ router.get('/course/:course_id/qa', function(req, res){
 
                                                     }
                                                     else {
+                                                        connection.query("SELECT * FROM REPLY WHERE Course_id = ? ",[req.params.course_id] ,function(err6,reply){
+                                                            if(err6) {
+                                                                console.log(err6);
+                                                                res.redirect('/instructor/courses/')
 
-                                                        console.log(rows6);
-                                                        console.log(rows5);
-                                                        res.render('instructor/qa',{'user':rows1[0], 'instructor': rows2[0], 'course': rows3[0], 'announcements': rows4, 'q': rows5, 'a':rows6,  messages: req.flash('info')});
+                                                            }
+                                                            else {
+
+                                                                console.log(rows6);
+                                                                console.log(rows5);
+                                                                console.log("................");
+                                                                console.log(reply);
+                                                                res.render('instructor/qa',{'user':rows1[0], 'instructor': rows2[0], 'course': rows3[0], 'announcements': rows4, 'q': rows5, 'a':rows6,  'r':reply });
+
+                                                            }
+                                                        });
 
                                                     }
                                                 });
@@ -2516,6 +2528,69 @@ router.get('/course/:course_id/add-attendence/', function(req, res){
 });
 
 
+
+
+
+
+router.post('/course/:course_id/:question_id/:answer_id', function(req, res){
+    if(req.user) {
+
+        connection.query("SELECT * FROM USER WHERE id = ? AND Role = ?",[req.user, 'Instructor'] ,function(err1,rows1){
+            if(err1) {
+                console.log(err1);
+                res.redirect('/users/login')
+
+            }
+            else {
+                connection.query("SELECT * FROM INSTRUCTOR WHERE User_id = ?  ",req.user ,function(err2,rows2){
+                    if(err2) {
+                        console.log(err2);
+                        res.redirect('/users/login')
+
+                    }
+                    else {
+                        var Reply = req.body.answer;
+                        var instructor = rows2[0].Instructor_id;
+                        var name = rows2[0].First_Name + ' ' + rows2[0].Last_Name;
+                        if(req.body.type){
+                            instructor = null;
+                            name = '';
+                        }
+
+                        var data = {
+                            'Reply': Reply,
+                            'Q_A_id': req.params.question_id,
+                            'Instructor_id': instructor,
+                            'Student_id': null,
+                            'Course_id': req.params.course_id,
+                            'Name': name,
+                            'Answer_id':req.params.answer_id
+                        };
+
+                        connection.query("INSERT INTO  Reply SET ?",data ,function(err3,rows3){
+                            if(err3) {
+                                console.log(err3);
+                                res.redirect('/instructor/courses/')
+
+                            }
+                            else {
+
+                                console.log(rows3);
+                                var url = '/instructor/course/' + req.params.course_id + '/qa';
+                                req.flash('info', 'New Reply Successfully Added to Q&A Section!');
+                                res.redirect(url);
+
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    }
+    else{
+        return res.redirect('/users/login')
+    }
+});
 
 
 

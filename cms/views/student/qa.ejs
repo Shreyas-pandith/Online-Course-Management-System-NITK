@@ -272,6 +272,39 @@
                                                             <div class="card-body"><p style="white-space: pre-wrap;"><%= a[j].Answer%> <br><br> Answered By : <p style="color: #1da1f2"><%= a[j].Name %><% if (a[j].Instructor_id != null){ %> ( Instructor )<% } %> <% if (a[j].Student_id != null){ %> ( Student )<% } %> <% if (a[j].Instructor_id === null && a[j].Student_id === null){ %> ( Annonymous )<% } %></p> </p></div>
 
                                                         </div><br>
+
+                                                            <% if (r) { %>
+                                                                <% for (var k=0;k < r.length; k++) {%>
+
+                                                                    <% if (r[k].Answer_id === a[j].Answer_id) { %>
+
+                                                                        <div class="card" style="margin-left: 20%;margin-bottom: 5px;border:1px solid green">
+
+
+                                                                            <div class="card-body align-right"><p style="white-space: pre-wrap;"><%= r[k].Reply%> <br><br> Replied By : <p style="color: #1da1f2"><%= r[k].Name %><% if (r[k].Instructor_id != null){ %> ( Instructor )<% } %> <% if (r[k].Student_id != null){ %> ( Student )<% } %> <% if (r[k].Instructor_id === null && r[k].Student_id === null){ %> ( Annonymous )<% } %></p></div>
+                                                                        </div>
+                                                                    <% }%>
+                                                                <%}%>
+                                                            <%}%>
+                                                            <div class="card-footer replydiv">
+                                                                <div >
+                                                                    <form action="/student/course/<%= course.Course_id%>/<%=q[i].Q_A_id%>/<%= a[j].Answer_id%>" method="post">
+                                                                        <div class="row">
+                                                                            <div class="form-group col-lg-7" >
+                                                                                <textarea class="form-control" name="answer" placeholder="Your reply..." required=""></textarea>
+                                                                            </div>
+                                                                            <div class="form-group col-lg-4">
+                                                                                <label><h6 style="color: rgba(28,28,28,0.57); margin-top: 5px">Annonymous: </h6></label>           <input type="checkbox" checked name="type">
+                                                                            </div>
+                                                                            <div class="col-lg-1">
+                                                                                <button type="submit" class="btn btn-primary submit " >Post</button>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+
                                                             <%} %>
 
                                                     <% }%>
