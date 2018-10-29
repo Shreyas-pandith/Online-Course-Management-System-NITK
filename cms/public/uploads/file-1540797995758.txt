@@ -1,0 +1,137 @@
+CREATE TABLE DEPARTMENT
+(
+  Department_id INT NOT NULL,
+  Department_Name VARCHAR(255) NOT NULL,
+  PRIMARY KEY (Department_id)
+);
+
+CREATE TABLE STUDENT
+(
+  First_Name VARCHAR(255) NOT NULL,
+  Middle_Name VARCHAR(255) NOT NULL,
+  Last_Name VARCHAR(255) NOT NULL,
+  Student_id VARCHAR(25) NOT NULL,
+  Email VARCHAR(255) NOT NULL,
+  Phone_Number NUMERIC(11) NOT NULL,
+  Department_id INT NOT NULL,
+  PRIMARY KEY (Student_id),
+  FOREIGN KEY (Department_id) REFERENCES DEPARTMENT(Department_id)
+);
+
+CREATE TABLE INSTRUCTOR
+(
+  Instructor_id INT NOT NULL,
+  First_Name VARCHAR(255) NOT NULL,
+  Last_Name VARCHAR(255) NOT NULL,
+  Middle_Name VARCHAR(255) NOT NULL,
+  Email VARCHAR(255) NOT NULL,
+  Phone_Number NUMERIC(11) NOT NULL,
+  Department_id INT NOT NULL,
+  PRIMARY KEY (Instructor_id),
+  FOREIGN KEY (Department_id) REFERENCES DEPARTMENT(Department_id)
+);
+
+CREATE TABLE COURSE
+(
+  Course_Title VARCHAR(255) NOT NULL,
+  Course_id INT NOT NULL,
+  Instructor_id INT NOT NULL,
+  Department_id INT NOT NULL,
+  PRIMARY KEY (Course_id),
+  FOREIGN KEY (Instructor_id) REFERENCES INSTRUCTOR(Instructor_id),
+  FOREIGN KEY (Department_id) REFERENCES DEPARTMENT(Department_id)
+);
+
+CREATE TABLE COURSE_MATERIALS
+(
+  Material_id INT NOT NULL,
+  Topic VARCHAR(255) NOT NULL,
+  Remark VARCHAR(255) NOT NULL,
+  Material File NOT NULL,
+  Course_id INT NOT NULL,
+  Instructor_id INT NOT NULL,
+  PRIMARY KEY (Material_id),
+  FOREIGN KEY (Course_id) REFERENCES COURSE(Course_id),
+  FOREIGN KEY (Instructor_id) REFERENCES INSTRUCTOR(Instructor_id)
+);
+
+CREATE TABLE TESTS
+(
+  Test_id INT NOT NULL,
+  Test_Name VARCHAR(100) NOT NULL,
+  Maximun_Marks INT NOT NULL,
+  Question_Paper File NOT NULL,
+  Answer_Key File NOT NULL,
+  Course_id INT NOT NULL,
+  Instructor_id INT NOT NULL,
+  PRIMARY KEY (Test_id),
+  FOREIGN KEY (Course_id) REFERENCES COURSE(Course_id),
+  FOREIGN KEY (Instructor_id) REFERENCES INSTRUCTOR(Instructor_id)
+);
+
+CREATE TABLE TEST_RESULTS
+(
+  Result_id INT NOT NULL,
+  Marks_Obtained INT NOT NULL,
+  Test_id INT NOT NULL,
+  Student_id VARCHAR(25) NOT NULL,
+  PRIMARY KEY (Result_id),
+  FOREIGN KEY (Test_id) REFERENCES TESTS(Test_id),
+  FOREIGN KEY (Student_id) REFERENCES STUDENT(Student_id)
+);
+
+CREATE TABLE GRADE
+(
+  Grade_id INT NOT NULL,
+  Grade_Obtained CHAR(1) NOT NULL,
+  Final_Consolidated_Marks INT NOT NULL,
+  Student_id VARCHAR(25) NOT NULL,
+  Course_id INT NOT NULL,
+  PRIMARY KEY (Grade_id),
+  FOREIGN KEY (Student_id) REFERENCES STUDENT(Student_id),
+  FOREIGN KEY (Course_id) REFERENCES COURSE(Course_id)
+);
+
+CREATE TABLE ANOUNCEMENT
+(
+  Anouncement_id INT NOT NULL,
+  Anouncement_Details VARCHAR(255) NOT NULL,
+  Course_id INT,
+  Instructor_id INT NOT NULL,
+  PRIMARY KEY (Anouncement_id),
+  FOREIGN KEY (Course_id) REFERENCES COURSE(Course_id),
+  FOREIGN KEY (Instructor_id) REFERENCES INSTRUCTOR(Instructor_id)
+);
+
+CREATE TABLE Q_A
+(
+  Q_A_id INT NOT NULL,
+  Question VARCHAR(1000) NOT NULL,
+  Student_id VARCHAR(25),
+  Course_id INT NOT NULL,
+  PRIMARY KEY (Q_A_id),
+  FOREIGN KEY (Student_id) REFERENCES STUDENT(Student_id),
+  FOREIGN KEY (Course_id) REFERENCES COURSE(Course_id)
+);
+
+CREATE TABLE ANSWER
+(
+  Answer_id INT NOT NULL,
+  Answer VARCHAR(2500) NOT NULL,
+  Q_A_id INT NOT NULL,
+  Instructor_id INT,
+  Student_id VARCHAR(25),
+  PRIMARY KEY (Answer_id),
+  FOREIGN KEY (Q_A_id) REFERENCES Q_A(Q_A_id),
+  FOREIGN KEY (Instructor_id) REFERENCES INSTRUCTOR(Instructor_id),
+  FOREIGN KEY (Student_id) REFERENCES STUDENT(Student_id)
+);
+
+CREATE TABLE ENROLLED
+(
+  Course_id INT NOT NULL,
+  Student_id VARCHAR(25) NOT NULL,
+  PRIMARY KEY (Course_id, Student_id),
+  FOREIGN KEY (Course_id) REFERENCES COURSE(Course_id),
+  FOREIGN KEY (Student_id) REFERENCES STUDENT(Student_id)
+);

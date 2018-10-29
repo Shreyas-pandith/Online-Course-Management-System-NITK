@@ -41,7 +41,7 @@ router.get('/', function(req, res){
                     else {
                         console.log(rows1[0]);
 
-                        res.render('instructor/home',{'user':rows1[0], 'instructor': rows2[0]});
+                        res.render('instructor/home',{'user':rows1[0], 'instructor': rows2[0],  messages: req.flash('info')});
                     }
                 });
             }
@@ -63,33 +63,44 @@ router.post('/profile', function(req, res, next){
 
         req.checkBody('phone', 'Phone Number is Not Valid').isNumeric();
 
+        const errors = req.validationErrors();
 
-        console.log('ddd');
-        var First_Name = req.body.fname;
-        var Middle_Name = req.body.mname;
-        var Last_Name = req.body.lname;
+        if(errors){
+            req.flash('info', errors[0].message);
+            res.redirect('/instructor/profile/');
+        }
+        else
+        {
+            console.log('ddd');
+            var First_Name = req.body.fname;
+            var Middle_Name = req.body.mname;
+            var Last_Name = req.body.lname;
 
 
-        connection.query("SELECT * FROM USER WHERE id = ?",req.user ,function(err1,rows1){
-            if(err1) {
-                console.log(err1);
-                res.redirect('/users/login')
+            connection.query("SELECT * FROM USER WHERE id = ?",req.user ,function(err1,rows1){
+                if(err1) {
+                    console.log(err1);
+                    res.redirect('/users/login')
 
-            }
-            else if(rows1[0].role === 'Instructor') {
-                connection.query("UPDATE INSTRUCTOR SET First_Name = ?, Middle_Name = ?, Last_Name = ? WHERE User_id = ?  ",[First_Name, Middle_Name, Last_Name,req.user] ,function(err2,rows2){
-                    if(err2) {
-                        console.log(err2);
-                        res.redirect('/users/login')
+                }
+                else if(rows1[0].role === 'Instructor') {
+                    connection.query("UPDATE INSTRUCTOR SET First_Name = ?, Middle_Name = ?, Last_Name = ? WHERE User_id = ?  ",[First_Name, Middle_Name, Last_Name,req.user] ,function(err2,rows2){
+                        if(err2) {
+                            console.log(err2);
+                            res.redirect('/users/login')
 
-                    }
-                    else {
-                        req.flash( 'Profile Succesfully Updated');
-                        next();
-                    }
-                });
-            }
-        });
+                        }
+                        else {
+                            req.flash('info', 'Profile Successfully Updated!');
+                            res.redirect('/instructor/profile/');
+                        }
+                    });
+                }
+            });
+        }
+
+
+
     }
     else {
         res.redirect('/login/')
@@ -117,7 +128,7 @@ router.get('/profile', function(req, res, next) {
                     }
                     else {
                         console.log(rows1[0]);
-                        res.render('instructor/profile',{'user':rows1[0], 'instructor': rows2[0]});
+                        res.render('instructor/profile',{'user':rows1[0], 'instructor': rows2[0],  messages: req.flash('info')});
                     }
                 });
             }
@@ -173,6 +184,7 @@ router.post('/offer-course', function(req, res){
                                     else {
                                         console.log(rows4[0]);
                                         url = '/instructor/course-details/' + rows4[0].id;
+                                        req.flash('info', 'Course Successfully Added!. Please Update the Course');
                                         return res.redirect(url);
                                     }
                                 });
@@ -216,7 +228,7 @@ router.get('/courses', function(req, res){
                             }
                             else {
 
-                                res.render('instructor/courses',{'user':rows1[0], 'instructor': rows2[0], 'courses': rows3});
+                                res.render('instructor/courses',{'user':rows1[0], 'instructor': rows2[0], 'courses': rows3,  messages: req.flash('info')});
                             }
                         });
 
@@ -264,7 +276,7 @@ router.get('/course-details/:id', function(req, res){
                                     }
                                     else {
                                         console.log(rows4);
-                                        res.render('instructor/course',{'user':rows1[0], 'instructor': rows2[0], 'course': rows3[0], 'announcements': rows4});
+                                        res.render('instructor/course',{'user':rows1[0], 'instructor': rows2[0], 'course': rows3[0], 'announcements': rows4,  messages: req.flash('info')});
                                     }
                                 });
                             }
@@ -327,6 +339,7 @@ router.post('/course-details/:id', function(req, res){
                             }
                             else {
                                 console.log(rows3[0]);
+                                req.flash('info', 'Course Details Successfully Updated!');
                                 url = '/instructor/course-details/' + req.params.id;
                                 return res.redirect(url);
                             }
@@ -362,7 +375,7 @@ router.get('/offer-course', function(req, res){
                     }
                     else {
                         console.log(rows1[0]);
-                        res.render('instructor/offer_course',{'user':rows1[0], 'instructor': rows2[0]});
+                        res.render('instructor/offer_course',{'user':rows1[0], 'instructor': rows2[0],  messages: req.flash('info')});
                     }
                 });
             }
@@ -418,7 +431,7 @@ router.get('/course/announcement/:id1/:id2', function(req, res){
                                             else {
 
                                                 console.log(rows4);
-                                                res.render('instructor/announcement',{'user':rows1[0], 'instructor': rows2[0], 'course': rows3[0], 'announcement': rows5[0], 'announcements': rows4});
+                                                res.render('instructor/announcement',{'user':rows1[0], 'instructor': rows2[0], 'course': rows3[0], 'announcement': rows5[0], 'announcements': rows4,  messages: req.flash('info')});
                                             }
                                         });
 
@@ -484,6 +497,7 @@ router.post('/course/announcement/:id', function(req, res){
                             else {
                                 console.log(rows3[0]);
                                 var url = '/instructor/course-details/' + req.params.id;
+                                req.flash('info', 'Announcemnet has Successfully Posted!');
                                 res.redirect(url);
                             }
                         });
@@ -539,7 +553,7 @@ router.get('/course/:course_id/resources/', function(req, res){
                                             }
                                             else {
                                                 console.log(rows5);
-                                                res.render('instructor/resources',{'user':rows1[0], 'instructor': rows2[0], 'course': rows3[0], 'announcements': rows4, 'resources': rows5});
+                                                res.render('instructor/resources',{'user':rows1[0], 'instructor': rows2[0], 'course': rows3[0], 'announcements': rows4, 'resources': rows5,  messages: req.flash('info')});
                                             }
                                         });
                                     }
@@ -612,6 +626,7 @@ router.post('/course/:course_id/resources/', function (req, res) {
                                 else {
                                     console.log(rows4);
                                     var url = '/instructor/course/' + req.params.course_id + '/resources/';
+                                    req.flash('info', 'New Resource Successfully Added to Resource Section!');
                                     res.redirect(url);
                                 }
                             });
@@ -730,6 +745,7 @@ router.get('/course/:course_id/resources/:resource_id/delete', function (req, re
                                                     else {
                                                         console.log('File was deleted');
                                                         var url = '/instructor/course/' + req.params.course_id + '/resources/';
+                                                        req.flash('info', ' Resource Successfully Deleted from Resource Section!');
                                                         res.redirect(url);
 
                                                     }
@@ -807,7 +823,7 @@ router.get('/course/:course_id/tests/', function(req, res){
                                                     }
                                                     else {
                                                         console.log(rows6);
-                                                        res.render('instructor/tests',{'user':rows1[0], 'instructor': rows2[0], 'course': rows3[0], 'announcements': rows4, 'tests': rows5, 'assignments': rows6});
+                                                        res.render('instructor/tests',{'user':rows1[0], 'instructor': rows2[0], 'course': rows3[0], 'announcements': rows4, 'tests': rows5, 'assignments': rows6,  messages: req.flash('info')});
                                                     }
                                                 });
                                             }
@@ -878,7 +894,7 @@ router.get('/course/:course_id/tests/:test_id/edit', function(req, res){
                                                     }
                                                     else {
                                                         console.log(rows6);
-                                                        res.render('instructor/test_edit',{'user':rows1[0], 'instructor': rows2[0], 'course': rows3[0], 'announcements': rows4, 'tests': rows5, 'test': rows6[0]});
+                                                        res.render('instructor/test_edit',{'user':rows1[0], 'instructor': rows2[0], 'course': rows3[0], 'announcements': rows4, 'tests': rows5, 'test': rows6[0],  messages: req.flash('info')});
                                                     }
                                                 });
                                             }
@@ -990,6 +1006,7 @@ router.post('/course/:course_id/tests/:test_id/edit', function (req, res) {
                                                                 else {
                                                                     console.log(req.files);
                                                                     var url = '/instructor/course/' + req.params.course_id + '/tests/';
+                                                                    req.flash('info', 'Test information Successfully Updated.');
                                                                     res.redirect(url);
                                                                 }
                                                             });
@@ -1050,6 +1067,7 @@ router.post('/course/:course_id/tests/', function (req, res) {
                                 else {
                                     console.log(rows4);
                                     var url = '/instructor/course/' + req.params.course_id + '/tests/';
+                                    req.flash('info', 'New Test Successfully Added to Test Section!');
                                     res.redirect(url);
                                 }
                             });
@@ -1232,6 +1250,7 @@ router.get('/course/:course_id/tests/:test_id/delete', function (req, res) {
                                             else {
                                                 console.log('File was deleted');
                                                 var url = '/instructor/course/' + req.params.course_id + '/tests/';
+                                                req.flash('info', 'Test Successfully Deleted From Test Section!');
                                                 res.redirect(url);
 
                                             }
@@ -1317,7 +1336,7 @@ router.get('/course/:course_id/tests/:test_id/results', function(req, res){
                                                             else {
 
                                                                 console.log(rows7);
-                                                                res.render('instructor/upload_result',{'user':rows1[0], 'instructor': rows2[0], 'course': rows3[0], 'announcements': rows4, 'students': rows6, 'test':rows5[0], 'results': rows7});
+                                                                res.render('instructor/upload_result',{'user':rows1[0], 'instructor': rows2[0], 'course': rows3[0], 'announcements': rows4, 'students': rows6, 'test':rows5[0], 'results': rows7,  messages: req.flash('info')});
 
                                                             }
                                                         });
@@ -1443,6 +1462,7 @@ router.post('/course/:course_id/tests/:test_id/results', function(req, res){
 
                                                         console.log(rows6);
                                                         var url = '/instructor/course/' + req.params.course_id+ '/tests/';
+                                                        req.flash('info', 'Results of th test Successfully Updated!');
                                                         res.redirect(url);
 
                                                     }
@@ -1512,7 +1532,7 @@ router.get('/course/:course_id/assignments/', function(req, res){
                                             else {
 
                                                 console.log(rows5);
-                                                res.render('instructor/assignment',{'user':rows1[0], 'instructor': rows2[0], 'course': rows3[0], 'announcements': rows4, 'assignments': rows5});
+                                                res.render('instructor/assignment',{'user':rows1[0], 'instructor': rows2[0], 'course': rows3[0], 'announcements': rows4, 'assignments': rows5,  messages: req.flash('info')});
                                             }
                                         });
                                     }
@@ -1574,7 +1594,9 @@ router.post('/course/:course_id/assignments/', function (req, res) {
                                 'Assignment_Name': req.body.resource_name,
                                 'Assignment_file' : path.join(__dirname, "../public/uploads/" + req.file.filename),
                                 'Course_id': req.params.course_id,
-                                'Instructor_id': rows2[0].Instructor_id
+                                'Instructor_id': rows2[0].Instructor_id,
+                                'Date': req.body.date,
+                                'Maximun_Marks': req.body.marks
                             };
                             console.log(data);
                             connection.query("INSERT INTO ASSIGNMENT SET ?",data ,function(err4,rows4){
@@ -1586,6 +1608,7 @@ router.post('/course/:course_id/assignments/', function (req, res) {
                                 else {
                                     console.log(rows4);
                                     var url = '/instructor/course/' + req.params.course_id + '/assignments/';
+                                    req.flash('info', 'New Assignment Successfully Added to Assignment Section!');
                                     res.redirect(url);
                                 }
                             });
@@ -1707,6 +1730,7 @@ router.get('/course/:course_id/assignments/:assignment_id/delete', function (req
                                                     else {
                                                         console.log('File was deleted');
                                                         var url = '/instructor/course/' + req.params.course_id + '/assignments/';
+                                                        req.flash('info', 'ASSIGNMENT Deleted Successfully');
                                                         res.redirect(url);
 
                                                     }
@@ -1779,7 +1803,7 @@ router.get('/course/:course_id/assignment/:assignment_id/submissions', function(
                                             else {
 
                                                 console.log(rows5);
-                                                res.render('instructor/submissions',{'user':rows1[0], 'instructor': rows2[0], 'course': rows3[0], 'announcements': rows4, 'submissions': rows5});
+                                                res.render('instructor/submissions',{'user':rows1[0], 'instructor': rows2[0], 'course': rows3[0], 'announcements': rows4, 'submissions': rows5,  messages: req.flash('info')});
 
                                             }
                                         });
@@ -1843,7 +1867,7 @@ router.get('/course/:course_id/students', function(req, res){
                                             else {
 
                                                 console.log(rows5);
-                                                res.render('instructor/students',{'user':rows1[0], 'instructor': rows2[0], 'course': rows3[0], 'announcements': rows4, 'students': rows5});
+                                                res.render('instructor/students',{'user':rows1[0], 'instructor': rows2[0], 'course': rows3[0], 'announcements': rows4, 'students': rows5,  messages: req.flash('info')});
 
                                             }
                                         });
@@ -1920,7 +1944,7 @@ router.get('/course/:course_id/qa', function(req, res){
 
                                                         console.log(rows6);
                                                         console.log(rows5);
-                                                        res.render('instructor/qa',{'user':rows1[0], 'instructor': rows2[0], 'course': rows3[0], 'announcements': rows4, 'q': rows5, 'a':rows6});
+                                                        res.render('instructor/qa',{'user':rows1[0], 'instructor': rows2[0], 'course': rows3[0], 'announcements': rows4, 'q': rows5, 'a':rows6,  messages: req.flash('info')});
 
                                                     }
                                                 });
@@ -1995,6 +2019,7 @@ router.post('/course/:course_id/qa', function(req, res){
 
                                 console.log(rows3);
                                 var url = '/instructor/course/' + req.params.course_id + '/qa';
+                                req.flash('info', 'New Question Successfully Added to Q&A Section!');
                                 res.redirect(url);
 
                             }
@@ -2056,6 +2081,7 @@ router.post('/course/:course_id/:question_id/', function(req, res){
 
                                 console.log(rows3);
                                 var url = '/instructor/course/' + req.params.course_id + '/qa';
+                                req.flash('info', 'New Answer Successfully Added to Q&A Section!');
                                 res.redirect(url);
 
                             }
@@ -2175,7 +2201,7 @@ router.get('/course/:course_id/announcements/', function(req, res){
                                     else {
 
                                         console.log(rows4);
-                                        res.render('instructor/announcements',{'user':rows1[0], 'instructor': rows2[0], 'course': rows3[0], 'announcements': rows4});
+                                        res.render('instructor/announcements',{'user':rows1[0], 'instructor': rows2[0], 'course': rows3[0], 'announcements': rows4,  messages: req.flash('info')});
                                     }
                                 });
                             }

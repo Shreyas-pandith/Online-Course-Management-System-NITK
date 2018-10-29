@@ -363,7 +363,7 @@ router.get('/course-details/:id', function(req, res, next) {
                             else {
                                 if(enrolled.length === 0)
                                 {
-                                    res.redirect('/student/mycourses');
+                                    res.redirect('/student/courses');
                                 }else
                                 {
                                     connection.query("select  * FROM COURSE where Course_id =?",req.params.id,function(err4,course){
@@ -429,7 +429,7 @@ router.get('/course/join', function(req, res, next) {
                         connection.query(" SELECT * FROM COURSE WHERE Course_id NOT IN (SELECT Course_id FROM ENROLLED WHERE Student_id = ?) ",rows2[0].Student_id,function(err3,row3){
                             if(err3) {
                                 console.log(err3);
-                                res.redirect('/student/mycourses');
+                                res.redirect('/student/courses');
                             }
                             else {
                                 console.log(row3);
@@ -478,7 +478,7 @@ router.get('/course/announcement/:id/:announcement_id', function(req, res, next)
                             else {
                                 if(enrolled.length === 0)
                                 {
-                                    res.redirect('/student/mycourses');
+                                    res.redirect('/student/courses');
                                 }else
                                 {
                                     connection.query("select  * FROM COURSE where Course_id =?",req.params.id,function(err4,course){
@@ -1190,7 +1190,7 @@ router.post('/course/:course_id/assignment/:assignment_id/submit', function (req
                                         var data = {
                                             'Submission_File': path.join(__dirname, "../public/uploads/" + req.file.filename),
                                             'Course_id': req.params.course_id,
-                                            'Assignment_id': req.params.course_id,
+                                            'Assignment_id': req.params.assignment_id,
                                             'Student_id': rows2[0].Student_id
                                         };
                                         console.log(data);

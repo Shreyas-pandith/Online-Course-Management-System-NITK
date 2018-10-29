@@ -174,24 +174,7 @@
                                 <a href="/users/logout" class="nav-link">Logout</a>
                             </li>
                         </ul>
-                    <li>
-                        <!-- search --->
-                        <div class="search-bar-agileits">
-                            <div class="cd-main-header">
-                                <ul class="cd-header-buttons">
-                                    <li><a class="cd-search-trigger" href="#cd-search"> <span></span></a></li>
-                                </ul>
-                                <!-- cd-header-buttons -->
-                            </div>
-                            <div id="cd-search" class="cd-search">
-                                <form action="#" method="post">
-                                    <input name="Search" type="search" placeholder="Click enter after typing...">
-                                </form>
-                            </div>
-                        </div>
-                        <!-- search --->
 
-                    </li>
                 </ul>
             </div>
             <!-- //main nav -->
@@ -206,7 +189,7 @@
     <div class="container">
         <div class="agileinfo-inner">
             <h2 class="text-center text-white">
-                Course Name
+               <%= course.Course_Title%>
             </h2>
         </div>
     </div>
@@ -224,10 +207,20 @@
         <li class="breadcrumb-item">
             <a href="/instructor/course-details/<%= course.Course_id%>"><%= course.Course_Title%></a>
         </li>
-        <li class="breadcrumb-item active" aria-current="page">Test And Announcement</li>
+        <li class="breadcrumb-item active" aria-current="page">Test And Examinations</li>
     </ol>
 </nav>
 <!-- //breadcrumbs -->
+
+<% if (messages) { %>
+<%if(messages[0]){%>
+    <div class="alert alert-success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <i class="fa sign"></i><strong></strong>
+        <span><%= messages[0]%></span>
+    </div>
+<%}%>
+<% } %>
 
 <!-- courses -->
 <section class="courses py-5">
@@ -339,84 +332,23 @@
                             <ul class="list-group single">
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     <a href="/instructor/course/<%= course.Course_id%>/resources">Resources Section</a>
-                                    <span class="badge badge-primary badge-pill">14</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     <a href="/instructor/course/<%= course.Course_id%>/assignments">Assignment And Submissions</a>
-                                    <span class="badge badge-primary badge-pill">2</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     <a href="/instructor/course/<%= course.Course_id%>/tests">Test And Examinations</a>
-                                    <span class="badge badge-primary badge-pill">1</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     <a href="/instructor/course/<%= course.Course_id%>/students">Students</a>
-                                    <span class="badge badge-primary badge-pill">1</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     <a href="/instructor/course/<%= course.Course_id%>/qa">Q&A</a>
-                                    <span class="badge badge-primary badge-pill">1</span>
                                 </li>
                             </ul>
                         </div>
 
 
-                        <div class="tech-btm">
-                            <h4>Top stories of the week</h4>
-
-                            <div class="blog-grids row mb-3">
-                                <div class="col-md-5 blog-grid-left">
-                                    <a href="single.html">
-                                        <img src="images/g3.jpg" class="img-fluid rounded" alt="">
-                                    </a>
-                                </div>
-                                <div class="col-md-7 blog-grid-right">
-
-                                    <h5>
-                                        <a href="single.html">Pellentesque dui, non felis. Maecenas male non felis </a>
-                                    </h5>
-                                    <div class="sub-meta">
-											<span>
-												<i class="far fa-clock"></i> 20 Jan, 2018</span>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="blog-grids row mb-3">
-                                <div class="col-md-5 blog-grid-left">
-                                    <a href="single.html">
-                                        <img src="images/g1.jpg" class="img-fluid rounded" alt="">
-                                    </a>
-                                </div>
-                                <div class="col-md-7 blog-grid-right">
-                                    <h5>
-                                        <a href="single.html">Pellentesque dui, non felis. Maecenas male non felis </a>
-                                    </h5>
-                                    <div class="sub-meta">
-											<span>
-												<i class="far fa-clock"></i> 20 Feb, 2018</span>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="single-gd tech-btm">
-                            <h4>Recent Post</h4>
-                            <div class="blog-grids">
-                                <div class="blog-grid-left">
-                                    <a href="single.html">
-                                        <img src="images/g2.jpg" class="img-fluid rounded" alt="">
-                                    </a>
-                                </div>
-                                <div class="blog-grid-right">
-                                    <h5 class="mt-0">
-                                        <a href="single.html">Pellentesque dui, non felis. Maecenas male</a>
-                                    </h5>
-                                </div>
-                                <div class="clearfix"> </div>
-                            </div>
-                        </div>
                     </div>
                 </aside>
                 <!-- //right side -->

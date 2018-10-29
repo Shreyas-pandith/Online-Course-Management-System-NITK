@@ -31,7 +31,7 @@ router.get('/', csrfProtection,  function(req, res, next) {
 
 
 router.get('/register', csrfProtection,  function(req, res, next) {
-    res.render('register', { csrfToken: req.csrfToken() });
+    res.render('register', { csrfToken: req.csrfToken() ,  messages: req.flash('info')});
 });
 
 
@@ -51,7 +51,11 @@ router.post('/register', parseForm, csrfProtection, function(req, res, next) {
     const errors = req.validationErrors();
 
     if(errors){
-        return res.render('register', { messages : errors})
+        console.log(errors);
+        for(var i=0;i<errors.length;i++){
+            req.flash('info', errors[i].msg);
+        }
+        return res.redirect('/users/register/')
     }
     else
     {
@@ -128,9 +132,9 @@ router.post('/register', parseForm, csrfProtection, function(req, res, next) {
 
                     });
                 } else {
-                    req.flash('Email Already Exists');
+                    req.flash('info','Email Already Exists');
                     console.log(err);
-                    return res.render('register', { csrfToken: req.csrfToken() })
+                    return res.redirect('/users/register/')
                 }
             });
         });
@@ -143,7 +147,7 @@ router.post('/register', parseForm, csrfProtection, function(req, res, next) {
 
 
 router.get('/login',  csrfProtection, function(req, res, next) {
-    res.render('login');
+    res.render('login',{ csrfToken: req.csrfToken() ,  messages: req.flash('info')});
 });
 
 
@@ -168,13 +172,12 @@ router.post('/login',
                     res.redirect('/student/')
                 }
                 else if(role === 'Instructor'){
-                    console.log('ashdgasgdhsad');
+                    req.flash('info', 'Succesfully Logged In.');
                     res.redirect('/instructor/')
                 }
                 else{
                     req.flash('User Does not Exists');
-                    console.log(err);
-                    return res.render('login', { csrfToken: req.csrfToken() })
+                    res.redirect('/users/login/');
                 }
             }
         });

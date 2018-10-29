@@ -10,7 +10,7 @@ var logger = require('morgan');
 
 var passport = require('passport');
 var mysql_store = require('express-mysql-session')(session);
-var flash = require('express-flash-notification');
+var flash = require('connect-flash');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');

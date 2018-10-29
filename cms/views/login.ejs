@@ -150,6 +150,17 @@
 </nav>
 <!-- //breadcrumbs -->
 
+<% if (messages) { %>
+<%if(messages[0]){%>
+    <div class="alert alert-success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <i class="fa sign"></i><strong></strong>
+        <span><%= messages[0]%></span>
+    </div>
+<%}%>
+<% } %>
+
+
 <!-- courses -->
 <section class="courses py-5">
     <!-- Login modal -->
@@ -161,6 +172,7 @@
                 </div>
                 <div class="modal-body">
                     <form action="/users/login" method="post" class="p-3">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken%>">
                         <div class="form-group">
                             <label for="recipient-name" class="col-form-label">User Name</label>
                             <input type="email" class="form-control" placeholder="Email" name="email" id="recipient-name" required="">

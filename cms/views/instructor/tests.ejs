@@ -228,6 +228,15 @@
     </ol>
 </nav>
 <!-- //breadcrumbs -->
+<% if (messages) { %>
+<%if(messages[0]){%>
+    <div class="alert alert-success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <i class="fa sign"></i><strong></strong>
+        <span><%= messages[0]%></span>
+    </div>
+<%}%>
+<% } %>
 
 <!-- courses -->
 <section class="courses py-5">
@@ -321,23 +330,18 @@
                             <ul class="list-group single">
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     <a href="/instructor/course/<%= course.Course_id%>/resources">Resources Section</a>
-                                    <span class="badge badge-primary badge-pill">14</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     <a href="/instructor/course/<%= course.Course_id%>/assignments">Assignment And Submissions</a>
-                                    <span class="badge badge-primary badge-pill">2</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     <a href="/instructor/course/<%= course.Course_id%>/tests">Test And Examinations</a>
-                                    <span class="badge badge-primary badge-pill">1</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     <a href="/instructor/course/<%= course.Course_id%>/students">Students</a>
-                                    <span class="badge badge-primary badge-pill">1</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     <a href="/instructor/course/<%= course.Course_id%>/qa">Q&A</a>
-                                    <span class="badge badge-primary badge-pill">1</span>
                                 </li>
                             </ul>
                         </div>
@@ -432,6 +436,42 @@
     <!--</div>-->
 </footer>
 <!-- footer -->
+<!-- Test modal -->
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-uppercase" id="exampleModalLabel2">Conduct a test</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="/instructor/course/<%= course.Course_id%>/tests" method="post" class="p-3" >
+
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Test Name</label>
+                        <input type="text" class="form-control" placeholder="Test Name" name="test_name" id="recipient-name4" required="">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Maximum Marks</label>
+                        <input type="number" class="form-control" placeholder="Maximum Marks" name="test_marks" id="recipient-name4" required="">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Date of Conduct</label>
+                        <input type="date" class="form-control" placeholder="Date of Conduct" name="test_date" id="recipient-name4" required="">
+                    </div>
+                    <div class="right-w3l mt-4 mb-3">
+                        <input type="submit" class="form-control" value="Add Test">
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- //Register modal -->
+
 <!-- Register modal -->
 <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -484,41 +524,7 @@
 
 
 
-<!-- Test modal -->
-<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title text-uppercase" id="exampleModalLabel2">Conduct a test</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form action="/instructor/course/<%= course.Course_id%>/tests" method="post" class="p-3" >
 
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Test Name</label>
-                        <input type="text" class="form-control" placeholder="Test Name" name="test_name" id="recipient-name4" required="">
-                    </div>
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Maximum Marks</label>
-                        <input type="number" class="form-control" placeholder="Maximum Marks" name="test_marks" id="recipient-name4" required="">
-                    </div>
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Date of Conduct</label>
-                        <input type="date" class="form-control" placeholder="Date of Conduct" name="test_date" id="recipient-name4" required="">
-                    </div>
-                    <div class="right-w3l mt-4 mb-3">
-                        <input type="submit" class="form-control" value="Add Test">
-                    </div>
-                </form>
-
-            </div>
-        </div>
-    </div>
-</div>
-<!-- //Register modal -->
 
 
 

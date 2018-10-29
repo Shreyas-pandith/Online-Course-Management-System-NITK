@@ -186,6 +186,8 @@
 </header>
 <!-- //header -->
 
+
+
 <!-- inner banner -->
 <div class="inner_banner layer" id="home">
     <div class="container">
@@ -210,6 +212,15 @@
     </ol>
 </nav>
 <!-- //breadcrumbs -->
+<% if (messages) { %>
+<%if(messages[0]){%>
+    <div class="alert alert-success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <i class="fa sign"></i><strong></strong>
+        <span><%= messages[0]%></span>
+    </div>
+<%}%>
+<% } %>
 
 <!-- courses -->
 <section class="courses py-5">
@@ -337,23 +348,18 @@
                                 <ul class="list-group single">
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                         <a href="/instructor/course/<%= course.Course_id%>/resources">Resources Section</a>
-                                        <span class="badge badge-primary badge-pill">14</span>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                         <a href="/instructor/course/<%= course.Course_id%>/assignments">Assignment And Submissions</a>
-                                        <span class="badge badge-primary badge-pill">2</span>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                         <a href="/instructor/course/<%= course.Course_id%>/tests">Test And Examinations</a>
-                                        <span class="badge badge-primary badge-pill">1</span>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                         <a href="/instructor/course/<%= course.Course_id%>/students">Students</a>
-                                        <span class="badge badge-primary badge-pill">1</span>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                         <a href="/instructor/course/<%= course.Course_id%>/qa">Q&A</a>
-                                        <span class="badge badge-primary badge-pill">1</span>
                                     </li>
                                 </ul>
                             </div>
@@ -471,7 +477,7 @@
 
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Link 1</label>
-                        <input type="" class="form-control" placeholder="Link 1" name="link1" id="recipient-name4" required="">
+                        <input type="" class="form-control" placeholder="Link 1" name="link1" id="recipient-name4" >
                     </div>
                     <!--   <div class="form-group">
                          <label for="recipient-name" class="col-form-label">Mobile Number</label>
@@ -480,11 +486,11 @@
                      -->
                     <div class="form-group">
                         <label for="recipient-name1" class="col-form-label">Link 2</label>
-                        <input type="" class="form-control" placeholder="Link 2" name="link2" id="recipient-name6" required="">
+                        <input type="" class="form-control" placeholder="Link 2" name="link2" id="recipient-name6" >
                     </div>
                     <div class="form-group">
                         <label for="recipient-name1" class="col-form-label">Link 3</label>
-                        <input type="" class="form-control" placeholder="Link 3" name="link3" id="recipient-name6" required="">
+                        <input type="" class="form-control" placeholder="Link 3" name="link3" id="recipient-name6" >
                     </div>
                     <div class="right-w3l mt-4 mb-3">
                         <input type="submit" class="form-control" value="Create account">
