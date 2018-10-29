@@ -21,8 +21,8 @@ router.get('/', function(req, res){
 
     if(req.user) {
 
-        connection.query("SELECT * FROM USER WHERE id = ?",req.user ,function(err1,rows1){
-            if(err1) {
+        connection.query("SELECT * FROM USER WHERE id = ? AND Role = ?",[req.user, 'Student'] ,function(err1,rows1){
+            if(err1 || rows1.length ===0) {
                 console.log(err1);
                 res.redirect('/users/login')
 
@@ -35,7 +35,7 @@ router.get('/', function(req, res){
 
                     }
                     else {
-                        connection.query("SELECT * FROM ANOUNCEMENT WHERE Course_id IN (SELECT Course_id FROM ENROLLED WHERE Student_id = ?) ORDER BY -Posted_on",rows2[0].Student_id ,function(err3,rows3){
+                        connection.query("SELECT * FROM COURSE A,(SELECT * FROM ANOUNCEMENT WHERE Course_id IN (SELECT Course_id FROM ENROLLED WHERE Student_id = ?) ORDER BY -Posted_on LIMIT 5) B WHERE A.Course_id = B.Course_id",rows2[0].Student_id ,function(err3,rows3){
                             if(err3) {
                                 console.log(err3);
                                 res.redirect('/users/login')
@@ -556,7 +556,7 @@ router.get('/course/:course_id/resources/', function(req, res){
                             }
                             else {
 
-                                connection.query("SELECT * FROM ANOUNCEMENT WHERE Course_id = ? ORDER BY -Posted_on",[req.params.course_id] ,function(err4,rows4){
+                                connection.query("SELECT * FROM ANOUNCEMENT WHERE Course_id = ? ORDER BY -Posted_on LIMIT 5",[req.params.course_id] ,function(err4,rows4){
                                     if(err4) {
                                         console.log(err4);
                                         res.redirect('/student/courses/')
@@ -669,7 +669,7 @@ router.get('/course/:course_id/assignments/', function(req, res){
                             }
                             else {
 
-                                connection.query("SELECT * FROM ANOUNCEMENT WHERE Course_id = ? ORDER BY -Posted_on",[req.params.course_id] ,function(err4,rows4){
+                                connection.query("SELECT * FROM ANOUNCEMENT WHERE Course_id = ? ORDER BY -Posted_on LIMIT 5",[req.params.course_id] ,function(err4,rows4){
                                     if(err4) {
                                         console.log(err4);
                                         res.redirect('/student/courses/')
@@ -782,7 +782,7 @@ router.get('/course/:course_id/tests/', function(req, res){
                             }
                             else {
 
-                                connection.query("SELECT * FROM ANOUNCEMENT WHERE Course_id = ? ORDER BY -Posted_on",[req.params.course_id] ,function(err4,rows4){
+                                connection.query("SELECT * FROM ANOUNCEMENT WHERE Course_id = ? ORDER BY -Posted_on LIMIT 5",[req.params.course_id] ,function(err4,rows4){
                                     if(err4) {
                                         console.log(err4);
                                         res.redirect('/student/courses/')
@@ -1271,7 +1271,7 @@ router.get('/course/:course_id/assignment/:assignment_id/submit', function (req,
                             }
                             else {
 
-                                connection.query("SELECT * FROM ANOUNCEMENT WHERE Course_id = ? ORDER BY -Posted_on",[req.params.course_id] ,function(err4,rows4){
+                                connection.query("SELECT * FROM ANOUNCEMENT WHERE Course_id = ? ORDER BY -Posted_on LIMIT 5",[req.params.course_id] ,function(err4,rows4){
                                     if(err4) {
                                         console.log(err4);
                                         res.redirect('/student/courses/')
@@ -1344,7 +1344,7 @@ router.get('/course/:course_id/assignment/:assignment_id/submission', function (
                             }
                             else {
 
-                                connection.query("SELECT * FROM ANOUNCEMENT WHERE Course_id = ? ORDER BY -Posted_on",[req.params.course_id] ,function(err4,rows4){
+                                connection.query("SELECT * FROM ANOUNCEMENT WHERE Course_id = ? ORDER BY -Posted_on LIMIT 5",[req.params.course_id] ,function(err4,rows4){
                                     if(err4) {
                                         console.log(err4);
                                         res.redirect('/student/courses/')

@@ -113,13 +113,13 @@
 </nav>
 <!-- //breadcrumbs -->
 <% if (messages) { %>
-
-<div class="alert alert-success">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-    <i class="fa sign"></i><strong></strong>
-    <span><%= messages[0]%></span>
-</div>
-
+<%if(messages[0]){%>
+    <div class="alert alert-success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <i class="fa sign"></i><strong></strong>
+        <span><%= messages[0]%></span>
+    </div>
+<%}%>
 <% } %>
 
 <!-- courses -->
@@ -127,7 +127,58 @@
 
 
 
+    <div class="container py-sm-3">
 
+
+
+        <div class="row course-grids">
+
+            <div class="col-lg-4 col-md-6">
+                <div class="card">
+                    <img class="card-img-top" src="/images/image2.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title"></h5>
+
+                        <h6 class="card-title"> MY COURSES</h6>
+
+                        <a href="/instructor/courses" class="btn btn-primary"><i class="fas fa-graduation-cap"></i> OPEN</a>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-lg-4 col-md-6">
+                <div class="card">
+                    <img class="card-img-top" src="/images/image3.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title"></h5>
+
+                        <h6 class="card-title"> OFFER COURSES</h6>
+
+                        <a href="/instructor/offer-course" class="btn btn-primary"><i class="fas fa-graduation-cap"></i> OPEN</a>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <div class="col-lg-4 col-md-6">
+                <div class="card">
+                    <img class="card-img-top" style="width: 350px;height: 210px;" src="/images/history.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title"></h5>
+
+                        <h6 class="card-title"> PROFILE</h6>
+
+                        <a href="/instructor/profile" class="btn btn-primary"><i class="fas fa-graduation-cap"></i> OPEN</a>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
 
 
 

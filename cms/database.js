@@ -365,6 +365,29 @@ function connectDatabase() {
 
 
 
+                let createTodos16 = `CREATE TABLE if not exists ATTENDENCE
+                (
+                  Attendence_id INT NOT NULL AUTO_INCREMENT,
+                  Date DATE,
+                  Attended INT,
+                  Course_id INT NOT NULL,
+                  Student_id INT NOT NULL,
+                  PRIMARY KEY (Attendence_id),
+                  FOREIGN KEY (Course_id) REFERENCES COURSE(Course_id) ON DELETE CASCADE,
+                  FOREIGN KEY (Student_id) REFERENCES STUDENT(Student_id) ON DELETE CASCADE
+           
+                ) 
+                ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci`;
+
+                db.query(createTodos16, function(err, results, fields) {
+                    if (err) {
+                        console.log(err.message);
+                    }
+                    console.log('Attendance table created');
+                });
+
+
+
                 db.end(function(err) {
                     if (err) {
                         return console.log(err.message);

@@ -253,24 +253,25 @@
 
                                 <% if (tests) { %>
                                     <% for (var i=0;i<tests.length ;i ++) {%>
-                                        <li class="list-group-item d-flex justify-content-between align-items-center" >
-                                            <a><%= tests[i].Test_Name%></a><br><br><br>
+                                        <li class="list-group-item justify-content-between align-items-center" >
+                                            <a>Name : <%= tests[i].Test_Name%></a><br><br>
+                                            <a>Date : <%= tests[i].Date%></a><br><br>
                                             <% if (tests[i].Question_Paper == null){%>
-                                                <a>Question Paper</a><br><br><br>
+                                                <a>Question Paper</a><br><br>
                                             <%}else{%>
-                                                <a href="/student/course/<%= course.Course_id%>/tests/<%= tests[i].Test_id%>/question">Question Paper</a><br><br><br>
+                                                <a href="/student/course/<%= course.Course_id%>/tests/<%= tests[i].Test_id%>/question">Question Paper</a><br><br>
                                             <%}%>
 
                                             <% if (tests[i].Answer_Key == null){%>
-                                                <a>Answer Key</a><br><br><br>
+                                                <a>Answer Key</a><br><br>
                                             <%}else{%>
-                                                <a href="/student/course/<%= course.Course_id%>/tests/<%= tests[i].Test_id%>/answer">Answer Key</a><br><br><br>
+                                                <a href="/student/course/<%= course.Course_id%>/tests/<%= tests[i].Test_id%>/answer">Answer Key</a><br><br>
                                             <%}%>
-                                            <a>Maximun Marks : 10</a><br><br><br>
+                                            <a>Maximun Marks : 10</a><br><br>
                                             <% if (results) { %>
                                                 <% for (var j=0;j<results.length ;j ++) {%>
                                                 <% if (results[j].Student_id === student.Student_id && results[j].Test_id === tests[i].Test_id){%>
-                                                        <a>Marks Obtained : <%= results[j].Marks_Obtained%></a><br><br><br>
+                                                        <a>Marks Obtained : <%= results[j].Marks_Obtained%></a><br>
                                                     <%}%>
                                                 <% }%>
                                             <% } %>

@@ -132,7 +132,7 @@
 <marquee behavior="scroll" direction="left"><h4 style="color: red; display: inline;">New Announcements..........   </h4>
     <% if(announcement){%>
         <% for(var i=0;i<announcement.length;i++) {%>
-            <h4 style="color: #60aeff; display: inline;">Course Name :</h4>
+            <h4 style="color: green; display: inline;"><%= announcement[i].Course_Title %> :</h4>
             <a href="/student/course/announcement/<%= announcement[i].Course_id%>/<%= announcement[i].Anouncement_id%>"><h4 style=" display: inline;"><%= announcement[i].Short_Description%></h4></a>
         <%}%>
     <%}%>
@@ -141,17 +141,58 @@
 
 <!-- courses -->
 <section class="courses py-5">
+    <div class="container py-sm-3">
+
+
+
+        <div class="row course-grids">
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card">
+                            <img class="card-img-top" src="/images/image2.jpg" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title"></h5>
+
+                                <h6 class="card-title"> MY COURSES</h6>
+
+                                <a href="/student/courses" class="btn btn-primary"><i class="fas fa-graduation-cap"></i> OPEN</a>
+                            </div>
+                        </div>
+                    </div>
+
+
+            <div class="col-lg-4 col-md-6">
+                <div class="card">
+                    <img class="card-img-top" src="/images/image3.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title"></h5>
+
+                        <h6 class="card-title"> JOIN COURSES</h6>
+
+                        <a href="/student/course/join" class="btn btn-primary"><i class="fas fa-graduation-cap"></i> OPEN</a>
+                    </div>
+                </div>
+            </div>
 
 
 
 
+            <div class="col-lg-4 col-md-6">
+                <div class="card">
+                    <img class="card-img-top" style="width: 350px;height: 210px;" src="/images/history.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title"></h5>
+
+                        <h6 class="card-title"> PROFILE</h6>
+
+                        <a href="/student/profile" class="btn btn-primary"><i class="fas fa-graduation-cap"></i> OPEN</a>
+                    </div>
+                </div>
+            </div>
 
 
-
-
-
-
-
+        </div>
+    </div>
 </section>
 <!-- courses -->
 
