@@ -256,6 +256,7 @@
                     <!-- left side -->
                     <div class="col-lg-8 left-blog-info text-left">
                         <div class="blog-grid-top">
+                            <h2
 
                             <h2 class="tittle mb-xl-5 mb-4 text-dark text-uppercase font-weight-bold pl-4 py-3">Students Enrolled</h2>
                             <div class="category-story tech-btm"">
@@ -266,6 +267,9 @@
                                     <a style="color: red">First Name</a><br><br><br>
                                     <a style="color: red">Last Name</a><br><br><br>
                                     <a style="color: red">Roll Number</a><br><br><br>
+                               
+                                        <a style="color: red">Classes Attended (of <%= classes.total_classes %>)</a><br><br><br>
+
                                 </li>
 
 
@@ -276,6 +280,14 @@
                                             <a><%= students[i].First_Name%></a><br><br><br>
                                             <a><%= students[i].Last_Name%></a><br><br><br>
                                             <a><%= students[i].Roll_Number%></a><br><br><br>
+                                            <% if (attendence.length >0) {%>
+                                                <a><%= attendence[i].total%></a><br><br><br>
+                                            <% }else{%>
+                                                <a>0</a><br><br><br>
+                                            <%}%>
+
+
+
                                         </li>
                                     <% }%>
                                 <% } %>

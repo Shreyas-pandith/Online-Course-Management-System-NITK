@@ -1858,7 +1858,7 @@ router.get('/course/:course_id/students', function(req, res){
                                     }
                                     else {
 
-                                        connection.query("SELECT * FROM STUDENT WHERE Student_id IN (SELECT Student_id FROM ENROLLED WHERE Course_id = ?)",[req.params.course_id] ,function(err5,rows5){
+                                        connection.query("SELECT * FROM STUDENT WHERE Student_id IN (SELECT Student_id FROM ENROLLED WHERE Course_id = ?) ORDER BY Student_id",[req.params.course_id] ,function(err5,rows5){
                                             if(err5) {
                                                 console.log(err4);
                                                 res.redirect('/instructor/courses/')
@@ -1866,8 +1866,39 @@ router.get('/course/:course_id/students', function(req, res){
                                             }
                                             else {
 
-                                                console.log(rows5);
-                                                res.render('instructor/students',{'user':rows1[0], 'instructor': rows2[0], 'course': rows3[0], 'announcements': rows4, 'students': rows5,  messages: req.flash('info')});
+                                                connection.query("SELECT count(*) as total ,Student_id FROM (SELECT  * FROM  ATTENDENCE  WHERE Course_id = ? AND Attended = 1 ORDER BY Student_id )A GROUP BY Student_id ",[req.params.course_id] ,function(err5,rows6){
+                                                    if(err5) {
+                                                        console.log(err4);
+                                                        res.redirect('/instructor/courses/')
+
+                                                    }
+                                                    else {
+                                                        connection.query("SELECT count(*) as total_classes FROM (SELECT  * FROM  ATTENDENCE  WHERE Course_id = ?  GROUP BY Date )A",[req.params.course_id] ,function(err5,c) {
+                                                            if (err5) {
+                                                                console.log(err4);
+                                                                res.redirect('/instructor/courses/')
+
+                                                            }
+                                                            else {
+
+
+
+                                                                res.render('instructor/students', {
+                                                                    'user': rows1[0],
+                                                                    'instructor': rows2[0],
+                                                                    'course': rows3[0],
+                                                                    'announcements': rows4,
+                                                                    'students': rows5,
+                                                                    'attendence': rows6,
+                                                                    'classes':c[0],
+                                                                    messages: req.flash('info')
+                                                                });
+                                                            }
+                                                        });
+
+                                                    }
+                                                    });
+
 
                                             }
                                         });
