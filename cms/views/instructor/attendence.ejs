@@ -239,15 +239,15 @@
                     <div class="col-lg-8 left-blog-info text-left">
                         <div class="blog-grid-top">
 
-                            <h2 class="tittle mb-xl-5 mb-4 text-dark text-uppercase font-weight-bold pl-4 py-3">Course Attendence Section<a href="/instructor/course/<%=course.Course_id%>/add-attendence">  <i class="fas fa-plus-circle" style="color: red"></i></a></h2>
+                            <h2 class="tittle mb-xl-5 mb-4 text-dark text-uppercase font-weight-bold pl-4 py-3">Course Attendence Section<a href="/instructor/course/<%=course.Course_id%>/add_attendence">  <i class="fas fa-plus-circle" style="color: red"></i></a></h2>
                             <div class="category-story tech-btm"">
                             <ul class="list-group single" >
 
                                 <% if (attendence) { %>
                                     <% for (var i=0;i<attendence.length ;i ++) {%>
                                         <li class="list-group-item  justify-content-between align-items-center" >
-                                            <a>Name : <%= attendence[i].Date%></a><br><br>
-                                           <a href="/instructor/course/<%=course.Course_id%>/attendence/<%=attendence[i].Attendence_id%>/details">Details</a>
+                                            <a>Date  : <%= attendence[i].Date%></a><br><br>
+                                           <a href="/instructor/course/<%=course.Course_id%>/attendence/ <%= attendence[i].Date%>/details">Details</a>
 
                                         </li><br><br>
                                     <% }%>

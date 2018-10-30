@@ -244,13 +244,17 @@
                             <ul class="list-group single" >
 
 
-                                <form action="/instructor/course/<%= course.Course_id%>" method="post" class="p-3">
+                                <form action="/instructor/course/add/<%= course.Course_id%>/attendence/" method="post" class="p-3">
 
                                     <li class="list-group-item d-flex justify-content-between align-items-center" >
                                         <a style="color: red">Student name</a><br><br><br>
                                         <a style="color: red">Roll Number</a><br><br><br>
-                                        <a style="color: red">Marks Obtained</a><br><br><br>
+                                        <a style="color: red">Attendence/a><br><br><br>
                                     </li>
+                                    <div class="form-group">
+                                        <label for="recipient-name" class="col-form-label">Due Date</label>
+                                        <input type="date" class="form-control" placeholder="date" name="date" id="recipient-name4" required="">
+                                    </div>
                                     <% if (attendence) { %>
                                         <% for (var i=0;i<attendence.length ;i ++) {%>
                                             <li class="list-group-item d-flex justify-content-between align-items-center" >
@@ -258,7 +262,7 @@
                                                 <a><%= attendence[i].Roll_Number%></a><br><br><br>
                                                 <div class="form-group">
                                                     <label style="display: inline">Attendence : </label>
-                                                    <input style="display: inline" type="number" class="form-control" placeholder="" name="marks" id="recipient-name4" value="0" min="<%= attendence[i].Attended%>" max="1">
+                                                    <input style="display: inline" type="number" class="form-control" placeholder="" name="att" id="recipient-name4" min="0" value="<%= attendence[i].Attended%>" max="1">
                                                 </div>
                                             </li>
                                         <% }%>

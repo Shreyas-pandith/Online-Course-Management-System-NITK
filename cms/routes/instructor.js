@@ -2230,7 +2230,7 @@ router.get('/course/:course_id/announcements/', function(req, res){
 });
 
 
-router.post('/course/:course_id', function(req, res){
+router.post('/course/add/:course_id/attendence/', function(req, res){
     console.log('dsdadghsafdsfd');
     if(req.user) {
 
@@ -2264,14 +2264,17 @@ router.post('/course/:course_id', function(req, res){
                                     }
                                     else {
 
-                                        let m = req.body.marks;
+                                        let m = req.body.att;
+                                        console.log("--------------");
+                                        console.log(m);
+                                        console.log("--------------");
 
                                         for(let i=0;i<rows6.length;i++)
                                         {console.log('aasgshdggf');
                                             let data = {
                                                 'Attended':m[i],
                                                 'Student_id': rows6[i].Student_id,
-                                                'Date' : new Date(),
+                                                'Date' : req.body.date,
                                                 'Course_id' : req.params.course_id
                                             };
 
@@ -2350,7 +2353,7 @@ router.get('/course/:course_id/attendence/', function(req, res){
                                             }
                                             else {
 
-                                                connection.query("SELECT  Date, Attendence_id FROM ATTENDENCE WHERE Course_id = ? ORDER BY -Date",[req.params.course_id, rows2[0].Instructor_id] ,function(err5,rows6){
+                                                connection.query("SELECT  DISTINCT Date  FROM ATTENDENCE WHERE Course_id = ? ORDER BY -Date",[req.params.course_id] ,function(err5,rows6){
                                                     if(err5) {
                                                         console.log(err5);
                                                         res.redirect('/instructor/courses/')
@@ -2423,15 +2426,16 @@ router.get('/course/:course_id/attendence/:id/details', function(req, res){
                                             }
                                             else {
 
-                                                connection.query("SELECT * FROM ATTENDENCE,STUDENT WHERE Course_id = ? ANd STUDENT.Student_id = ATTENDENCE.Student_id  = ?",[req.params.course_id, req.params.id] ,function(err5,rows6){
+                                                connection.query("Select * from (select * FROM ATTENDENCE  where Course_id = ? AND Date = ? )A INNER JOIN STUDENT ON STUDENT.Student_id=A.Student_id ORDER BY A.Student_id ",[req.params.course_id , req.params.id] ,function(err5,rows6){
                                                     if(err5) {
                                                         console.log(err5);
                                                         res.redirect('/instructor/courses/')
 
                                                     }
                                                     else {
-
+                                                        console.log("---");
                                                         console.log(rows6);
+                                                        console.log("---");
                                                         res.render('instructor/add_attendence',{'user':rows1[0], 'instructor': rows2[0], 'course': rows3[0], 'announcements': rows4, 'assignments': rows5,  messages: req.flash('info') , 'current' : new Date(), 'attendence':rows6});
                                                     }
                                                 });
@@ -2456,7 +2460,7 @@ router.get('/course/:course_id/attendence/:id/details', function(req, res){
 
 
 
-router.get('/course/:course_id/add-attendence/', function(req, res){
+router.get('/course/:course_id/add_attendence/', function(req, res){
     if(req.user) {
 
         connection.query("SELECT * FROM USER WHERE id = ? AND Role = ?",[req.user, 'Instructor'] ,function(err1,rows1){
