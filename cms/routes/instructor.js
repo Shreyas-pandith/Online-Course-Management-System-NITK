@@ -2255,48 +2255,122 @@ router.post('/course/add/:course_id/attendence/', function(req, res){
 
                             }
                             else {
+////////////////////////////////////////////////////////////////////////////////
+                                var year, month, day;
+                                var dt = new Date(req.body.date);
+                                year = String(dt.getFullYear());
+                                month = String(dt.getMonth() + 1);
+                                if (month.length == 1) {
+                                    month = "0" + month;
+                                }
+                                day = String(dt.getDate());
+                                if (day.length == 1) {
+                                    day = "0" + day;
+                                }
+                                var dt2= year + "-" + month + "-" + day;
 
-                                connection.query("SELECT * FROM STUDENT WHERE Student_id IN (SELECT Student_id FROM ENROLLED WHERE Course_id = ?) ORDER BY Student_id",[req.params.course_id] ,function(err6,rows6){
-                                    if(err6) {
-                                        console.log(err6);
+                                connection.query("SELECT * FROM ATTENDENCE WHERE Course_id = ? AND Date= ? ",[req.params.course_id ,dt2 ],function(err3,result){
+                                    if(err3) {
+                                        console.log(err3);
                                         res.redirect('/instructor/courses/')
 
                                     }
                                     else {
+                                        if(result.length >0 )
+                                        {/////////update
 
-                                        let m = req.body.att;
-                                        console.log("--------------");
-                                        console.log(m);
-                                        console.log("--------------");
-
-                                        for(let i=0;i<rows6.length;i++)
-                                        {console.log('aasgshdggf');
-                                            let data = {
-                                                'Attended':m[i],
-                                                'Student_id': rows6[i].Student_id,
-                                                'Date' : req.body.date,
-                                                'Course_id' : req.params.course_id
-                                            };
-
-                                            connection.query("INSERT INTO ATTENDENCE SET ? ",data ,function(err8,rows8){
-                                                if(err8) {
-                                                    console.log(err8);
+                                            connection.query("SELECT * FROM ATTENDENCE  WHERE Course_id = ? AND Date = ?",[req.params.course_id,dt2] ,function(err6,rows6){
+                                                if(err6) {
+                                                    console.log(err6);
                                                     res.redirect('/instructor/courses/')
+
+                                                }
+                                                else {
+
+                                                    let m = req.body.att;
+                                                    console.log("--------------");
+                                                    console.log(m);
+                                                    console.log("--------------");
+
+                                                    for(let i=0;i<rows6.length;i++)
+                                                    {console.log('aasg');
+
+
+
+                                                        connection.query("UPDATE ATTENDENCE SET Attended = ?  where Course_id = ? and Student_id = ?  and Date = ?",[m[i],req.params.course_id,rows6[i].Student_id,dt2],function(err8,rows8){
+                                                            if(err8) {
+                                                                console.log(err8);
+                                                                res.redirect('/instructor/courses/')
+
+                                                            }
+
+
+
+                                                        });
+
+                                                    }
+                                                    var url = '/instructor/course/' + req.params.course_id+ '/attendence/';
+                                                    req.flash('info', 'Results of th test Successfully Updated!');
+                                                    res.redirect(url);
+
 
                                                 }
                                             });
 
+                                        }
+                                        else {
+                                          ////create
+                                            connection.query("SELECT * FROM STUDENT WHERE Student_id IN (SELECT Student_id FROM ENROLLED WHERE Course_id = ?) ORDER BY Student_id",[req.params.course_id] ,function(err6,rows6){
+                                                if(err6) {
+                                                    console.log(err6);
+                                                    res.redirect('/instructor/courses/')
+
+                                                }
+                                                else {
+
+                                                    let m = req.body.att;
+                                                    console.log("--------------");
+                                                    console.log(m);
+                                                    console.log("--------------");
+
+                                                    for(let i=0;i<rows6.length;i++)
+                                                    {console.log('aasgshdggf');
+                                                        let data = {
+                                                            'Attended':m[i],
+                                                            'Student_id': rows6[i].Student_id,
+                                                            'Date' : req.body.date,
+                                                            'Course_id' : req.params.course_id
+                                                        };
+
+                                                        connection.query("INSERT INTO ATTENDENCE SET ? ",data ,function(err8,rows8){
+                                                            if(err8) {
+                                                                console.log(err8);
+                                                                res.redirect('/instructor/courses/')
+
+                                                            }
+
+
+
+                                                        });
+
+                                                    }
+                                                    var url = '/instructor/course/' + req.params.course_id+ '/attendence/';
+                                                    req.flash('info', 'Results of th test Successfully Updated!');
+                                                    res.redirect(url);
+
+
+                                                }
+                                            });
 
                                         }
+                                        ////crete end
 
-                                        console.log(rows6);
-                                        var url = '/instructor/course/' + req.params.course_id+ '/attendence/';
-                                        req.flash('info', 'Results of th test Successfully Updated!');
-                                        res.redirect(url);
 
+                                       }
                                     }
-                                });
+                                );
 
+            /////////////////////////////////////////////////////////////////////////////////////////
                             }
                         });
                     }
@@ -2425,8 +2499,24 @@ router.get('/course/:course_id/attendence/:id/details', function(req, res){
 
                                             }
                                             else {
+                                                console.log("+++");
+                                                var year, month, day;
+                                                var dt = new Date(req.params.id);
+                                                year = String(dt.getFullYear());
+                                                month = String(dt.getMonth() + 1);
+                                                if (month.length == 1) {
+                                                    month = "0" + month;
+                                                }
+                                                day = String(dt.getDate());
+                                                if (day.length == 1) {
+                                                    day = "0" + day;
+                                                }
+                                                var dt2= year + "-" + month + "-" + day;
 
-                                                connection.query("Select * from (select * FROM ATTENDENCE  where Course_id = ? AND Date = ? )A INNER JOIN STUDENT ON STUDENT.Student_id=A.Student_id ORDER BY A.Student_id ",[req.params.course_id , req.params.id] ,function(err5,rows6){
+                                                // var dt2=dt.toISOString().substring(0, 10);
+                                                console.log(dt2);
+
+                                                connection.query("Select * from (select * FROM ATTENDENCE  where Course_id = ? AND Date = ? )A INNER JOIN STUDENT ON STUDENT.Student_id=A.Student_id ORDER BY A.Student_id ",[req.params.course_id , dt2 ] ,function(err5,rows6){
                                                     if(err5) {
                                                         console.log(err5);
                                                         res.redirect('/instructor/courses/')
@@ -2436,7 +2526,7 @@ router.get('/course/:course_id/attendence/:id/details', function(req, res){
                                                         console.log("---");
                                                         console.log(rows6);
                                                         console.log("---");
-                                                        res.render('instructor/add_attendence',{'user':rows1[0], 'instructor': rows2[0], 'course': rows3[0], 'announcements': rows4, 'assignments': rows5,  messages: req.flash('info') , 'current' : new Date(), 'attendence':rows6});
+                                                        res.render('instructor/add_attendence',{'user':rows1[0], 'instructor': rows2[0], 'course': rows3[0], 'announcements': rows4, 'assignments': rows5,  messages: req.flash('info') , 'current' : new Date(), 'attendence':rows6 ,'create':0});
                                                     }
                                                 });
 
@@ -2510,7 +2600,7 @@ router.get('/course/:course_id/add_attendence/', function(req, res){
                                                     else {
 
                                                         console.log(rows6);
-                                                        res.render('instructor/add_attendence',{'user':rows1[0], 'instructor': rows2[0], 'course': rows3[0], 'announcements': rows4, 'assignments': rows5,  messages: req.flash('info') , 'current' : new Date(), 'attendence':rows6});
+                                                        res.render('instructor/add_attendence',{'user':rows1[0], 'instructor': rows2[0], 'course': rows3[0], 'announcements': rows4, 'assignments': rows5,  messages: req.flash('info') , 'current' : new Date(), 'attendence':rows6 ,'create':1});
                                                     }
                                                 });
 

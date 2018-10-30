@@ -243,16 +243,16 @@
                             <div class="category-story tech-btm"">
                             <ul class="list-group single" >
 
-
+<% if( create) { %>
                                 <form action="/instructor/course/add/<%= course.Course_id%>/attendence/" method="post" class="p-3">
 
                                     <li class="list-group-item d-flex justify-content-between align-items-center" >
                                         <a style="color: red">Student name</a><br><br><br>
                                         <a style="color: red">Roll Number</a><br><br><br>
-                                        <a style="color: red">Attendence/a><br><br><br>
+                                        <a style="color: red">Attendence</a><br><br><br>
                                     </li>
                                     <div class="form-group">
-                                        <label for="recipient-name" class="col-form-label">Due Date</label>
+                                        <label for="recipient-name" class="col-form-label"> Date</label>
                                         <input type="date" class="form-control" placeholder="date" name="date" id="recipient-name4" required="">
                                     </div>
                                     <% if (attendence) { %>
@@ -278,6 +278,50 @@
 
 
                                 </form>
+
+
+                                <% } else {%>
+
+        <form action="/instructor/course/add/<%= course.Course_id%>/attendence/" method="post" class="p-3">
+            <% if (attendence) { %>
+                <div class="form-group">
+                    <label for="recipient-name" class="col-form-label">Attendence for  Date : <%= attendence[0].Date%></label>
+                    <input type="hidden" class="form-control" name="date" id="recipient-name4" value="<%= attendence[0].Date%>">
+                </div>
+            <li class="list-group-item d-flex justify-content-between align-items-center" >
+                <a style="color: red">Student name</a><br><br><br>
+                <a style="color: red">Roll Number</a><br><br><br>
+                <a style="color: red">Attendence</a><br><br><br>
+            </li>
+
+
+
+
+                <% for (var i=0;i<attendence.length ;i ++) {%>
+                    <li class="list-group-item d-flex justify-content-between align-items-center" >
+                        <a><%= attendence[i].First_Name%>  <%=attendence[i].Last_Name%></a><br><br><br>
+                        <a><%= attendence[i].Roll_Number%></a><br><br><br>
+                        <div class="form-group">
+                            <label style="display: inline">Attendence : </label>
+                            <input style="display: inline" type="number" class="form-control" placeholder="" name="att" id="recipient-name4" min="0" value="<%= attendence[i].Attended%>" max="1">
+                        </div>
+                    </li>
+                <% }%>
+            <% } %>
+
+
+            <li class="list-group-item d-flex justify-content-between align-items-center" >
+
+                <input type="submit" class="form-control" value="Upload">
+
+            </li>
+
+
+
+        </form>
+
+
+    <%  } %>
 
 
                             </ul>
