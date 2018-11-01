@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5cc45993-6fc1-44ef-bc5c-4ed60012fcb5" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/routes/instructor.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/instructor.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/student.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/student.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/instructor/exams.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/instructor/exams.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/instructor/create_exam.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/instructor/create_exam.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/student/exams.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/student/exams.ejs" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -30,28 +30,28 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="create_exam" value="1" />
-          <entry key="ejs" value="77" />
+          <entry key="ejs" value="80" />
           <entry key="js" value="16" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="EJS" value="78" />
+          <entry key="EJS" value="81" />
           <entry key="JavaScript" value="16" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="ejs" value="6231" />
-          <entry key="js" value="4584" />
+          <entry key="ejs" value="6466" />
+          <entry key="js" value="4814" />
           <entry key="txt" value="34" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="EJS" value="6219" />
+          <entry key="EJS" value="6454" />
           <entry key="HTML" value="12" />
-          <entry key="JavaScript" value="4584" />
+          <entry key="JavaScript" value="4814" />
           <entry key="PLAIN_TEXT" value="34" />
         </counts>
       </usages-collector>
@@ -97,6 +97,15 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/register.ejs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="354">
+              <caret line="200" column="27" lean-forward="true" selection-start-line="176" selection-start-column="19" selection-end-line="200" selection-end-column="27" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/instructor/exams.ejs">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="216">
@@ -105,38 +114,35 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/views/instructor/create_exam.ejs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="146">
+              <caret line="241" column="90" selection-start-line="241" selection-start-column="90" selection-end-line="241" selection-end-column="90" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/views/student/exams.ejs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="197">
-              <caret line="255" column="50" lean-forward="true" selection-start-line="255" selection-start-column="50" selection-end-line="255" selection-end-column="50" />
+            <state relative-caret-position="371">
+              <caret line="258" selection-end-line="575" selection-end-column="7" />
+              <folding>
+                <element signature="e#16561#16568#1#HTML" expanded="true" />
+                <element signature="n#style#0;n#textarea#0;n#div#0;n#form#0;n#div#1;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#textarea#0;n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="e#19366#19373#1#HTML" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/database.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="193">
-              <caret line="466" column="64" selection-start-line="466" selection-start-column="64" selection-end-line="466" selection-end-column="79" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/student/exam.ejs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="346">
-              <caret line="276" column="31" selection-end-line="404" selection-end-column="7" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/routes/instructor.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="3060" column="105" selection-start-line="3060" selection-start-column="105" selection-end-line="3060" selection-end-column="105" />
+            <state relative-caret-position="306">
+              <caret line="3065" column="53" lean-forward="true" selection-start-line="3065" selection-start-column="53" selection-end-line="3065" selection-end-column="53" />
             </state>
           </provider>
         </entry>
@@ -157,8 +163,23 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/student.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="65">
-              <caret line="1719" column="38" lean-forward="true" selection-start-line="1719" selection-start-column="38" selection-end-line="1731" />
+            <state relative-caret-position="119">
+              <caret line="1904" column="154" selection-start-line="1904" selection-start-column="154" selection-end-line="1904" selection-end-column="154" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/student/enter_exam.ejs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="253">
+              <caret line="254" column="43" selection-start-line="254" selection-start-column="43" selection-end-line="254" selection-end-column="43" />
+              <folding>
+                <element signature="e#16561#16568#1#HTML" expanded="true" />
+                <element signature="n#style#0;n#textarea#0;n#div#0;n#form#0;n#div#1;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#textarea#0;n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="e#19366#19373#1#HTML" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -181,15 +202,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="118">
               <caret line="312" column="55" selection-start-line="312" selection-start-column="55" selection-end-line="312" selection-end-column="65" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/instructor/students.ejs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="303">
-              <caret line="273" lean-forward="true" selection-start-line="273" selection-end-line="273" />
             </state>
           </provider>
         </entry>
@@ -220,6 +232,9 @@
       <find>redirect(url)</find>
       <find>/students</find>
       <find>/exams</find>
+      <find>req.f</find>
+      <find>/resu</find>
+      <find>/sta</find>
     </findStrings>
     <replaceStrings>
       <replace>-Posted_on LIMIT 5&quot;</replace>
@@ -234,7 +249,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/views/search/instructor.ejs" />
         <option value="$PROJECT_DIR$/views/instructor/add_material.ejs" />
         <option value="$PROJECT_DIR$/views/services.ejs" />
         <option value="$PROJECT_DIR$/views/index.ejs" />
@@ -273,18 +287,19 @@
         <option value="$PROJECT_DIR$/views/student/tests.ejs" />
         <option value="$PROJECT_DIR$/views/student/qa.ejs" />
         <option value="$PROJECT_DIR$/views/instructor/course.ejs" />
-        <option value="$PROJECT_DIR$/views/instructor/create_exam.ejs" />
         <option value="$PROJECT_DIR$/views/student/mycourse.ejs" />
-        <option value="$PROJECT_DIR$/views/student/exams.ejs" />
         <option value="$PROJECT_DIR$/database.js" />
         <option value="$PROJECT_DIR$/views/student/exam.ejs" />
         <option value="$PROJECT_DIR$/views/student/result.ejs" />
-        <option value="$PROJECT_DIR$/routes/student.js" />
         <option value="$PROJECT_DIR$/views/instructor/exams.ejs" />
         <option value="$PROJECT_DIR$/views/instructor/students.ejs" />
         <option value="$PROJECT_DIR$/views/instructor/exam.ejs" />
         <option value="$PROJECT_DIR$/views/instructor/result.ejs" />
         <option value="$PROJECT_DIR$/routes/instructor.js" />
+        <option value="$PROJECT_DIR$/views/student/exams.ejs" />
+        <option value="$PROJECT_DIR$/views/student/enter_exam.ejs" />
+        <option value="$PROJECT_DIR$/routes/student.js" />
+        <option value="$PROJECT_DIR$/views/instructor/create_exam.ejs" />
       </list>
     </option>
   </component>
@@ -407,7 +422,7 @@
       <workItem from="1540902662986" duration="6362000" />
       <workItem from="1540922803270" duration="10797000" />
       <workItem from="1541068681955" duration="11739000" />
-      <workItem from="1541082476207" duration="11019000" />
+      <workItem from="1541082476207" duration="14216000" />
     </task>
     <task id="LOCAL-00001" summary="frontend updated">
       <created>1540755275089</created>
@@ -434,7 +449,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="80897000" />
+    <option name="totallyTimeSpent" value="84094000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="697" extended-state="6" />
@@ -453,7 +468,7 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="9" sideWeight="0.49920508" visible="true" weight="0.19680852" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="9" sideWeight="0.49920508" visible="true" weight="0.12411348" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5007949" side_tool="true" weight="0.38475177" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -492,9 +507,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="reply added" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/public/images/test3.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/images/image1.jpg">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -720,20 +732,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/instructor/create_exam.ejs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="79">
-          <caret line="286" column="30" lean-forward="true" selection-start-line="286" selection-start-column="30" selection-end-line="302" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/register.ejs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="192" column="27" selection-start-line="192" selection-start-column="27" selection-end-line="195" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/views/student/mycourse.ejs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="363">
@@ -755,24 +753,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/student/exams.ejs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="197">
-          <caret line="255" column="50" lean-forward="true" selection-start-line="255" selection-start-column="50" selection-end-line="255" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/views/instructor/students.ejs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="303">
           <caret line="273" lean-forward="true" selection-start-line="273" selection-end-line="273" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/student.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="65">
-          <caret line="1719" column="38" lean-forward="true" selection-start-line="1719" selection-start-column="38" selection-end-line="1731" />
         </state>
       </provider>
     </entry>
@@ -814,8 +798,55 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/routes/instructor.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="3060" column="105" selection-start-line="3060" selection-start-column="105" selection-end-line="3060" selection-end-column="105" />
+        <state relative-caret-position="306">
+          <caret line="3065" column="53" lean-forward="true" selection-start-line="3065" selection-start-column="53" selection-end-line="3065" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/student/exams.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="371">
+          <caret line="258" selection-end-line="575" selection-end-column="7" />
+          <folding>
+            <element signature="e#16561#16568#1#HTML" expanded="true" />
+            <element signature="n#style#0;n#textarea#0;n#div#0;n#form#0;n#div#1;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#textarea#0;n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="e#19366#19373#1#HTML" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/register.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="354">
+          <caret line="200" column="27" lean-forward="true" selection-start-line="176" selection-start-column="19" selection-end-line="200" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/student/enter_exam.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="254" column="43" selection-start-line="254" selection-start-column="43" selection-end-line="254" selection-end-column="43" />
+          <folding>
+            <element signature="e#16561#16568#1#HTML" expanded="true" />
+            <element signature="n#style#0;n#textarea#0;n#div#0;n#form#0;n#div#1;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#textarea#0;n#div#1;n#form#0;n#div#1;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="e#19366#19373#1#HTML" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/student.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="1904" column="154" selection-start-line="1904" selection-start-column="154" selection-end-line="1904" selection-end-column="154" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/instructor/create_exam.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="146">
+          <caret line="241" column="90" selection-start-line="241" selection-start-column="90" selection-end-line="241" selection-end-column="90" />
         </state>
       </provider>
     </entry>
