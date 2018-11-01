@@ -1873,31 +1873,162 @@ router.get('/course/:course_id/students', function(req, res){
 
                                                     }
                                                     else {
-                                                        connection.query("SELECT count(*) as total_classes FROM (SELECT  * FROM  ATTENDENCE  WHERE Course_id = ?  GROUP BY Date )A",[req.params.course_id] ,function(err5,c) {
+                                                        connection.query("SELECT  Date, COUNT(Attendence_id) FROM  ATTENDENCE  WHERE Course_id = ?  GROUP BY Date",[req.params.course_id] ,function(err5,c) {
                                                             if (err5) {
-                                                                console.log(err4);
-                                                                res.redirect('/instructor/courses/')
+                                                                console.log(err5);
+                                                                res.redirect('/instructor/')
 
                                                             }
                                                             else {
 
+                                                                connection.query("SELECT  * FROM  PERMISSION, STUDENT  WHERE Course_id = ? AND PERMISSION.Student_id = STUDENT.Student_id",[req.params.course_id] ,function(err5,c1) {
+                                                                    if (err5) {
+                                                                        console.log(err5);
+                                                                        res.redirect('/instructor/')
+
+                                                                    }
+                                                                    else {
+                                                                        console.log(rows6);
 
 
-                                                                res.render('instructor/students', {
-                                                                    'user': rows1[0],
-                                                                    'instructor': rows2[0],
-                                                                    'course': rows3[0],
-                                                                    'announcements': rows4,
-                                                                    'students': rows5,
-                                                                    'attendence': rows6,
-                                                                    'classes':c[0],
-                                                                    messages: req.flash('info')
+
+                                                                        res.render('instructor/students', {
+                                                                            'user': rows1[0],
+                                                                            'instructor': rows2[0],
+                                                                            'course': rows3[0],
+                                                                            'announcements': rows4,
+                                                                            'students': rows5,
+                                                                            'attendence': rows6,
+                                                                            'classes':c[0],
+                                                                            'requested':c1,
+                                                                            messages: req.flash('info')
+                                                                        });
+                                                                    }
                                                                 });
+
                                                             }
                                                         });
 
                                                     }
                                                     });
+
+
+                                            }
+                                        });
+
+                                    }
+                                });
+                            }
+                        });
+
+                    }
+                });
+            }
+        });
+    }
+    else{
+        return res.redirect('/users/login')
+    }
+});
+
+
+
+
+
+router.get('/course/:course_id/:student_id/approve', function(req, res){
+    if(req.user) {
+
+        connection.query("SELECT * FROM USER WHERE id = ? AND Role = ?",[req.user, 'Instructor'] ,function(err1,rows1){
+            if(err1) {
+                console.log(err1);
+                res.redirect('/users/login')
+
+            }
+            else {
+                connection.query("SELECT * FROM INSTRUCTOR WHERE User_id = ?  ",req.user ,function(err2,rows2){
+                    if(err2) {
+                        console.log(err2);
+                        res.redirect('/users/login')
+
+                    }
+                    else {
+                        connection.query("SELECT * FROM COURSE WHERE Course_id = ?  ",req.params.course_id ,function(err3,rows3){
+                            if(err3) {
+                                console.log(err3);
+                                res.redirect('/instructor/courses/')
+
+                            }
+                            else {
+
+                                connection.query("SELECT * FROM ANOUNCEMENT WHERE Course_id = ?  AND Instructor_id = ? ORDER BY -Posted_on LIMIT 5",[req.params.course_id, rows2[0].Instructor_id] ,function(err4,rows4){
+                                    if(err4) {
+                                        console.log(err4);
+                                        res.redirect('/instructor/courses/')
+
+                                    }
+                                    else {
+
+                                        connection.query("SELECT * FROM STUDENT WHERE Student_id IN (SELECT Student_id FROM ENROLLED WHERE Course_id = ?) ORDER BY Student_id",[req.params.course_id] ,function(err5,rows5){
+                                            if(err5) {
+                                                console.log(err4);
+                                                res.redirect('/instructor/courses/')
+
+                                            }
+                                            else {
+
+                                                connection.query("SELECT count(*) as total ,Student_id FROM (SELECT  * FROM  ATTENDENCE  WHERE Course_id = ? AND Attended = 1 ORDER BY Student_id )A GROUP BY Student_id ",[req.params.course_id] ,function(err5,rows6){
+                                                    if(err5) {
+                                                        console.log(err4);
+                                                        res.redirect('/instructor/courses/')
+
+                                                    }
+                                                    else {
+                                                        connection.query("SELECT  Date, COUNT(Attendence_id) FROM  ATTENDENCE  WHERE Course_id = ?  GROUP BY Date",[req.params.course_id] ,function(err5,c) {
+                                                            if (err5) {
+                                                                console.log(err5);
+                                                                res.redirect('/instructor/')
+
+                                                            }
+                                                            else {
+
+                                                                var data = {
+                                                                    'Student_id': req.params.student_id,
+                                                                    'Course_id': req.params.course_id
+                                                                };
+
+                                                                connection.query("INSERT  INTO ENROLLED SET ?",data ,function(err5,c1) {
+                                                                    if (err5) {
+                                                                        console.log(err5);
+                                                                        res.redirect('/instructor/')
+
+                                                                    }
+                                                                    else {
+
+
+                                                                        connection.query("DELETE  FROM PERMISSION WHERE Student_id = ? AND Course_id = ?",[req.params.student_id, req.params.course_id] ,function(err5,c2) {
+                                                                            if (err5) {
+                                                                                console.log(err5);
+                                                                                res.redirect('/instructor/')
+
+                                                                            }
+                                                                            else {
+
+
+
+                                                                                res.redirect('/instructor/corse/'+req.params.course_id+'/students/')
+
+                                                                            }
+                                                                        });
+
+
+                                                                    }
+                                                                });
+
+                                                            }
+                                                        });
+
+                                                    }
+                                                });
 
 
                                             }
@@ -2692,7 +2823,7 @@ router.post('/course/:course_id/:question_id/:answer_id', function(req, res){
                             'Answer_id':req.params.answer_id
                         };
 
-                        connection.query("INSERT INTO  Reply SET ?",data ,function(err3,rows3){
+                        connection.query("INSERT INTO  REPLY SET ?",data ,function(err3,rows3){
                             if(err3) {
                                 console.log(err3);
                                 res.redirect('/instructor/courses/')

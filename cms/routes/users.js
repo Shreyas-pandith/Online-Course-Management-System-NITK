@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var csrf = require('csurf');
 var bodyParser = require('body-parser');
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey("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");
 
 var csrfProtection = csrf({ cookie: true });
 var parseForm = bodyParser.urlencoded({ extended: false });
@@ -148,6 +150,134 @@ router.post('/register', parseForm, csrfProtection, function(req, res, next) {
 
 router.get('/login',  csrfProtection, function(req, res, next) {
     res.render('login',{ csrfToken: req.csrfToken() ,  messages: req.flash('info')});
+});
+
+
+router.post('/forgot_password', function(req, res, next) {
+
+
+    var email = req.body.email;
+
+    db.query("SELECT * FROM USER WHERE email = ?",email ,function(err2,rows2){
+        if(err2) {
+            console.log(err2);
+            es.redirect('/users/login/')
+
+        }
+        else {
+            if(rows2.length===0)
+            {
+                res.redirect('/users/login/')
+            }
+            else
+            {
+                var data = {
+                    'User_id':rows2[0].id,
+                    'Secret': Math.floor(Math.random() * 1000000) + '_' + rows2[0].id
+                };
+                db.query("INSERT INTO PASSWORD SET ?",data ,function(err2,rows3){
+                    if(err2) {
+                        console.log(err2);
+                        es.redirect('/users/login/')
+
+                    }
+                    else {
+                        var url = 'http://localhost:3000/users/forgot_password/' + data.Secret;
+                        const msg = {
+                            to: rows2[0].email,
+                            from: 'siddeshlc08@gmail.com',
+                            subject: 'Reset Your Password' + ' '+ rows2[0].email,
+                            text: 'Do not Share with Anyone',
+                            html: '<h3>Please Copy Paste the url To Reset Your Password</h3><br>' +
+                                'http://localhost:3000/users/forgot_password/' + data.Secret,
+                        };
+
+                        sgMail.send(msg);
+
+                        res.redirect('/users/login/')
+                    }
+                });
+            }
+        }
+    });
+
+});
+
+
+
+
+router.get('/forgot_password/:id/',  csrfProtection, function(req, res, next) {
+
+
+    var e = req.body.email;
+
+    db.query("SELECT * FROM PASSWORD WHERE Secret = ?",req.params.id ,function(err2,rows2){
+        if(err2) {
+            console.log(err2);
+            res.redirect('/users/login/')
+
+        }
+        else {
+            if(rows2.length===0)
+            {
+                res.redirect('/users/login/')
+            }
+            else
+            {
+                res.render('reset',{ csrfToken: req.csrfToken() ,  messages: req.flash('info'), 'id':req.params.id});
+            }
+        }
+    });
+
+});
+
+
+router.post('/forgot_password/:id/',  csrfProtection, function(req, res, next) {
+
+
+    var e = req.body.email;
+
+    db.query("SELECT * FROM PASSWORD WHERE Secret = ?",req.params.id ,function(err2,rows2){
+        if(err2) {
+            console.log(err2);
+            res.redirect('/')
+
+        }
+        else {
+            if(rows2.length===0)
+            {
+                console.log('dsd');
+                res.redirect('/')
+            }
+            else
+            {
+                console.log(rows2);
+                bcrypt.hash(req.body.psw, saltRounds, function(err, hash) {
+                    // Store hash in your password DB.
+
+
+                    db.query(`UPDATE USER SET password = ? WHERE id = ?`, [hash, rows2[0].User_id], function(err, rows, fields) {
+                        if (!err) {
+                            db.query(`DELETE FROM PASSWORD WHERE User_id = ?`, [ rows2[0].User_id], function(err, rows, fields) {
+                                if (!err) {
+                                    console.log(err);
+                                    return res.redirect('/users/login/')
+
+                                } else {
+                                    return res.redirect('/')
+                                }
+                            });
+
+                        } else {
+                            console.log(err);
+                            return res.redirect('/')
+                        }
+                    });
+                });
+            }
+        }
+    });
+
 });
 
 

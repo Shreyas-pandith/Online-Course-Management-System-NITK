@@ -264,13 +264,12 @@ router.get('/course/:id/join', function(req, res, next) {
                     }
                     else {
 
-                        var enroll={
+                        var permission={
                             'Course_id' : req.params.id ,
                             'Student_id' : rows2[0].Student_id
-
                         };
 
-                        connection.query(" INSERT INTO ENROLLED SET ? ",enroll,function(err1,row){
+                        connection.query(" INSERT INTO PERMISSION SET ? ",permission,function(err1,row){
                             if(err1) {
 
                                 console.log(err1);
@@ -318,8 +317,18 @@ router.get('/courses', function(req, res){
 
                             }
                             else {
+                                connection.query("select A.Course_id ,Course_Title,Course_Code from COURSE INNER JOIN (SELECT * FROM PERMISSION WHERE Student_id = ? )A ON COURSE.Course_id=A.Course_id ",student[0].Student_id ,function(err2,rcourses){
+                                    if(err2) {
+                                        console.log(err2);
+                                        res.redirect('/student');
 
-                                res.render('student/mycourses',{'user':rows1[0], 'student': student,'courses':courses});
+                                    }
+                                    else {
+
+                                        res.render('student/mycourses',{'user':rows1[0], 'student': student,'courses':courses, 'requested': rcourses});
+                                    }
+                                });
+
                             }
                         });
 
@@ -426,7 +435,7 @@ router.get('/course/join', function(req, res, next) {
                     }
                     else {
 
-                        connection.query(" SELECT * FROM COURSE WHERE Course_id NOT IN (SELECT Course_id FROM ENROLLED WHERE Student_id = ?) ",rows2[0].Student_id,function(err3,row3){
+                        connection.query(" SELECT * FROM COURSE WHERE Course_id NOT IN (SELECT Course_id FROM ENROLLED WHERE Student_id = ?) AND Course_id NOT IN (SELECT Course_id FROM PERMISSION WHERE Student_id = ?)",[rows2[0].Student_id, rows2[0].Student_id],function(err3,row3){
                             if(err3) {
                                 console.log(err3);
                                 res.redirect('/student/courses');
@@ -1535,7 +1544,7 @@ router.post('/course/:course_id/:question_id/:answer_id', function(req, res){
                             'Answer_id':req.params.answer_id
                         };
 
-                        connection.query("INSERT INTO  Reply SET ?",data ,function(err3,rows3){
+                        connection.query("INSERT INTO  REPLY SET ?",data ,function(err3,rows3){
                             if(err3) {
                                 console.log(err3);
                                 res.redirect('/student/courses/')

@@ -167,6 +167,32 @@
             <% } %>
 
         </div>
+
+
+        <div class="row course-grids">
+            <% if (requested) { %>
+                <% for (var i=0;i<requested.length ;i ++) {%>
+                    <br><br><div class="col-lg-4 col-md-6">
+                        <div class="card">
+                            <img class="card-img-top" src="/images/image3.jpg" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title"><%= requested[i].Course_Title%> (<%= courses[i].Course_Code%>)</h5>
+
+                                <h6 class="card-title"> Instructor : <a href="#"><%= requested[i].First_Name%> <%= requested[i].Middle_Name%> <%= requested[i].Last_Name%></a></h6>
+
+                                <p class="card-text mb-3"><%= requested[i].Introduction%>.</p>
+                                <a href="" class="btn btn-primary"><i class="fas fa-graduation-cap"></i> Requested Please Wait Till Approval</a>
+                            </div>
+                        </div><br><br>
+                    </div><br><br>
+                    <br><br>
+
+                <% }%>
+
+            <% }  %>
+
+
+        </div>
     </div>
 </section>
 <!-- courses -->

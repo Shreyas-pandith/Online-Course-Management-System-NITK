@@ -6,8 +6,8 @@ function connectDatabase() {
         db = mysql.createConnection({
             host     : 'localhost',
             user     : 'root',
-            password : 'dpsp1191',
-            database : 'dbms2'
+            password : 'mysql',
+            database : 'DBMS'
         });
 
         db.connect(function(err){
@@ -387,7 +387,7 @@ function connectDatabase() {
                 });
 
 
-                let createTodos17 = `CREATE TABLE if not exists Reply
+                let createTodos17 = `CREATE TABLE if not exists REPLY
                 (
                   Reply_id INT NOT NULL AUTO_INCREMENT,
                   Reply VARCHAR(2500) NOT NULL,
@@ -398,7 +398,7 @@ function connectDatabase() {
                   Course_id INT,
                   Name VARCHAR(255),
                   PRIMARY KEY (Reply_id),
-                  FOREIGN KEY (Answer_id) REFERENCES Answer(Answer_id) ON DELETE CASCADE,
+                  FOREIGN KEY (Answer_id) REFERENCES ANSWER(Answer_id) ON DELETE CASCADE,
                   FOREIGN KEY (Q_A_id) REFERENCES Q_A(Q_A_id) ON DELETE CASCADE,
                   FOREIGN KEY (Instructor_id) REFERENCES INSTRUCTOR(Instructor_id),
                   FOREIGN KEY (Student_id) REFERENCES STUDENT(Student_id)
@@ -409,7 +409,46 @@ function connectDatabase() {
                     if (err) {
                         console.log(err.message);
                     }
-                    console.log('Answer table created');
+                    else
+                    console.log('Reply table created');
+                });
+
+
+
+                let createTodos18 = `CREATE TABLE if not exists PERMISSION
+                (
+                  Permission_id INT NOT NULL AUTO_INCREMENT,
+                  Course_id INT NOT NULL,
+                  Student_id INT,
+                  PRIMARY KEY (Permission_id),
+                  FOREIGN KEY (Course_id) REFERENCES COURSE(Course_id) ON DELETE CASCADE,
+                  FOREIGN KEY (Student_id) REFERENCES STUDENT(Student_id)
+                ) 
+                ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci`;
+
+                db.query(createTodos18, function(err, results, fields) {
+                    if (err) {
+                        console.log(err.message);
+                    }
+                    console.log('Permission table created');
+                });
+
+
+                let createTodos19 = `CREATE TABLE if not exists PASSWORD
+                (
+                  Password_id INT NOT NULL AUTO_INCREMENT,
+                  User_id INT NOT NULL,
+                  Secret VARCHAR(1000),
+                  PRIMARY KEY (Password_id),
+                  FOREIGN KEY (User_id) REFERENCES USER(id)
+                ) 
+                ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci`;
+
+                db.query(createTodos19, function(err, results, fields) {
+                    if (err) {
+                        console.log(err.message);
+                    }
+                    console.log('Password table created');
                 });
 
 

@@ -256,7 +256,7 @@
                     <!-- left side -->
                     <div class="col-lg-8 left-blog-info text-left">
                         <div class="blog-grid-top">
-                            <h2
+
 
                             <h2 class="tittle mb-xl-5 mb-4 text-dark text-uppercase font-weight-bold pl-4 py-3">Students Enrolled</h2>
                             <div class="category-story tech-btm"">
@@ -281,7 +281,12 @@
                                             <a><%= students[i].Last_Name%></a><br><br><br>
                                             <a><%= students[i].Roll_Number%></a><br><br><br>
                                             <% if (attendence.length >0) {%>
-                                                <a><%= attendence[i].total%></a><br><br><br>
+                                            <% for(var j=0;j<attendence.length;j++){%>
+                                                <%if(attendence[j].Student_id === students[i].Student_id){%>
+                                                    <a><%= attendence[j].total%></a><br><br><br>
+                                                <%}%>
+                                                <%}%>
+
                                             <% }else{%>
                                                 <a>0</a><br><br><br>
                                             <%}%>
@@ -295,6 +300,41 @@
 
                             </ul>
                         </div>
+
+
+
+                        <h2 class="tittle mb-xl-5 mb-4 text-dark text-uppercase font-weight-bold pl-4 py-3">Students Requested</h2>
+                        <div class="category-story tech-btm"">
+                        <ul class="list-group single" >
+
+
+                            <li class="list-group-item d-flex justify-content-between align-items-center" >
+                                <a style="color: red">First Name</a><br><br><br>
+                                <a style="color: red">Last Name</a><br><br><br>
+                                <a style="color: red">Roll Number</a><br><br><br>
+
+                                <a style="color: red">Approval</a><br><br><br>
+
+                            </li>
+
+
+
+                            <% if (students) { %>
+                                <% for (var i=0;i<requested.length ;i ++) {%>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center" >
+                                        <a><%= requested[i].First_Name%></a><br><br><br>
+                                        <a><%= requested[i].Last_Name%></a><br><br><br>
+                                        <a><%= requested[i].Roll_Number%></a><br><br><br>
+                                        <a href="/instructor/course/<%= course.Course_id%>/<%= requested[i].Student_id%>/approve">Approve</a>
+
+
+                                    </li>
+                                <% }%>
+                            <% } %>
+
+
+                        </ul>
+                    </div>
 
 
 
