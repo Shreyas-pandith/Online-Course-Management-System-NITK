@@ -903,8 +903,22 @@ router.get('/course/:course_id/tests/', function(req, res){
                                                     }
                                                     else {
 
-                                                        console.log(rows6);
-                                                        res.render('student/tests',{'user':rows1[0], 'student': rows2[0], 'course': rows3[0], 'announcements': rows4, 'tests': rows5, 'results': rows6});
+                                                        connection.query("SELECT * FROM EXAMS WHERE Course_id = ?   ORDER BY Date",req.params.course_id ,function(err4,exams){
+                                                            if(err4) {
+                                                                console.log(err4);
+                                                                res.redirect('/student/courses/')
+
+                                                            }
+                                                            else {
+
+                                                                console.log("+++++++++++++++++++++++++++");
+
+                                                                res.render('student/tests',{'user':rows1[0], 'student': rows2[0], 'course': rows3[0], 'announcements': rows4,'exams': exams , 'tests': rows5, 'results': rows6});
+
+
+                                                            }
+                                                        });
+
                                                     }
                                                 });
 

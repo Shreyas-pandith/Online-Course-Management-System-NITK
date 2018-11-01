@@ -822,8 +822,23 @@ router.get('/course/:course_id/tests/', function(req, res){
 
                                                     }
                                                     else {
-                                                        console.log(rows6);
-                                                        res.render('instructor/tests',{'user':rows1[0], 'instructor': rows2[0], 'course': rows3[0], 'announcements': rows4, 'tests': rows5, 'assignments': rows6,  messages: req.flash('info'), 'current' : new Date()});
+                                                        connection.query("SELECT * FROM EXAMS WHERE Course_id = ?   ORDER BY Date",req.params.course_id ,function(err4,exams){
+                                                            if(err4) {
+                                                                console.log(err4);
+                                                                res.redirect('/instructor/courses/')
+
+                                                            }
+                                                            else {
+                                                                console.log("----------------------------");
+                                                                console.log(rows4);
+                                                                res.render('instructor/tests',{'user':rows1[0], 'instructor': rows2[0], 'course': rows3[0],'exams': exams, 'announcements': rows4, 'tests': rows5, 'assignments': rows6,  messages: req.flash('info'), 'current' : new Date()});
+
+
+
+
+                                                            }
+                                                        });
+
                                                     }
                                                 });
                                             }
