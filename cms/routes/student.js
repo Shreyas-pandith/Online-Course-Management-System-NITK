@@ -705,6 +705,103 @@ router.get('/course/:course_id/assignments/', function(req, res){
 });
 
 
+
+router.get('/course/:course_id/students', function(req, res){
+    if(req.user) {
+
+        connection.query("SELECT * FROM USER WHERE id = ? AND Role = ?",[req.user, 'Instructor'] ,function(err1,rows1){
+            if(err1) {
+                console.log(err1);
+                res.redirect('/users/login')
+
+            }
+            else {
+                connection.query("SELECT * FROM STUDENT WHERE User_id = ?  ",req.user ,function(err2,rows2){
+                    if(err2) {
+                        console.log(err2);
+                        res.redirect('/users/login')
+
+                    }
+                    else {
+                        connection.query("SELECT * FROM COURSE WHERE Course_id = ?  ",req.params.course_id ,function(err3,rows3){
+                            if(err3) {
+                                console.log(err3);
+                                res.redirect('/student/courses/')
+
+                            }
+                            else {
+
+                                connection.query("SELECT * FROM ANOUNCEMENT WHERE Course_id = ?   ORDER BY -Posted_on LIMIT 5",req.params.course_id ,function(err4,rows4){
+                                    if(err4) {
+                                        console.log(err4);
+                                        res.redirect('/student/courses/')
+
+                                    }
+                                    else {
+
+                                        connection.query("SELECT * FROM STUDENT WHERE Student_id IN (SELECT Student_id FROM ENROLLED WHERE Course_id = ?) ORDER BY Student_id",[req.params.course_id] ,function(err5,rows5){
+                                            if(err5) {
+                                                console.log(err4);
+                                                res.redirect('/student/courses/')
+
+                                            }
+                                            else {
+
+                                                connection.query("SELECT count(*) as total ,Student_id FROM (SELECT  * FROM  ATTENDENCE  WHERE Course_id = ? AND Attended = 1 ORDER BY Student_id )A GROUP BY Student_id ",[req.params.course_id] ,function(err5,rows6){
+                                                    if(err5) {
+                                                        console.log(err4);
+                                                        res.redirect('/student/courses/')
+
+                                                    }
+                                                    else {
+                                                        connection.query("SELECT count(*) as total_classes FROM (SELECT  * FROM  ATTENDENCE  WHERE Course_id = ?  GROUP BY Date )A",[req.params.course_id] ,function(err5,c) {
+                                                            if (err5) {
+                                                                console.log(err4);
+                                                                res.redirect('/student/courses/')
+
+                                                            }
+                                                            else {
+
+
+
+                                                                res.render('student/students', {
+                                                                    'user': rows1[0],
+                                                                    'student': rows2[0],
+                                                                    'course': rows3[0],
+                                                                    'announcements': rows4,
+                                                                    'students': rows5,
+                                                                    'attendence': rows6,
+                                                                    'classes':c[0],
+                                                                    messages: req.flash('info')
+                                                                });
+                                                            }
+                                                        });
+
+                                                    }
+                                                });
+
+
+                                            }
+                                        });
+
+                                    }
+                                });
+                            }
+                        });
+
+                    }
+                });
+            }
+        });
+    }
+    else{
+        return res.redirect('/users/login')
+    }
+});
+
+
+
+
 router.get('/course/:course_id/assignments/:assignment_id', function (req, res) {
 
     if(req.user) {

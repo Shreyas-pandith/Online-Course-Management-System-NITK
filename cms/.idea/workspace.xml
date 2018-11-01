@@ -2,8 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5cc45993-6fc1-44ef-bc5c-4ed60012fcb5" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/routes/instructor.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/instructor.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/student.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/student.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/instructor/students.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/instructor/students.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/student/mycourse.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/student/mycourse.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/student/qa.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/student/qa.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/student/resources.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/student/resources.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/student/tests.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/student/tests.ejs" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -18,38 +23,38 @@
     <session id="-76586019">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="3" />
-          <entry key="project.open.time.11" value="2" />
+          <entry key="project.closed" value="4" />
+          <entry key="project.open.time.11" value="3" />
           <entry key="project.open.time.13" value="1" />
           <entry key="project.open.time.3" value="1" />
           <entry key="project.open.time.5" value="1" />
-          <entry key="project.opened" value="5" />
+          <entry key="project.opened" value="6" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="ejs" value="54" />
+          <entry key="ejs" value="58" />
           <entry key="js" value="10" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="EJS" value="54" />
+          <entry key="EJS" value="58" />
           <entry key="JavaScript" value="10" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="ejs" value="4303" />
-          <entry key="js" value="1942" />
+          <entry key="ejs" value="4398" />
+          <entry key="js" value="2006" />
           <entry key="txt" value="34" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="EJS" value="4296" />
+          <entry key="EJS" value="4391" />
           <entry key="HTML" value="7" />
-          <entry key="JavaScript" value="1942" />
+          <entry key="JavaScript" value="2006" />
           <entry key="PLAIN_TEXT" value="34" />
         </counts>
       </usages-collector>
@@ -95,49 +100,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/register.ejs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3009">
-              <caret line="177" column="47" selection-start-line="177" selection-start-column="47" selection-end-line="177" selection-end-column="47" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/instructor/attendence.ejs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4301">
-              <caret line="253" column="39" selection-start-line="253" selection-start-column="39" selection-end-line="253" selection-end-column="39" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/routes/users.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="663">
-              <caret line="39" selection-start-line="39" selection-end-line="39" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/instructor/add_attendence.ejs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="252" column="41" lean-forward="true" selection-start-line="252" selection-start-column="41" selection-end-line="252" selection-end-column="41" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/views/instructor/students.ejs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="127">
-              <caret line="273" column="84" selection-start-line="273" selection-start-column="84" selection-end-line="273" selection-end-column="84" />
-              <folding>
-                <element signature="n#style#0;n#a#3;n#li#0;n#ul#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
+            <state relative-caret-position="170">
+              <caret line="10" lean-forward="true" selection-end-line="663" selection-end-column="7" />
             </state>
           </provider>
         </entry>
@@ -150,8 +116,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/database.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="371" column="18" lean-forward="true" selection-start-line="371" selection-start-column="18" selection-end-line="371" selection-end-column="26" />
+            <state relative-caret-position="6307">
+              <caret line="371" column="18" selection-start-line="371" selection-start-column="18" selection-end-line="371" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -159,17 +125,53 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/student.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="279">
-              <caret line="1000" column="61" selection-start-line="1000" selection-start-column="61" selection-end-line="1000" selection-end-column="61" />
+            <state relative-caret-position="371">
+              <caret line="801" lean-forward="true" selection-start-line="801" selection-end-line="801" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/student/students.ejs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="231">
+              <caret line="351" column="31" lean-forward="true" selection-start-line="351" selection-start-column="31" selection-end-line="353" selection-end-column="37" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/student/mycourse.ejs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="312">
+              <caret line="334" column="41" selection-start-line="334" selection-start-column="41" selection-end-line="334" selection-end-column="41" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/student/resources.ejs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="264">
+              <caret line="327" column="41" selection-start-line="327" selection-start-column="41" selection-end-line="327" selection-end-column="41" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/student/tests.ejs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="307">
+              <caret line="348" column="89" lean-forward="true" selection-start-line="348" selection-start-column="89" selection-end-line="348" selection-end-column="89" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/views/student/qa.ejs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4930">
-              <caret line="290" column="90" selection-start-line="290" selection-start-column="90" selection-end-line="290" selection-end-column="90" />
+            <state relative-caret-position="442">
+              <caret line="309" lean-forward="true" selection-start-line="309" selection-end-line="309" />
             </state>
           </provider>
         </entry>
@@ -177,8 +179,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/instructor.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="1883" selection-start-line="1883" selection-end-line="1883" />
+            <state relative-caret-position="354">
+              <caret line="1921" lean-forward="true" selection-start-line="1921" selection-end-line="1921" />
             </state>
           </provider>
         </entry>
@@ -201,6 +203,10 @@
       <find>INSERT INTO ANSWER SET</find>
       <find>from Attendence</find>
       <find>/stu</find>
+      <find>/st</find>
+      <find>student/courses</find>
+      <find>student/mycourses</find>
+      <find>/students</find>
     </findStrings>
     <replaceStrings>
       <replace>-Posted_on LIMIT 5&quot;</replace>
@@ -235,9 +241,7 @@
         <option value="$PROJECT_DIR$/views/instructor/test_edit.ejs" />
         <option value="$PROJECT_DIR$/views/login.ejs" />
         <option value="$PROJECT_DIR$/views/instructor/assignment.ejs" />
-        <option value="$PROJECT_DIR$/views/student/resources.ejs" />
         <option value="$PROJECT_DIR$/views/instructor/upload_result.ejs" />
-        <option value="$PROJECT_DIR$/views/student/tests.ejs" />
         <option value="$PROJECT_DIR$/views/instructor/tests.ejs" />
         <option value="$PROJECT_DIR$/views/student/announcement.ejs" />
         <option value="$PROJECT_DIR$/views/contact.ejs" />
@@ -245,7 +249,6 @@
         <option value="$PROJECT_DIR$/views/instructor/home.ejs" />
         <option value="$PROJECT_DIR$/views/student/search/courses.ejs" />
         <option value="$PROJECT_DIR$/views/student/mycourses.ejs" />
-        <option value="$PROJECT_DIR$/views/student/mycourse.ejs" />
         <option value="$PROJECT_DIR$/views/instructor/profile.ejs" />
         <option value="$PROJECT_DIR$/views/student/submit_assignment.ejs" />
         <option value="$PROJECT_DIR$/views/student/profile.ejs" />
@@ -254,14 +257,18 @@
         <option value="$PROJECT_DIR$/db.js" />
         <option value="$PROJECT_DIR$/database.js" />
         <option value="$PROJECT_DIR$/views/instructor/qa.ejs" />
-        <option value="$PROJECT_DIR$/views/student/qa.ejs" />
-        <option value="$PROJECT_DIR$/routes/student.js" />
         <option value="$PROJECT_DIR$/routes/users.js" />
         <option value="$PROJECT_DIR$/views/register.ejs" />
         <option value="$PROJECT_DIR$/views/instructor/attendence.ejs" />
         <option value="$PROJECT_DIR$/views/instructor/add_attendence.ejs" />
         <option value="$PROJECT_DIR$/routes/instructor.js" />
         <option value="$PROJECT_DIR$/views/instructor/students.ejs" />
+        <option value="$PROJECT_DIR$/routes/student.js" />
+        <option value="$PROJECT_DIR$/views/student/students.ejs" />
+        <option value="$PROJECT_DIR$/views/student/mycourse.ejs" />
+        <option value="$PROJECT_DIR$/views/student/resources.ejs" />
+        <option value="$PROJECT_DIR$/views/student/tests.ejs" />
+        <option value="$PROJECT_DIR$/views/student/qa.ejs" />
       </list>
     </option>
   </component>
@@ -382,7 +389,8 @@
       <workItem from="1540815052717" duration="12143000" />
       <workItem from="1540889140279" duration="95000" />
       <workItem from="1540902662986" duration="6362000" />
-      <workItem from="1540922803270" duration="10194000" />
+      <workItem from="1540922803270" duration="10797000" />
+      <workItem from="1541068681955" duration="1309000" />
     </task>
     <task id="LOCAL-00001" summary="frontend updated">
       <created>1540755275089</created>
@@ -409,13 +417,13 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="57536000" />
+    <option name="totallyTimeSpent" value="59448000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="697" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.18839428" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18839428" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -428,7 +436,7 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="9" sideWeight="0.49920508" visible="true" weight="0.32978722" />
+      <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.49920508" visible="true" weight="0.0" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5007949" side_tool="true" weight="0.38475177" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -467,13 +475,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="reply added" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/views/instructor/offer_course.ejs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="471">
-          <caret line="129" column="7" selection-start-line="129" selection-start-column="7" selection-end-line="129" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/views/instructor/submissions.ejs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="430">
@@ -523,13 +524,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/student/resources.ejs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="383">
-          <caret line="334" selection-start-line="334" selection-end-line="334" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/views/student/search/instructor.ejs" />
     <entry file="file://$PROJECT_DIR$/public/images/t3.jpg">
       <provider selected="true" editor-type-id="images" />
@@ -569,13 +563,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="193">
           <caret line="93" column="47" selection-start-line="93" selection-start-column="47" selection-end-line="93" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/student/mycourse.ejs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2820">
-          <caret line="188" column="61" selection-start-line="188" selection-start-column="61" selection-end-line="188" selection-end-column="61" />
         </state>
       </provider>
     </entry>
@@ -621,13 +608,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="865">
           <caret line="238" column="315" selection-start-line="238" selection-start-column="315" selection-end-line="238" selection-end-column="315" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/student/tests.ejs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="373">
-          <caret line="269" column="77" lean-forward="true" selection-start-line="269" selection-start-column="77" selection-end-line="269" selection-end-column="77" />
         </state>
       </provider>
     </entry>
@@ -729,51 +709,76 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/views/instructor/add_attendence.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4284">
+          <caret line="252" column="41" selection-start-line="252" selection-start-column="41" selection-end-line="252" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/routes/index.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/views/student/qa.ejs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4930">
-          <caret line="290" column="90" selection-start-line="290" selection-start-column="90" selection-end-line="290" selection-end-column="90" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/database.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="371" column="18" lean-forward="true" selection-start-line="371" selection-start-column="18" selection-end-line="371" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/instructor/add_attendence.ejs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="252" column="41" lean-forward="true" selection-start-line="252" selection-start-column="41" selection-end-line="252" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/student.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="279">
-          <caret line="1000" column="61" selection-start-line="1000" selection-start-column="61" selection-end-line="1000" selection-end-column="61" />
+        <state relative-caret-position="6307">
+          <caret line="371" column="18" selection-start-line="371" selection-start-column="18" selection-end-line="371" selection-end-column="26" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/routes/instructor.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="1883" selection-start-line="1883" selection-end-line="1883" />
+        <state relative-caret-position="354">
+          <caret line="1921" lean-forward="true" selection-start-line="1921" selection-end-line="1921" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/student.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="371">
+          <caret line="801" lean-forward="true" selection-start-line="801" selection-end-line="801" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/views/instructor/students.ejs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="127">
-          <caret line="273" column="84" selection-start-line="273" selection-start-column="84" selection-end-line="273" selection-end-column="84" />
-          <folding>
-            <element signature="n#style#0;n#a#3;n#li#0;n#ul#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#section#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
+        <state relative-caret-position="170">
+          <caret line="10" lean-forward="true" selection-end-line="663" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/student/students.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="351" column="31" lean-forward="true" selection-start-line="351" selection-start-column="31" selection-end-line="353" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/student/mycourse.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="312">
+          <caret line="334" column="41" selection-start-line="334" selection-start-column="41" selection-end-line="334" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/student/resources.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="327" column="41" selection-start-line="327" selection-start-column="41" selection-end-line="327" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/student/tests.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="307">
+          <caret line="348" column="89" lean-forward="true" selection-start-line="348" selection-start-column="89" selection-end-line="348" selection-end-column="89" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/student/qa.ejs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="309" lean-forward="true" selection-start-line="309" selection-end-line="309" />
         </state>
       </provider>
     </entry>
