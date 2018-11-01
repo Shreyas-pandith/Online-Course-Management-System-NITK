@@ -412,7 +412,81 @@ function connectDatabase() {
                     console.log('Answer table created');
                 });
 
+                let createTodos18 = `CREATE TABLE if not exists Exams
+                (
+                  Exam_id INT NOT NULL AUTO_INCREMENT,
+                  Exam_Name VARCHAR(100),
+                  Total_Questions INT,
+                  Course_id INT NOT NULL,
+                  Instructor_id INT NOT NULL,
+                  Date DATE,
+                  PRIMARY KEY (Exam_id),
+                  FOREIGN KEY (Course_id) REFERENCES COURSE(Course_id) ON DELETE CASCADE,
+                  FOREIGN KEY (Instructor_id) REFERENCES INSTRUCTOR(Instructor_id)
+                ) 
+                ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci`;
 
+                db.query(createTodos18, function(err, results, fields) {
+                    if (err) {
+                        console.log(err.message);
+                    }
+                    console.log('Exams table created');
+                });
+
+
+
+
+                let createTodos19 = `CREATE TABLE if not exists Questions
+                (
+                  Question_id INT NOT NULL AUTO_INCREMENT,
+                  Question VARCHAR(100),
+                  Op1 VARCHAR(100),
+                  Op2 VARCHAR(100),
+                  Op3 VARCHAR(100),
+                  Op4 VARCHAR(100),
+                  Correct_Option INT NOT NULL,
+                  Exam_id INT NOT NULL,
+                  Course_id INT NOT NULL,
+                  Instructor_id INT NOT NULL,
+                  PRIMARY KEY (Question_id),
+                  FOREIGN KEY (Exam_id) REFERENCES Exams(Exam_id) ON DELETE CASCADE,
+                  FOREIGN KEY (Course_id) REFERENCES COURSE(Course_id) ON DELETE CASCADE,
+                  FOREIGN KEY (Instructor_id) REFERENCES INSTRUCTOR(Instructor_id)
+                ) 
+                ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci`;
+
+                db.query(createTodos19, function(err, results, fields) {
+                    if (err) {
+                        console.log(err.message);
+                    }
+                    console.log('Questions table created');
+                });
+
+
+
+                let createTodos20 = `CREATE TABLE if not exists Exam_Submission
+                (
+                  Exam_Submission_id INT NOT NULL AUTO_INCREMENT,
+                  Question_id  INT NOT NULL,
+                  Answer_id INT ,
+                  Mark INT,
+                  Exam_id INT NOT NULL,
+                  Course_id INT NOT NULL,
+                  Student_id INT NOT NULL,
+                  PRIMARY KEY (Exam_Submission_id),
+                  FOREIGN KEY (Question_id) REFERENCES Questions(Question_id) ON DELETE CASCADE,
+                  FOREIGN KEY (Exam_id) REFERENCES Exams(Exam_id) ON DELETE CASCADE,
+                  FOREIGN KEY (Course_id) REFERENCES COURSE(Course_id) ON DELETE CASCADE,
+                  FOREIGN KEY (Student_id) REFERENCES Student(Student_id)
+                ) 
+                ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci`;
+
+                db.query(createTodos20, function(err, results, fields) {
+                    if (err) {
+                        console.log(err.message);
+                    }
+                    console.log('Exam-submission table created');
+                });
 
                 db.end(function(err) {
                     if (err) {

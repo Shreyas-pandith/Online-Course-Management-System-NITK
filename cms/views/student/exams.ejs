@@ -38,6 +38,7 @@
     <!--web font-->
     <link href="//fonts.googleapis.com/css?family=PT+Sans+Caption:400,700&amp;subset=cyrillic,cyrillic-ext,latin-ext" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
     <!--//web font-->
 
     <style>
@@ -161,7 +162,7 @@
                         </a>
                     </li>
                     <li class="nav-item mr-lg-3">
-                        <a class="nav-link" href="/student/courses/">My Courses</a>
+                        <a class="nav-link" href="/student/courses/">Courses</a>
                     </li>
                     <li class="dropdown nav-item active mr-lg-3">
                         <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle ">
@@ -186,8 +187,8 @@
                                 <!-- cd-header-buttons -->
                             </div>
                             <div id="cd-search" class="cd-search">
-                                <form action="/student/search" method="post">
-                                    <input name="search" type="search" placeholder="Click enter after typing...">
+                                <form action="#" method="post">
+                                    <input name="Search" type="search" placeholder="Click enter after typing...">
                                 </form>
                             </div>
                         </div>
@@ -221,17 +222,18 @@
             <a href="/student/">Home</a>
         </li>
         <li class="breadcrumb-item">
-            <a href="/student/courses">Courses</a>
+            <a href="/student/courses/">Courses</a>
         </li>
-        <li class="breadcrumb-item active" aria-current="page">Course Name</li>
+        <li class="breadcrumb-item">
+            <a href="/student/course-details/<%= course.Course_id%>"><%= course.Course_Title%></a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Resources</li>
     </ol>
 </nav>
 <!-- //breadcrumbs -->
 
 <!-- courses -->
 <section class="courses py-5">
-
-
 
 
 
@@ -245,113 +247,78 @@
                     <!-- left side -->
                     <div class="col-lg-8 left-blog-info text-left">
                         <div class="blog-grid-top">
-                            <div class="b-grid-top">
-                                <div class="blog_info_left_grid">
-                                    <a href="single.html">
-                                        <img src="/images/4.jpg" class="img-fluid" alt="">
-                                    </a>
-                                </div>
-                            </div>
+
+                            <h2 class="tittle mb-xl-5 mb-4 text-dark text-uppercase font-weight-bold pl-4 py-3">Course Resource Section</h2>
+
+                            <div class="category-story tech-btm"">
+                            <ul class="list-group single" >
+
+                                <% if (exams) { %>
+                                    <% for (var i=0;i<exams.length ;i ++) {%>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center" >
+                                            <a href="/student/course/<%= course.Course_id%>/exams/<%= exams[i].Exam_id%>/start"><%= exams[i].Exam_Name%></a><br><br><br>
+
+                                        </li>
+                                    <% }%>
+                                <% } %>
 
 
-
-
-                            <h2 class="tittle mb-xl-5 mb-4 text-dark text-uppercase font-weight-bold pl-4 py-3">Course Details Page</h2>
-
-
-
-
-                            <h3>
-                                <a class="single-text text-dark font-weight-light">Introduction To Course</a>
-                            </h3>
-                            <p id="introduction" style="white-space: pre-wrap;"><%= course.Introduction%></p>
-
-                            </p>
-
-                            <h3>
-                                <a class="single-text text-dark font-weight-light">Description of Course</a>
-                            </h3>
-
-                            <p id="description" style="white-space: pre-wrap;"> <%= course.Description%> </p>
-
-
-                            <h3>
-                                <a class="single-text text-dark font-weight-light">Requirements of the Course</a>
-                            </h3>
-
-                            <p id="requirements" style="white-space: pre-wrap;"><%= course.Requirements%></p>
+                            </ul>
                         </div>
+
+
+
+
+
+
+
 
 
                     </div>
-                    <!-- //left side -->
-                    <!-- right side -->
-                    <aside class="col-lg-4 right-blog-con text-right mt-lg-0 mt-5">
-                        <div class="right-blog-info text-left">
-                            <div class="category-story tech-btm">
-                                <h4>Recent Announcements</h4>
-                                <ul class="list-unstyled">
 
 
-                                    <% if (announcements) { %>
-                                        <% for (var i=0;i<announcements.length ;i ++) {%>
-                                            <li class="border-bottom mb-3 pb-3">
-                                                <i class="fas fa-angle-right mr-2"></i>
-                                                <a href="/student/course/announcement/<%= course.Course_id%>/<%= announcements[i].Anouncement_id%>" class="text-danger"><%= announcements[i].Short_Description%></a>
-                                            </li>
-                                        <% }%>
-                                    <% } %>
-
-
-                                    <li>
-                                        <i class="fas fa-angle-right mr-3"></i>
-                                        <a href="#" class="text-danger">...............Older Announcemenets</a>
-                                    </li>
-                                </ul>
-                            </div>
-
-                            <div class="tech-btm">
-                                <img src="images/g4.jpg" class="img-fluid rounded" alt="">
-                            </div>
-
-
-                            <div class="category-story tech-btm">
-                                <h4>Course Materials</h4>
-                                <ul class="list-group single">
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <a href="/student/course/<%= course.Course_id%>/resources">Resources Section</a>
-                                        <span class="badge badge-primary badge-pill">14</span>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <a href="/student/course/<%= course.Course_id%>/assignments">Assignment And Submissions</a>
-                                        <span class="badge badge-primary badge-pill">2</span>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <a href="/student/course/<%= course.Course_id%>/tests">Test And Examinations</a>
-                                        <span class="badge badge-primary badge-pill">1</span>
-                                    </li>
-
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <a href="/student/course/<%= course.Course_id%>/students">Students</a>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <a href="/student/course/<%= course.Course_id%>/exams">Exams</a>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <a href="/student/course/<%= course.Course_id%>/qa">Q&A</a>
-                                        <span class="badge badge-primary badge-pill">1</span>
-                                    </li>
-                                </ul>
-                            </div>
-
-
-
-                        </div>
-                    </aside>
-                    <!-- //right side -->
                 </div>
+                <!-- //left side -->
+                <!-- right side -->
+                <aside class="col-lg-4 right-blog-con text-right mt-lg-0 mt-5">
+                    <div class="right-blog-info text-left">
+
+
+
+
+                        <div class="category-story tech-btm">
+                            <h4>Course Materials</h4>
+                            <ul class="list-group single">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <a href="/student/course/<%= course.Course_id%>/resources">Resources Section</a>
+                                    <span class="badge badge-primary badge-pill">14</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <a href="/student/course/<%= course.Course_id%>/assignments">Assignment And Submissions</a>
+                                    <span class="badge badge-primary badge-pill">2</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <a href="/student/course/<%= course.Course_id%>/tests">Test And Examinations</a>
+                                    <span class="badge badge-primary badge-pill">1</span>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <a href="/student/course/<%= course.Course_id%>/students">Students</a>
+                                </li>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <a href="/student/course/<%= course.Course_id%>/qa">Q&A</a>
+                                    <span class="badge badge-primary badge-pill">1</span>
+                                </li>
+                            </ul>
+                        </div>
+
+
+
+                    </div>
+                </aside>
+                <!-- //right side -->
             </div>
         </div>
+    </div>
     </div>
 
 
@@ -435,8 +402,94 @@
     <!--</div>-->
 </footer>
 <!-- footer -->
+<!-- Register modal -->
+<div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-uppercase" id="exampleModalLabel1">Make An Announcement</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="/student/course/announcement/<%= course.Course_id%>" method="post" class="p-3">
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Describe Announcement in 30 Characters</label><br>
+                        <textarea maxlength="50" style="width: 100%;" name="description"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Announcement Details</label><br>
+                        <textarea maxlength="255" style="width: 100%; height: 200px;" name="details"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Link 1</label>
+                        <input type="" class="form-control" placeholder="Link 1" name="link1" id="recipient-name4" required="">
+                    </div>
+                    <!--   <div class="form-group">
+                         <label for="recipient-name" class="col-form-label">Mobile Number</label>
+                         <input type="text" class="form-control" placeholder="Mobile Number" name="Name" id="recipient-name5" required="">
+                       </div>
+                     -->
+                    <div class="form-group">
+                        <label for="recipient-name1" class="col-form-label">Link 2</label>
+                        <input type="" class="form-control" placeholder="Link 2" name="link2" id="recipient-name6" required="">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name1" class="col-form-label">Link 3</label>
+                        <input type="" class="form-control" placeholder="Link 3" name="link3" id="recipient-name6" required="">
+                    </div>
+                    <div class="right-w3l mt-4 mb-3">
+                        <input type="submit" class="form-control" value="Create account">
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- //Register modal -->
 
 
+
+
+<!-- Resource modal -->
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-uppercase" id="exampleModalLabel2">Add A Resource</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="/student/course/<%= course.Course_id%>/resources" method="post" class="p-3" enctype="multipart/form-data">
+
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Resource Name</label>
+                        <input type="text" class="form-control" placeholder="Resource Name" name="resource_name" id="recipient-name4" required="">
+                    </div>
+                    <!--   <div class="form-group">
+                         <label for="recipient-name" class="col-form-label">Mobile Number</label>
+                         <input type="text" class="form-control" placeholder="Mobile Number" name="Name" id="recipient-name5" required="">
+                       </div>
+                     -->
+                    <div class="form-group">
+                        <label for="recipient-name1" class="col-form-label">Link 2</label>
+                        <input type="file" class="form-control" placeholder="Upload File" name="file" id="recipient-name6" required="">
+                    </div>
+                    <div class="right-w3l mt-4 mb-3">
+                        <input type="submit" class="form-control" value="Create account">
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- //Register modal -->
 
 
 

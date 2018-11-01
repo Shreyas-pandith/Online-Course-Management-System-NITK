@@ -2718,6 +2718,202 @@ router.post('/course/:course_id/:question_id/:answer_id', function(req, res){
 });
 
 
+router.get('/course/:course_id/exams/', function(req, res){
+    if(req.user) {
+
+        connection.query("SELECT * FROM USER WHERE id = ? AND Role = ?",[req.user, 'Instructor'] ,function(err1,rows1){
+            if(err1) {
+                console.log(err1);
+                res.redirect('/users/login')
+
+            }
+            else {
+                connection.query("SELECT * FROM INSTRUCTOR WHERE User_id = ?  ",req.user ,function(err2,rows2){
+                    if(err2) {
+                        console.log(err2);
+                        res.redirect('/users/login')
+
+                    }
+                    else {
+                        connection.query("SELECT * FROM COURSE WHERE Course_id = ?  ",req.params.course_id ,function(err3,rows3){
+                            if(err3) {
+                                console.log(err3);
+                                res.redirect('/instructor/courses/')
+
+                            }
+                            else {
+
+                                connection.query("SELECT * FROM EXAMS WHERE Course_id = ?   ORDER BY Date",req.params.course_id ,function(err4,rows4){
+                                    if(err4) {
+                                        console.log(err4);
+                                        res.redirect('/instructor/courses/')
+
+                                    }
+                                    else {
+                                        console.log("----------------------------");
+                                                console.log(rows4);
+                                                res.render('instructor/exams',{'user':rows1[0], 'instructor': rows2[0], 'course': rows3[0], 'exams': rows4,  messages: req.flash('info')});
+
+
+                                    }
+                                });
+                            }
+                        });
+
+                    }
+                });
+            }
+        });
+    }
+    else{
+        return res.redirect('/users/login')
+    }
+});
+
+
+
+
+router.get('/course/:course_id/add_exam/', function(req, res){
+    if(req.user) {
+
+        connection.query("SELECT * FROM USER WHERE id = ? AND Role = ?",[req.user, 'Instructor'] ,function(err1,rows1){
+            if(err1) {
+                console.log(err1);
+                res.redirect('/users/login')
+
+            }
+            else {
+                connection.query("SELECT * FROM INSTRUCTOR WHERE User_id = ?  ",req.user ,function(err2,rows2){
+                    if(err2) {
+                        console.log(err2);
+                        res.redirect('/users/login')
+
+                    }
+                    else {
+                        connection.query("SELECT * FROM COURSE WHERE Course_id = ?  ",req.params.course_id ,function(err3,rows3){
+                            if(err3) {
+                                console.log(err3);
+                                res.redirect('/instructor/courses/')
+
+                            }
+                            else {
+
+
+                                        res.render('instructor/create_exam',{'user':rows1[0], 'instructor': rows2[0], 'course': rows3[0],  messages: req.flash('info')});
+
+
+                            }
+                        });
+
+                    }
+                });
+            }
+        });
+    }
+    else{
+        return res.redirect('/users/login')
+    }
+});
+
+
+
+
+
+router.post('/course/add/exam/:course_id/add_exam/', function(req, res){
+    if(req.user) {
+
+        connection.query("SELECT * FROM USER WHERE id = ? AND Role = ?",[req.user, 'Instructor'] ,function(err1,rows1){
+            if(err1) {
+                console.log(err1);
+                res.redirect('/users/login')
+
+            }
+            else {
+                connection.query("SELECT * FROM INSTRUCTOR WHERE User_id = ?  ",req.user ,function(err2,rows2){
+                    if(err2) {
+                        console.log(err2);
+                        res.redirect('/users/login')
+
+                    }
+                    else {
+                        connection.query("SELECT * FROM COURSE WHERE Course_id = ?  ",req.params.course_id ,function(err3,rows3){
+                            if(err3) {
+                                console.log(err3);
+                                res.redirect('/instructor/courses/')
+
+                            }
+                            else {
+                                var obj={
+                                    'Exam_Name':req.body.Exam_Name,
+                                    'Course_id':req.params.course_id,
+                                    'Instructor_id':rows2[0].Instructor_id
+                                };
+                                connection.query("INSERT INTO Exams SET  ?",obj ,function(err1,exam){
+                                    if(err1) {
+                                        console.log(err1);
+                                        res.redirect('/instructor/courses');
+
+                                    }
+                                    else {
+                                        console.log(exam);
+                                        console.log(req.body);
+                                        var q=req.body.question;
+                                        var op1=req.body.op1;
+                                        var op2=req.body.op2;
+                                        var op3=req.body.op3;
+                                        var op4=req.body.op4;
+                                        var ans=req.body.ans;
+                                        console.log(ans);
+                          var insert_id=exam.insertId;
+
+                                       for(var i=0;i<q.length;i++) {
+                                           var obj1={
+                                               'Question':q[i],
+                                               'Op1':op1[i],
+                                               'Op2':op2[i],
+                                               'Op3':op3[i],
+                                               'Op4':op4[i],
+                                               'Correct_Option':ans[i],
+                                               'Exam_id':insert_id,
+                                               'Course_id':req.params.course_id,
+                                               'Instructor_id': rows2[0].Instructor_id
+                                           }
+                                           connection.query("INSERT INTO Questions SET  ?", obj1, function (err1, Questions) {
+                                               if (err1) {
+                                                   console.log(err1);
+                                                   res.redirect('/instructor/courses');
+
+                                               }
+                                               else {
+
+
+
+                                               }
+                                           });
+                                       }
+                                        var url = '/instructor/course/' + req.params.course_id + '/exams';
+                                        req.flash('info', 'New Exam Successfully Added to Q&A Section!');
+                                        res.redirect(url);
+
+
+
+                                    }
+                                });
+
+
+
+                            }
+                        });
+
+                    }
+                });
+            }
+        });
+    }
+    else{
+        return res.redirect('/users/login')
+    }
+});
 
 
 module.exports = router;
