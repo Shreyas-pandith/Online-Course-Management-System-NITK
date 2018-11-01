@@ -209,7 +209,7 @@
     <div class="container">
         <div class="agileinfo-inner">
             <h2 class="text-center text-white">
-                Course Name
+               <%= course.Course_Title%>
             </h2>
         </div>
     </div>
@@ -219,15 +219,15 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="/student/">Home</a>
+            <a href="/instructor/">Home</a>
         </li>
         <li class="breadcrumb-item">
-            <a href="/student/courses/">Courses</a>
+            <a href="/instructor/courses/">Courses</a>
         </li>
         <li class="breadcrumb-item">
-            <a href="/student/course-details/<%= course.Course_id%>"><%= course.Course_Title%></a>
+            <a href="/instructor/course-details/<%= course.Course_id%>"><%= course.Course_Title%></a>
         </li>
-        <li class="breadcrumb-item active" aria-current="page">Resources</li>
+        <li class="breadcrumb-item active" aria-current="page">Exam Result</li>
     </ol>
 </nav>
 <!-- //breadcrumbs -->
@@ -248,7 +248,6 @@
                     <div class="col-lg-9 left-blog-info text-left">
                         <div class="blog-grid-top">
 
-                            <h2 class="tittle mb-xl-5 mb-4 text-dark text-uppercase font-weight-bold pl-4 py-3"></h2>
                                                   <h3>Submission of :  <%= student.First_Name %> &nbsp <%= student.Last_Name%></h3>
                             <div class="category-story tech-btm"">
                             <ul class="list-group single" >
@@ -257,24 +256,37 @@
                                 <% if (result) { %>
                                     <% var c=0%>
                                     <% for (var i=0;i<result.length ;i ++) {%>
+                                    <div class="card">
 
+
+                                    <div class="card-header" >
                                         <h3><%= i+1 %>. &nbsp <%= result[i].Question%></h3>
+                                    </div>
 
-
+                                        <div class="card-body" >
                                         <ul>
                                             <li><%= result[i].Op1%></li><br>
                                             <li><%= result[i].Op2%></li><br>
                                             <li><%= result[i].Op3%></li><br>
                                             <li><%= result[i].Op4%></li><br>
                                         </ul>
+                                        </div>
+                                        <div class="card-footer">
+
+                                        Selected Option :  <%= result[i].Answer_id%>
 
                                         <% if(result[i].Mark == 0){%>
 
-                                            <div > <h5 style="background-color: red"> wrong !</h5> <h6> correct answer: Option <%= result[i].Correct_Option%></h6></div>
+                                            <div > <h5 style="background-color: red;color:whitesmoke" > wrong !</h5> <h6> correct answer: Option <%= result[i].Correct_Option%></h6></div>
+
                                         <% } else {%>
                                             <% c=c+1%>
-                                            <div style="background-color: green"> <h5>correct !</h5></div>
+                                            <div style="background-color: green;color:whitesmoke"> <h5>correct !</h5></div>
                                         <%} %>
+
+                                        </div>
+
+                                    </div>
                                         <hr>
                                     <% }%>
 

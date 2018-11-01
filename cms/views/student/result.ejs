@@ -211,7 +211,7 @@
     <div class="container">
         <div class="agileinfo-inner">
             <h2 class="text-center text-white">
-                Course Name
+              <%= course.Course_Title%>
             </h2>
         </div>
     </div>
@@ -229,7 +229,7 @@
         <li class="breadcrumb-item">
             <a href="/student/course-details/<%= course.Course_id%>"><%= course.Course_Title%></a>
         </li>
-        <li class="breadcrumb-item active" aria-current="page">Resources</li>
+        <li class="breadcrumb-item active" aria-current="page">Exam Result</li>
     </ol>
 </nav>
 <!-- //breadcrumbs -->
@@ -266,10 +266,15 @@
                                     <% if (result) { %>
                                 <% var c=0%>
                                         <% for (var i=0;i<result.length ;i ++) {%>
+                                        <div class="card">
+                                            <div class="card-header">
+
+
 
                                             <h3><%= i+1 %>. &nbsp <%= result[i].Question%></h3>
+                                            </div>
 
-
+                                        <div class="card-body">
                                             <ul>
                                                 <li><%= result[i].Op1%></li><br>
                                                 <li><%= result[i].Op2%></li><br>
@@ -277,17 +282,25 @@
                                                 <li><%= result[i].Op4%></li><br>
                                             </ul>
 
+                                        </div>
+                                            <div class="card-footer">
+                                            Selected Answser : <%=result[i].Answer_id %>
                                             <% if(result[i].Mark == 0){%>
 
-                                            <div > <h5 style="background-color: red"> wrong !</h5> <h6> correct answer: Option <%= result[i].Correct_Option%></h6></div>
+                                            <div > <h5 style="background-color: red;color: white"> wrong !</h5> <h6> correct answer: Option <%= result[i].Correct_Option%></h6></div>
                                             <% } else {%>
 <% c=c+1%>
-                                            <div style="background-color: green"> <h5>correct !</h5></div>
+                                            <div style="background-color: green;color:white"> <h5>correct !</h5></div>
                                             <%} %>
-                                            <hr>
-                                        <% }%>
 
-                                <div> YOU Scored  <%= c %> out of <%= i%>  </div>
+                                            </div>
+
+                                        </div>
+                                    <br>
+                                        <% }%>
+                                    <br><br>
+
+                                <div class="jumbotron"> YOU Scored  <%= c %> out of <%= i%>  </div>
                                     <% } %>
 
 

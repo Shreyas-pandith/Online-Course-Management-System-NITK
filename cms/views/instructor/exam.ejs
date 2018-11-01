@@ -209,7 +209,7 @@
     <div class="container">
         <div class="agileinfo-inner">
             <h2 class="text-center text-white">
-                Course Name
+                <%= course.Course_Title%>
             </h2>
         </div>
     </div>
@@ -219,15 +219,15 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="/student/">Home</a>
+            <a href="/instructor/">Home</a>
         </li>
         <li class="breadcrumb-item">
-            <a href="/student/courses/">Courses</a>
+            <a href="/instructor/courses/">Courses</a>
         </li>
         <li class="breadcrumb-item">
-            <a href="/student/course-details/<%= course.Course_id%>"><%= course.Course_Title%></a>
+            <a href="/instructor/course-details/<%= course.Course_id%>"><%= course.Course_Title%></a>
         </li>
-        <li class="breadcrumb-item active" aria-current="page">Resources</li>
+        <li class="breadcrumb-item active" aria-current="page">Exam</li>
     </ol>
 </nav>
 <!-- //breadcrumbs -->
@@ -255,9 +255,14 @@
 
                                     <% if (questions) { %>
                                         <% for (var i=0;i<questions.length ;i ++) {%>
+                                            <div class="card ">
 
-                                            <h3><%= i+1 %>. &nbsp <%= questions[i].Question%></h3>
 
+                                            <div class="card-header" >
+                                                <h3><%= i+1 %>. &nbsp <%= questions[i].Question%></h3>
+                                              </div>
+
+                                         <div class="card-body" style="margin-left:8%">
 
                                             <ul>
                                                 <li><%= questions[i].Op1%></li><br>
@@ -265,8 +270,10 @@
                                                 <li><%= questions[i].Op3%></li><br>
                                                 <li><%= questions[i].Op4%></li><br>
                                             </ul>
+                                        </div>
 
-                                            <div> Correct Option :  <%= questions[i].Correct_Option%></div>
+                                            <div class="card-footer"> Correct Option :  <%= questions[i].Correct_Option%></div>
+</div>
                                             <hr>
                                         <% }%>
                                     <% } %>
