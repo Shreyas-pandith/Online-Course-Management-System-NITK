@@ -255,7 +255,7 @@
                     <div class="col-lg-8 left-blog-info text-left">
                         <div class="blog-grid-top">
 
-                            <h2 class="tittle mb-xl-5 mb-4 text-dark text-uppercase font-weight-bold pl-4 py-3">Course Test Section<a href="" data-toggle="modal" aria-pressed="false" data-target="#exampleModal2">  <i class="fas fa-plus-circle" style="color: red"></i></a></h2>
+                            <h2 class="tittle mb-xl-5 mb-4 text-dark text-uppercase font-weight-bold pl-4 py-3">Offline Test Section<a href="" data-toggle="modal" aria-pressed="false" data-target="#exampleModal2">  <i class="fas fa-plus-circle" style="color: red"></i></a></h2>
                             <div class="category-story tech-btm">
                             <ul class="list-group single" >
 
@@ -288,7 +288,26 @@
 
                     </div>
 
+                        <div class="blog-grid-top">
 
+                            <h2 class="tittle mb-xl-5 mb-4 text-dark text-uppercase font-weight-bold pl-4 py-3">Online Test Section<a href="/instructor/course/<%= course.Course_id%>/add_exam" >  <i class="fas fa-plus-circle" style="color: red"></i></a></h2>
+
+                            <div class="category-story tech-btm"">
+                            <ul class="list-group single" >
+
+
+                                <% if (exams) { %>
+                                    <% for (var i=0;i<exams.length ;i ++) {%>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center" >
+                                            <a href="/instructor/course/<%= course.Course_id %>/exams/<%= exams[i].Exam_id%>/"><%= exams[i].Exam_Name%></a><br><br><br>
+
+                                        </li>
+                                    <% }%>
+                                <% } %>
+
+                            </ul>
+                        </div>
+                    </div>
 
                 </div>
 

@@ -26,6 +26,8 @@
             window.scrollTo(0, 1);
         }
     </script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <!--// Meta tag Keywords -->
 
     <!-- css files -->
@@ -38,6 +40,7 @@
     <!--web font-->
     <link href="//fonts.googleapis.com/css?family=PT+Sans+Caption:400,700&amp;subset=cyrillic,cyrillic-ext,latin-ext" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
     <!--//web font-->
 
     <style>
@@ -161,7 +164,7 @@
                         </a>
                     </li>
                     <li class="nav-item mr-lg-3">
-                        <a class="nav-link" href="/student/courses/">My Courses</a>
+                        <a class="nav-link" href="/student/courses/">Courses</a>
                     </li>
                     <li class="dropdown nav-item active mr-lg-3">
                         <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle ">
@@ -186,8 +189,8 @@
                                 <!-- cd-header-buttons -->
                             </div>
                             <div id="cd-search" class="cd-search">
-                                <form action="/student/search" method="post">
-                                    <input name="search" type="search" placeholder="Click enter after typing...">
+                                <form action="#" method="post">
+                                    <input name="Search" type="search" placeholder="Click enter after typing...">
                                 </form>
                             </div>
                         </div>
@@ -208,7 +211,7 @@
     <div class="container">
         <div class="agileinfo-inner">
             <h2 class="text-center text-white">
-                <%= course.Course_Title%>
+              <%= course.Course_Title%>
             </h2>
         </div>
     </div>
@@ -221,20 +224,28 @@
             <a href="/student/">Home</a>
         </li>
         <li class="breadcrumb-item">
-            <a href="/student/courses">Courses</a>
+            <a href="/student/courses/">Courses</a>
         </li>
-        <li class="breadcrumb-item active" aria-current="page"><%= course.Course_Title%></li>
+        <li class="breadcrumb-item">
+            <a href="/student/course-details/<%= course.Course_id%>"><%= course.Course_Title%></a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Exam Result</li>
     </ol>
 </nav>
 <!-- //breadcrumbs -->
 
 <!-- courses -->
 <section class="courses py-5">
-
-
-
-
-
+<script>
+    document.getElementById('button').addEventListener('click', () => {
+    if (screenfull.enabled) {
+    screenfull.request();
+    } else {
+    // Ignore or do something else
+    }
+    });
+</script>
+    <button id="button">b</button>
 
 
     <!-- single page -->
@@ -243,115 +254,79 @@
             <div class="inner-sec">
                 <div class="row">
                     <!-- left side -->
-                    <div class="col-lg-8 left-blog-info text-left">
+                    <div class="col-lg-11 left-blog-info text-left">
                         <div class="blog-grid-top">
-                            <div class="b-grid-top">
-                                <div class="blog_info_left_grid">
-                                    <a href="single.html">
-                                        <img src="/images/4.jpg" class="img-fluid" alt="">
-                                    </a>
-                                </div>
-                            </div>
+
+                            <h2 class="tittle mb-xl-5 mb-4 text-dark text-uppercase font-weight-bold pl-4 py-3"></h2>
+
+                            <div class="category-story tech-btm"">
+                            <ul class="list-group single" >
+
+
+                                    <% if (result) { %>
+                                <% var c=0%>
+                                        <% for (var i=0;i<result.length ;i ++) {%>
+                                        <div class="card">
+                                            <div class="card-header">
 
 
 
+                                            <h3><%= i+1 %>. &nbsp <%= result[i].Question%></h3>
+                                            </div>
 
-                            <h2 class="tittle mb-xl-5 mb-4 text-dark text-uppercase font-weight-bold pl-4 py-3">Course Details Page</h2>
+                                        <div class="card-body">
+                                            <ul>
+                                                <li><%= result[i].Op1%></li><br>
+                                                <li><%= result[i].Op2%></li><br>
+                                                <li><%= result[i].Op3%></li><br>
+                                                <li><%= result[i].Op4%></li><br>
+                                            </ul>
 
+                                        </div>
+                                            <div class="card-footer">
+                                            Selected Answser : <%=result[i].Answer_id %>
+                                            <% if(result[i].Mark == 0){%>
 
+                                            <div > <h5 style="background-color: red;color: white"> wrong !</h5> <h6> correct answer: Option <%= result[i].Correct_Option%></h6></div>
+                                            <% } else {%>
+<% c=c+1%>
+                                            <div style="background-color: green;color:white"> <h5>correct !</h5></div>
+                                            <%} %>
 
+                                            </div>
 
-                            <h3>
-                                <a class="single-text text-dark font-weight-light">Introduction To Course</a>
-                            </h3>
-                            <p id="introduction" style="white-space: pre-wrap;"><%= course.Introduction%></p>
-
-                            </p>
-
-                            <h3>
-                                <a class="single-text text-dark font-weight-light">Description of Course</a>
-                            </h3>
-
-                            <p id="description" style="white-space: pre-wrap;"> <%= course.Description%> </p>
-
-
-                            <h3>
-                                <a class="single-text text-dark font-weight-light">Requirements of the Course</a>
-                            </h3>
-
-                            <p id="requirements" style="white-space: pre-wrap;"><%= course.Requirements%></p>
-                        </div>
-
-
-                    </div>
-                    <!-- //left side -->
-                    <!-- right side -->
-                    <aside class="col-lg-4 right-blog-con text-right mt-lg-0 mt-5">
-                        <div class="right-blog-info text-left">
-                            <div class="category-story tech-btm">
-                                <h4>Recent Announcements</h4>
-                                <ul class="list-unstyled">
-
-
-                                    <% if (announcements) { %>
-                                        <% for (var i=0;i<announcements.length ;i ++) {%>
-                                            <li class="border-bottom mb-3 pb-3">
-                                                <i class="fas fa-angle-right mr-2"></i>
-                                                <a href="/student/course/announcement/<%= course.Course_id%>/<%= announcements[i].Anouncement_id%>" class="text-danger"><%= announcements[i].Short_Description%></a>
-                                            </li>
+                                        </div>
+                                    <br>
                                         <% }%>
+                                    <br><br>
+
+                                <div class="jumbotron"> YOU Scored  <%= c %> out of <%= i%>  </div>
                                     <% } %>
 
 
-                                    <li>
-                                        <i class="fas fa-angle-right mr-3"></i>
-                                        <a href="#" class="text-danger">...............Older Announcemenets</a>
-                                    </li>
-                                </ul>
-                            </div>
-
-                            <div class="tech-btm">
-                                <img src="images/g4.jpg" class="img-fluid rounded" alt="">
-                            </div>
-
-
-                            <div class="category-story tech-btm">
-                                <h4>Course Materials</h4>
-                                <ul class="list-group single">
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <a href="/student/course/<%= course.Course_id%>/resources">Resources Section</a>
-                                        <span class="badge badge-primary badge-pill">14</span>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <a href="/student/course/<%= course.Course_id%>/assignments">Assignment And Submissions</a>
-                                        <span class="badge badge-primary badge-pill">2</span>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <a href="/student/course/<%= course.Course_id%>/tests">Test And Examinations</a>
-                                        <span class="badge badge-primary badge-pill">1</span>
-                                    </li>
-
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <a href="/student/course/<%= course.Course_id%>/students">Students</a>
-                                    </li>
-                                  <!--  <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <a href="/student/course/<%= course.Course_id%>/exams">Exams</a>
-                                    </li>-->
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <a href="/student/course/<%= course.Course_id%>/qa">Q&A</a>
-                                        <span class="badge badge-primary badge-pill">1</span>
-                                    </li>
-                                </ul>
-                            </div>
 
 
 
+                            </ul>
                         </div>
-                    </aside>
-                    <!-- //right side -->
+
+
+
+
+
+
+
+
+
+                    </div>
+
+
                 </div>
+                <!-- //left side -->
+
             </div>
         </div>
+    </div>
     </div>
 
 
@@ -365,78 +340,6 @@
 
 </section>
 <!-- courses -->
-
-<!-- footer -->
-<footer>
-    <div class="container-fluid p-sm-5 py-5">
-        <div class="row footer-gap">
-            <div class="col-lg-4 col-sm-6">
-                <h3 class="text-uppercase mb-3">Address</h3>
-                <address class="mb-0">
-                    <p><strong>Postal address:</strong></p>
-                    <p class="mb-3"><i class="fas fa-map-marker"></i> NH 66, Srinivas Nagar, Surathkal, Mangaluru <br> Karnataka 575025 .</p>
-                    <p><i class="fas fa-clock"></i> Timings : 8 a.m to 5 p.m</p>
-                    <p><i class="fas fa-phone"></i> 0824 6545654</p>
-                    <p><i class="fas fa-envelope-open"></i> <a href="http://www.nitk.ac.in">nitk.ac.in</a></p>
-
-                </address>
-            </div>
-            <div class="col-lg-3 col-sm-6 mt-lg-0 mt-sm-0 mt-4 p-md-0">
-                <h3 class="text-uppercase mb-3">Quick Links</h3>
-                <div class="links">
-                    <a class="text-capitalize" href="http://www.nitk.ac.in"> NITK</a>
-                    <a class="pt-2 text-capitalize" href="https://iris.nitk.ac.in"> NITK IRIS</a>
-
-                    <div class="divider"></div>
-                    <a class="pt-2 text-capitalize" href="/"> Our Home</a>
-
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-3 col-sm-6 mt-lg-0 mt-sm-5 mt-4 p-md-0">
-                <h3 class="text-uppercase mb-3">Support</h3>
-                <div class="links">
-                    <a class="text-capitalize" href="#"> Contact Us</a>
-                    <a class="pt-2 text-capitalize" href="#"> Technical support</a>
-                    <a class="pt-2 text-capitalize" href="#"> 24/7 Service</a>
-                    <div class="divider"></div>
-                    <a class="pt-2 text-capitalize" href="#"> Privacy Policy</a>
-                    <a class="pt-2 text-capitalize" href="#"> Feedback & FAQ's</a>
-                    <a class="pt-2 text-capitalize" href="#"> Terms Of Use</a>
-                </div>
-            </div><!--
-      <div class="col-lg-3 col-md-5 col-sm-6 mt-lg-0 mt-sm-5 mt-4 pr-md-5">
-        <h3 class="text-uppercase mb-3">Newsletter</h3>
-        <p class="mb-4">Subscribe to Our Newsletter to get News, Amazing Offers & More</p>
-        <form action="#" method="post">
-          <input type="email" name="Email" placeholder="Enter your email..." required="">
-          <button class="btn1"><i class="far fa-paper-plane"></i></button>
-          <div class="clearfix"> </div>
-        </form>
-      </div>-->
-            <div class="col-lg-3 col-md-4 col-sm-6 mt-lg-0 mt-sm-5 mt-4">
-                <h3 class="text-uppercase mb-3"> Follow us</h3>
-                <p class="mb-4">Follow us on social media</p>
-                <ul class="social mt-lg-0 mt-3">
-                    <li class="mr-1"><a href="#"><span class="fab fa-facebook-f"></span></a></li>
-                    <li class="mr-1"><a href="#"><span class="fab fa-twitter"></span></a></li>
-                    <li class="mr-1"><a href="#"><span class="fab fa-google-plus-g"></span></a></li>
-                    <li class=""><a href="#"><span class="fab fa-linkedin-in"></span></a></li>
-                    <div class="social-divider"></div>
-                    <li class="mr-1"><a href="#"><span class="fas fa-rss"></span></a></li>
-                    <li class="mr-1"><a href="#"><span class="fab fa-vk"></span></a></li>
-                    <li class="mr-1"><a href="#"><span class="fab fa-vimeo-v"></span></a></li>
-                    <li class=""><a href="#"><span class="fab fa-yahoo"></span></a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <!--<div class="copyright pb-5 text-center">-->
-    <!--<p>© 2018 Eduversity. All Rights Reserved | Design by <a href="http://www.W3Layouts.com" target="_blank">W3Layouts</a></p>-->
-    <!--</div>-->
-</footer>
-<!-- footer -->
-
-
 
 
 
