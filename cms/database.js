@@ -451,12 +451,13 @@ function connectDatabase() {
                     console.log('Password table created');
                 });
 
-                let createTodos18 = `CREATE TABLE if not exists Exams
+                let createTodos181 = `CREATE TABLE if not exists Exams
                 (
                   Exam_id INT NOT NULL AUTO_INCREMENT,
                   Exam_Name VARCHAR(100),
                   Total_Questions INT,
                   Course_id INT NOT NULL,
+                  Secret INT NOT NULL,
                   Instructor_id INT NOT NULL,
                   Date DATE,
                   PRIMARY KEY (Exam_id),
@@ -465,7 +466,7 @@ function connectDatabase() {
                 ) 
                 ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci`;
 
-                db.query(createTodos18, function(err, results, fields) {
+                db.query(createTodos181, function(err, results, fields) {
                     if (err) {
                         console.log(err.message);
                     }
@@ -475,7 +476,7 @@ function connectDatabase() {
 
 
 
-                let createTodos19 = `CREATE TABLE if not exists Questions
+                let createTodos191 = `CREATE TABLE if not exists Questions
                 (
                   Question_id INT NOT NULL AUTO_INCREMENT,
                   Question VARCHAR(100),
@@ -494,7 +495,7 @@ function connectDatabase() {
                 ) 
                 ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci`;
 
-                db.query(createTodos19, function(err, results, fields) {
+                db.query(createTodos191, function(err, results, fields) {
                     if (err) {
                         console.log(err.message);
                     }
@@ -516,7 +517,7 @@ function connectDatabase() {
                   FOREIGN KEY (Question_id) REFERENCES Questions(Question_id) ON DELETE CASCADE,
                   FOREIGN KEY (Exam_id) REFERENCES Exams(Exam_id) ON DELETE CASCADE,
                   FOREIGN KEY (Course_id) REFERENCES COURSE(Course_id) ON DELETE CASCADE,
-                  FOREIGN KEY (Student_id) REFERENCES Student(Student_id)
+                  FOREIGN KEY (Student_id) REFERENCES STUDENT(Student_id)
                 ) 
                 ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci`;
 

@@ -12,6 +12,8 @@ var storage = multer.diskStorage({
         cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
     }
 });
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey("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");
 
 var upload = multer({
     storage: storage,
@@ -822,7 +824,7 @@ router.get('/course/:course_id/tests/', function(req, res){
 
                                                     }
                                                     else {
-                                                        connection.query("SELECT * FROM EXAMS WHERE Course_id = ?   ORDER BY Date",req.params.course_id ,function(err4,exams){
+                                                        connection.query("SELECT * FROM Exams WHERE Course_id = ?   ORDER BY Date",req.params.course_id ,function(err4,exams){
                                                             if(err4) {
                                                                 console.log(err4);
                                                                 res.redirect('/instructor/courses/')
@@ -1888,7 +1890,7 @@ router.get('/course/:course_id/students', function(req, res){
 
                                                     }
                                                     else {
-                                                        connection.query("SELECT  Date, COUNT(Attendence_id) FROM  ATTENDENCE  WHERE Course_id = ?  GROUP BY Date",[req.params.course_id] ,function(err5,c) {
+                                                        connection.query("SELECT  COUNT(DISTINCT Date) as total FROM  ATTENDENCE  WHERE Course_id = ? ",[req.params.course_id] ,function(err5,c) {
                                                             if (err5) {
                                                                 console.log(err5);
                                                                 res.redirect('/instructor/')
@@ -1903,7 +1905,7 @@ router.get('/course/:course_id/students', function(req, res){
 
                                                                     }
                                                                     else {
-                                                                        console.log(rows6);
+                                                                        console.log(c);
 
 
 
@@ -2030,7 +2032,7 @@ router.get('/course/:course_id/:student_id/approve', function(req, res){
 
 
 
-                                                                                res.redirect('/instructor/corse/'+req.params.course_id+'/students/')
+                                                                                res.redirect('/instructor/course/'+req.params.course_id+'/students/')
 
                                                                             }
                                                                         });
@@ -2889,7 +2891,7 @@ router.get('/course/:course_id/exams/', function(req, res){
                             }
                             else {
 
-                                connection.query("SELECT * FROM EXAMS WHERE Course_id = ?   ORDER BY Date",req.params.course_id ,function(err4,rows4){
+                                connection.query("SELECT * FROM Exams WHERE Course_id = ?   ORDER BY Date",req.params.course_id ,function(err4,rows4){
                                     if(err4) {
                                         console.log(err4);
                                         res.redirect('/instructor/courses/')
@@ -2989,10 +2991,12 @@ router.post('/course/add/exam/:course_id/add_exam/', function(req, res){
 
                             }
                             else {
+                                var secrete = Math.floor(Math.random() * 1000000);
                                 var obj={
                                     'Exam_Name':req.body.Exam_Name,
                                     'Course_id':req.params.course_id,
-                                    'Instructor_id':rows2[0].Instructor_id
+                                    'Instructor_id':rows2[0].Instructor_id,
+                                    'Secret':secrete
                                 };
                                 connection.query("INSERT INTO Exams SET  ?",obj ,function(err1,exam){
                                     if(err1) {
@@ -3023,7 +3027,7 @@ router.post('/course/add/exam/:course_id/add_exam/', function(req, res){
                                                'Exam_id':insert_id,
                                                'Course_id':req.params.course_id,
                                                'Instructor_id': rows2[0].Instructor_id
-                                           }
+                                           };
                                            connection.query("INSERT INTO Questions SET  ?", obj1, function (err1, Questions) {
                                                if (err1) {
                                                    console.log(err1);
@@ -3037,9 +3041,53 @@ router.post('/course/add/exam/:course_id/add_exam/', function(req, res){
                                                }
                                            });
                                        }
-                                        var url = '/instructor/course/' + req.params.course_id + '/exams';
-                                        req.flash('info', 'New Exam Successfully Added to Q&A Section!');
-                                        res.redirect(url);
+
+
+                                        connection.query("SELECT * FROM USER WHERE id IN (SELECT User_id FROM STUDENT WHERE Student_id IN (SELECT Student_id FROM ENROLLED WHERE Course_id = ?) ORDER BY Student_id)",[req.params.course_id] ,function(err5,students) {
+                                            if (err5) {
+                                                console.log(err5);
+                                                res.redirect('/instructor/courses/')
+
+                                            }
+                                            else {
+
+                                                var  email1 = [];
+
+                                                for(var i=0;i<students.length;i++)
+                                                      email1.push(students[i].email)
+
+
+
+
+                                                    const msg = {
+                                                        to: email1,
+                                                        from: 'siddeshlc1998@gmail.com',
+                                                        subject: 'About Your Online Exam' + ' ' + rows3[0].Course_Title + ' | ' + req.body.Exam_Name,
+                                                        text: 'Do not Share with Anyone',
+                                                        html: '<h3>Your Secret Key is ' + secrete +'</h3><br>',
+                                                        isMultiple: true
+
+
+                                                    };
+
+
+
+
+
+
+                                                    console.log(msg);
+
+                                                    console.log(sgMail.send(msg));
+
+                                                var url = '/instructor/course/' + req.params.course_id + '/exams';
+                                                req.flash('info', 'New Exam Successfully Added to Q&A Section!');
+                                                res.redirect(url);
+                                            }
+                                        });
+
+
+
+
 
 
 
@@ -3087,7 +3135,7 @@ router.get('/course/:course_id/exams/:exam_id/', function(req, res){
                             }
                             else {
 
-                                connection.query("SELECT * FROM EXAMS WHERE Exam_id = ?   ",req.params.exam_id ,function(err4,exam){
+                                connection.query("SELECT * FROM Exams WHERE Exam_id = ?   ",req.params.exam_id ,function(err4,exam){
                                     if(err4) {
                                         console.log(err4);
                                         res.redirect('/instructor/courses/')
@@ -3095,7 +3143,7 @@ router.get('/course/:course_id/exams/:exam_id/', function(req, res){
                                     }
                                     else {
 
-                                        connection.query("SELECT * FROM QUESTIONS WHERE Exam_id = ?   ",req.params.exam_id ,function(err4,questions){
+                                        connection.query("SELECT * FROM Questions WHERE Exam_id = ?   ",req.params.exam_id ,function(err4,questions){
                                             if(err4) {
                                                 console.log(err4);
                                                 res.redirect('/instructor/courses/')
@@ -3163,7 +3211,7 @@ router.get('/course/:course_id/exams/:exam_id/:student_id', function(req, res){
                             }
                             else {
 
-                                connection.query("SELECT * FROM EXAMS WHERE Exam_id = ?   ",req.params.exam_id ,function(err4,exam){
+                                connection.query("SELECT * FROM Exams WHERE Exam_id = ?   ",req.params.exam_id ,function(err4,exam){
                                     if(err4) {
                                         console.log(err4);
                                         res.redirect('/instructor/courses/')
@@ -3171,7 +3219,7 @@ router.get('/course/:course_id/exams/:exam_id/:student_id', function(req, res){
                                     }
                                     else {
 
-                                        connection.query("SELECT * FROM QUESTIONS WHERE Exam_id = ?   ",req.params.exam_id ,function(err4,questions){
+                                        connection.query("SELECT * FROM Questions WHERE Exam_id = ?   ",req.params.exam_id ,function(err4,questions){
                                             if(err4) {
                                                 console.log(err4);
                                                 res.redirect('/instructor/courses/')
@@ -3179,7 +3227,7 @@ router.get('/course/:course_id/exams/:exam_id/:student_id', function(req, res){
                                             }
                                             else {
 
-                                                connection.query("SELECT * FROM (SELECT * FROM QUESTIONS WHERE Exam_id = ?  ORDER BY Question_id )A INNER JOIN (SELECT * FROM Exam_Submission WHERE Exam_id = ? and Student_id =?)B ON A.Question_id =B.Question_id ORDER BY A.Question_id",[req.params.exam_id,req.params.exam_id,req.params.student_id] ,function(err4,result){
+                                                connection.query("SELECT * FROM (SELECT * FROM Questions WHERE Exam_id = ?  ORDER BY Question_id )A INNER JOIN (SELECT * FROM Exam_Submission WHERE Exam_id = ? and Student_id =?)B ON A.Question_id =B.Question_id ORDER BY A.Question_id",[req.params.exam_id,req.params.exam_id,req.params.student_id] ,function(err4,result){
                                                     if(err4) {
                                                         console.log(err4);
                                                         res.redirect('/instructor/courses/')

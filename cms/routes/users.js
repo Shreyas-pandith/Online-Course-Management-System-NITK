@@ -3,7 +3,7 @@ var router = express.Router();
 var csrf = require('csurf');
 var bodyParser = require('body-parser');
 const sgMail = require('@sendgrid/mail');
-sgMail.setApiKey("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");
+sgMail.setApiKey("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");
 
 var csrfProtection = csrf({ cookie: true });
 var parseForm = bodyParser.urlencoded({ extended: false });
@@ -38,7 +38,7 @@ router.get('/register', csrfProtection,  function(req, res, next) {
 
 
 
-router.post('/register', parseForm, csrfProtection, function(req, res, next) {
+router.post('/register', function(req, res, next) {
 
     req.checkBody('psw', 'Password field can not be empty').notEmpty();
     req.checkBody('psw_repeat', 'Repeat Password field can not be empty').notEmpty();
@@ -185,15 +185,17 @@ router.post('/forgot_password', function(req, res, next) {
                         var url = 'http://localhost:3000/users/forgot_password/' + data.Secret;
                         const msg = {
                             to: rows2[0].email,
-                            from: 'siddeshlc08@gmail.com',
+                            from: 'siddeshlc1998@gmail.com',
                             subject: 'Reset Your Password' + ' '+ rows2[0].email,
                             text: 'Do not Share with Anyone',
                             html: '<h3>Please Copy Paste the url To Reset Your Password</h3><br>' +
                                 'http://localhost:3000/users/forgot_password/' + data.Secret,
                         };
 
-                        sgMail.send(msg);
-
+                        var f = sgMail.send(msg);
+                        if(f)
+                            console.log(f);
+                        console.log(msg);
                         res.redirect('/users/login/')
                     }
                 });

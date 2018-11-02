@@ -22,7 +22,7 @@ router.get('/', function(req, res){
     if(req.user) {
 
         connection.query("SELECT * FROM USER WHERE id = ? AND Role = ?",[req.user, 'Student'] ,function(err1,rows1){
-            if(err1 || rows1.length ===0) {
+            if(err1 || rows1.length === 0) {
                 console.log(err1);
                 res.redirect('/users/login')
 
@@ -317,13 +317,14 @@ router.get('/courses', function(req, res){
 
                             }
                             else {
-                                connection.query("select A.Course_id ,Course_Title,Course_Code from COURSE INNER JOIN (SELECT * FROM PERMISSION WHERE Student_id = ? )A ON COURSE.Course_id=A.Course_id ",student[0].Student_id ,function(err2,rcourses){
+                                connection.query("select Course_id ,Course_Title,Course_Code from COURSE  WHERE  Course_id IN (SELECT Course_id FROM PERMISSION WHERE Student_id = ? ) ",student[0].Student_id ,function(err2,rcourses){
                                     if(err2) {
                                         console.log(err2);
                                         res.redirect('/student');
 
                                     }
                                     else {
+                                        console.log(rcourses);
 
                                         res.render('student/mycourses',{'user':rows1[0], 'student': student,'courses':courses, 'requested': rcourses});
                                     }
@@ -763,9 +764,9 @@ router.get('/course/:course_id/students', function(req, res){
 
                                                     }
                                                     else {
-                                                        connection.query("SELECT count(*) as total_classes FROM (SELECT  * FROM  ATTENDENCE  WHERE Course_id = ?  GROUP BY Date )A",[req.params.course_id] ,function(err5,c) {
+                                                        connection.query("SELECT COUNT(DISTINCT Date) as total_classes FROM ATTENDENCE  WHERE Course_id = ?",[req.params.course_id] ,function(err5,c) {
                                                             if (err5) {
-                                                                console.log(err4);
+                                                                console.log(err5);
                                                                 res.redirect('/student/courses/')
 
                                                             }
@@ -912,7 +913,7 @@ router.get('/course/:course_id/tests/', function(req, res){
                                                     }
                                                     else {
 
-                                                        connection.query("SELECT * FROM EXAMS WHERE Course_id = ?   ORDER BY Date",req.params.course_id ,function(err4,exams){
+                                                        connection.query("SELECT * FROM Exams WHERE Course_id = ?   ORDER BY Date",req.params.course_id ,function(err4,exams){
                                                             if(err4) {
                                                                 console.log(err4);
                                                                 res.redirect('/student/courses/')
@@ -1610,7 +1611,7 @@ router.get('/course/:course_id/exams/', function(req, res){
                             }
                             else {
 
-                                connection.query("SELECT * FROM EXAMS WHERE Course_id = ?   ORDER BY Date",req.params.course_id ,function(err4,rows4){
+                                connection.query("SELECT * FROM Exams WHERE Course_id = ?   ORDER BY Date",req.params.course_id ,function(err4,rows4){
                                     if(err4) {
                                         console.log(err4);
                                         res.redirect('/student/courses/')
@@ -1667,7 +1668,7 @@ router.post('/course/:course_id/exams/:exam_id/start', function(req, res){
                             }
                             else {
 
-                                connection.query("SELECT * FROM EXAMS WHERE Exam_id = ?   ",req.params.exam_id ,function(err4,exam){
+                                connection.query("SELECT * FROM Exams WHERE Exam_id = ?   ",req.params.exam_id ,function(err4,exam){
                                     if(err4) {
                                         console.log(err4);
                                         res.redirect('/student/courses/')
@@ -1675,7 +1676,7 @@ router.post('/course/:course_id/exams/:exam_id/start', function(req, res){
                                     }
                                     else {
 
-                                        connection.query("SELECT * FROM QUESTIONS WHERE Exam_id = ?   ",req.params.exam_id ,function(err4,questions){
+                                        connection.query("SELECT * FROM Questions WHERE Exam_id = ?   ",req.params.exam_id ,function(err4,questions){
                                             if(err4) {
                                                 console.log(err4);
                                                 res.redirect('/student/courses/')
@@ -1683,8 +1684,29 @@ router.post('/course/:course_id/exams/:exam_id/start', function(req, res){
                                             }
                                             else {
 
-                                                console.log(questions);
-                                                res.render('student/exam',{'user':rows1[0], 'student': rows2[0], 'course': rows3[0], 'exam': exam[0], 'questions':questions, messages: req.flash('info')});
+
+                                                connection.query("SELECT * FROM Exams WHERE Exam_id = ?   ",req.params.exam_id ,function(err4,s){
+                                                    if(err4) {
+                                                        console.log(err4);
+                                                        res.redirect('/student/courses/')
+
+                                                    }
+                                                    else {
+
+                                                        console.log(s[0]);
+                                                        if((s[0].Secret).toString() === req.body.secret)
+                                                          res.render('student/exam',{'user':rows1[0], 'student': rows2[0], 'course': rows3[0], 'exam': exam[0], 'questions':questions, messages: req.flash('info')});
+                                                        else{
+                                                            req.flash('info', 'Invalid Key');
+                                                            var f = '/student/course/'+ rows3[0].Course_id+'/exams';
+                                                            res.redirect(f)
+                                                        }
+
+
+
+                                                    }
+                                                });
+
 
 
                                             }
@@ -1732,7 +1754,7 @@ router.get('/course/:course_id/exams/:exam_id/result', function(req, res){
                             }
                             else {
 
-                                connection.query("SELECT * FROM EXAMS WHERE Exam_id = ?   ",req.params.exam_id ,function(err4,exam){
+                                connection.query("SELECT * FROM Exams WHERE Exam_id = ?   ",req.params.exam_id ,function(err4,exam){
                                     if(err4) {
                                         console.log(err4);
                                         res.redirect('/student/courses/')
@@ -1740,7 +1762,7 @@ router.get('/course/:course_id/exams/:exam_id/result', function(req, res){
                                     }
                                     else {
 
-                                        connection.query("SELECT * FROM (SELECT * FROM QUESTIONS WHERE Exam_id = ?  ORDER BY Question_id )A INNER JOIN (SELECT * FROM Exam_Submission WHERE Exam_id = ? and Student_id =?)B ON A.Question_id =B.Question_id ORDER BY A.Question_id",[req.params.exam_id,req.params.exam_id,rows2[0].Student_id] ,function(err4,result){
+                                        connection.query("SELECT * FROM (SELECT * FROM Questions WHERE Exam_id = ?  ORDER BY Question_id )A INNER JOIN (SELECT * FROM Exam_Submission WHERE Exam_id = ? and Student_id =?)B ON A.Question_id =B.Question_id ORDER BY A.Question_id",[req.params.exam_id,req.params.exam_id,rows2[0].Student_id] ,function(err4,result){
                                             if(err4) {
                                                 console.log(err4);
                                                 res.redirect('/student/courses/')
@@ -1798,7 +1820,7 @@ router.post('/course/submit/exam/:course_id/:exam_id/', function(req, res){
                             }
                             else {
 
-                                connection.query("SELECT * FROM EXAMS WHERE Exam_id = ?   ",req.params.exam_id ,function(err4,exam){
+                                connection.query("SELECT * FROM Exams WHERE Exam_id = ?   ",req.params.exam_id ,function(err4,exam){
                                     if(err4) {
                                         console.log(err4);
                                         res.redirect('/student/courses/')
@@ -1806,7 +1828,7 @@ router.post('/course/submit/exam/:course_id/:exam_id/', function(req, res){
                                     }
                                     else {
 
-                                        connection.query("SELECT * FROM QUESTIONS WHERE Exam_id = ?  ORDER BY Question_id ",req.params.exam_id ,function(err4,questions){
+                                        connection.query("SELECT * FROM Questions WHERE Exam_id = ?  ORDER BY Question_id ",req.params.exam_id ,function(err4,questions){
                                             if(err4) {
                                                 console.log(err4);
                                                 res.redirect('/student/courses/')
@@ -1900,7 +1922,7 @@ router.get('/course/:course_id/exams/:exam_id/enter', function(req, res){
                             }
                             else {
 
-                                connection.query("SELECT * FROM EXAMS WHERE Exam_id = ?   ",req.params.exam_id ,function(err4,exam){
+                                connection.query("SELECT * FROM Exams WHERE Exam_id = ?   ",req.params.exam_id ,function(err4,exam){
                                     if(err4) {
                                         console.log(err4);
                                         res.redirect('/student/courses/')
@@ -1909,7 +1931,7 @@ router.get('/course/:course_id/exams/:exam_id/enter', function(req, res){
                                     else {
 
 
-                                        connection.query("SELECT * FROM (SELECT * FROM QUESTIONS WHERE Exam_id = ?  ORDER BY Question_id )A INNER JOIN (SELECT * FROM Exam_Submission WHERE Exam_id = ? and Student_id =?)B ON A.Question_id =B.Question_id ORDER BY A.Question_id",[req.params.exam_id,req.params.exam_id,rows2[0].Student_id] ,function(err4,result){
+                                        connection.query("SELECT * FROM (SELECT * FROM Questions WHERE Exam_id = ?  ORDER BY Question_id )A INNER JOIN (SELECT * FROM Exam_Submission WHERE Exam_id = ? and Student_id =?)B ON A.Question_id =B.Question_id ORDER BY A.Question_id",[req.params.exam_id,req.params.exam_id,rows2[0].Student_id] ,function(err4,result){
                                             if(err4) {
                                                 console.log(err4);
                                                 res.redirect('/student/courses/')

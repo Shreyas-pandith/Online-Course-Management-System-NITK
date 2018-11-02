@@ -268,7 +268,12 @@
                                     <a style="color: red">Last Name</a><br><br><br>
                                     <a style="color: red">Roll Number</a><br><br><br>
 
-                                    <a style="color: red">Classes Attended (of <%= classes.total_classes %>)</a><br><br><br>
+                                    <a style="color: red">Classes Attended ( of <% if(classes.length>0){%>
+                                                                                        <%= classes.total_classes %>
+                                                                             <%}else{%>
+                                                                                         0
+                                                                             <%}%> )
+                                     </a><br><br><br>
 
                                 </li>
 
