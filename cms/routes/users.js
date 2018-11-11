@@ -3,7 +3,7 @@ var router = express.Router();
 var csrf = require('csurf');
 var bodyParser = require('body-parser');
 const sgMail = require('@sendgrid/mail');
-sgMail.setApiKey("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");
+sgMail.setApiKey("*");
 
 var csrfProtection = csrf({ cookie: true });
 var parseForm = bodyParser.urlencoded({ extended: false });
